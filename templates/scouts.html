@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:color="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Liga Heineken 2022 - Scouts</title>
+
+</head>
+<body style="background-color:black; color:#ffffff;">
+<div style="background-color:black;color:white;">
+    <br/>
+    <br/>
+
+<center>
+     <table border="1">
+        <tr> <th colspan="6" align="center"> Parciais </th> </tr>
+        <tr> <th colspan="2" align="center"> Atleta </th>
+        <th colspan="1" align="center"> Clube </th>
+        <th colspan="1" align="center"> POS </th>
+        <th colspan="1" align="center"> Scouts </th>
+        <th colspan="1" align="center"> Pontos </th>
+        </tr>
+        <tr>
+
+            {% for item in get_list %}
+            <tr>
+                {% for i in item %}
+                    {% if i is not mapping %}
+                        {% if i.startswith('https') %}
+                            <td><center><img src="{{ i | replace('FORMATO', '140x140') }}" width="30" height="30"></center></td>
+                        {% else %}
+                            <td><font color="white">{{ i }}</font></td>
+                        {% endif %}
+                    {% else %}
+                        <td>
+                        {% for chave, val2 in i.items() %}
+                            {% if chave == 'FC' or chave == 'PI' or chave == 'I' or chave == 'CA' or chave == 'CV' or chave == 'PC' or chave == 'GC' or chave == 'GS' %}
+                                <font color="red">{{ val2 }}{{ chave }}</font>
+                            {% else %}
+                                <font color="green">{{ val2 }}{{ chave }}</font>
+                            {% endif %}
+                        {% endfor %}
+                        </td>
+                    {% endif %}
+
+                {% endfor %}
+            </tr>
+            {% endfor %}
+
+
+
+
+
+        </tr>
+    </table>
+</center>
+
+
+</div>
+
+</body>
+</html>
+

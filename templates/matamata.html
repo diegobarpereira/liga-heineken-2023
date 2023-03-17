@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:color="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Liga Heineken 2022 - Mata Mata</title>
+
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+<style>
+
+body {
+	font-family: 'Roboto', sans-serif;
+	font-size: 9px;
+	color: white;
+	margin: 0;
+	height: 0;
+	background-color: black;
+	height: 100%;
+}
+
+.content {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                margin: 0
+}
+
+.table-sm > tbody > tr > td, .table-sm > tbody > tr > th, .table-sm > tfoot > tr > td, .table-sm > tfoot > tr > th, .table-sm > thead > tr > td, .table-sm > thead > tr > th {
+	border: 0px;
+	text-align: center;
+	background-color: black;
+	white-space: nowrap;
+	margin: 0 auto;
+}
+
+.table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+	border: 0px;
+	text-align: center;
+	background-color: black;
+	white-space: nowrap;
+	margin: 0 auto;
+}
+
+.table-sm tr {
+   height: 0px;
+}
+
+td.border-lb {border: 1px solid #ccc; border-width: 1px 0 1px 1px; }
+td.border-rb {border: 1px solid #ccc; border-width: 1px 1px 1px 0; }
+td.border-udb {border: 1px solid #ccc; border-width: 1px 0 1px 0; }
+td.border-oit_first {border: 1px solid #ccc; border-width: 1px 0 0 0; }
+td.border-oit_first_right {border: 1px solid #ccc; border-width: 1px 1px 0 0; }
+td.border-oit_first_left {border: 1px solid #ccc; border-width: 1px 0 0 1px; }
+td.border-oit_sec {border: 1px solid #ccc; border-width: 0 0 1px 0; }
+td.border-oit_sec_right {border: 1px solid #ccc; border-width: 0 1px 1px 0; }
+td.border-oit_sec_left {border: 1px solid #ccc; border-width: 0 0 1px 1px; }
+td.border-oit_x {border: 1px solid #ccc; border-width: 0 1px 0 1px; }
+td.border-full {border: 1px solid #ccc; border-width: 1px 1px 1px 1px; }
+
+td.middle {
+vertical-align: middle;
+}
+
+</style>
+
+</head>
+<body>
+<div class= "content" align="center">
+
+<table style="border:none;" class="table table-sm w-auto h-auto">
+	<tr><th colspan="50"><h4>Liga Heineken 2022 - Mata Mata</h4></th></tr>
+<td>
+
+<table style="border:none;" class="table table-bordered table-sm w-auto h-auto">
+	<td>
+
+	<table>
+        	<tr>
+		<th colspan="4"> Oitavas </th>
+		</tr>
+
+<tr>
+
+		{% for key in get_list1 %}
+			<tr><td height="20" colspan="4" style='border:none;'> </td></tr>
+
+			{% if key[0] + key[3] > key[4] + key[7] %}
+
+				<td class="border-oit_first_left middle" style="color:yellow;">{{"%.2f"|format(key[0])}}</td>
+				<td class="border-oit_first middle"><img src="{{ key[1] }}" width="30" height="30"></td>
+				<td class="border-oit_first middle" style="color:yellow;">{{key[2]}}</td>
+				<td class="border-oit_first_right middle" style="color:yellow;">{{"%.2f"|format(key[3])}}</td>
+
+			{% else %}
+
+				<td class="border-oit_first_left middle" style="color:white;">{{"%.2f"|format(key[0])}}</td>
+				<td class="border-oit_first middle"><img src="{{ key[1] }}" width="30" height="30"></td>
+				<td class="border-oit_first middle" style="color:white;">{{key[2]}}</td>
+				<td class="border-oit_first_right middle" style="color:white;">{{"%.2f"|format(key[3])}}</td>
+
+			{% endif %}
+
+			</tr>
+			<tr><td colspan="4" class="border-oit_x">X</td></tr>
+			<tr>
+
+			{% if key[4] + key[7] > key[0] + key[3] %}
+
+				<td class="border-oit_sec_left middle" style="color:yellow;">{{"%.2f"|format(key[4])}}</td>
+				<td class="border-oit_sec middle"><img src="{{ key[5] }}" width="30" height="30"></td>
+				<td class="border-oit_sec middle" style="color:yellow;">{{key[6]}}</td>
+				<td class="border-oit_sec_right middle" style="color:yellow;">{{"%.2f"|format(key[7])}}</td>
+
+			{% else %}
+
+				<td class="border-oit_sec_left middle" style="color:white;">{{"%.2f"|format(key[4])}}</td>
+				<td class="border-oit_sec middle"><img src="{{ key[5] }}" width="30" height="30"></td>
+				<td class="border-oit_sec middle" style="color:white;">{{key[6]}}</td>
+				<td class="border-oit_sec_right middle" style="color:white;">{{"%.2f"|format(key[7])}}</td>
+
+			{% endif %}
+
+			</tr>
+		{% endfor %}
+
+    	</table>
+	</td>
+
+	<td>
+     	<table>
+        	<tr>
+		<th colspan="4"> Quartas </th>
+		</tr>
+
+			<tr style="display:inline-block;vertical-align:middle;">
+		{% for key in get_list3 %}
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+
+			{% if key[0] + key[3] > key[4] + key[7] %}
+
+			<td class="middle border-lb" style="color:yellow;">{{"%.2f"|format(key[0])}}</td>
+			<td class="middle border-udb"><img src="{{ key[1] }}" width="30" height="30"></td>
+			<td class="middle border-udb" style="color:yellow;">{{key[2]}}</td>
+			<td class="middle border-rb" style="color:yellow;">{{"%.2f"|format(key[3])}}</td>
+
+			{% else %}
+
+			<td class="middle border-lb" style="color:white;">{{"%.2f"|format(key[0])}}</td>
+			<td class="middle border-udb"><img src="{{ key[1] }}" width="30" height="30"></td>
+			<td class="middle border-udb" style="color:white;">{{key[2]}}</td>
+			<td class="middle border-rb" style="color:white;">{{"%.2f"|format(key[3])}}</td>
+
+			{% endif %}
+
+
+			</tr>
+			<tr><td colspan="4" style='border:none;'> {{"%.2f"|format(key[0] + key[3])}} </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'>X</td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+<!--			<tr><td colspan="4" style='border:none;'> </td></tr>-->
+			<tr>
+
+			{% if key[4] + key[7] > key[0] + key[3] %}
+
+			<td class="middle border-lb" style="color:yellow;">{{"%.2f"|format(key[4])}}</td>
+			<td class="middle border-udb"><img src="{{ key[5] }}" width="30" height="30"></td>
+			<td class="middle border-udb" style="color:yellow;">{{key[6]}}</td>
+			<td class="middle border-rb" style="color:yellow;">{{"%.2f"|format(key[7])}}</td>
+
+			{% else %}
+
+			<td class="middle border-lb" style="color:white;">{{"%.2f"|format(key[4])}}</td>
+			<td class="middle border-udb"><img src="{{ key[5] }}" width="30" height="30"></td>
+			<td class="middle border-udb" style="color:white;">{{key[6]}}</td>
+			<td class="middle border-rb" style="color:white;">{{"%.2f"|format(key[7])}}</td>
+
+			{% endif %}
+
+
+			<tr><td colspan="4" style='border:none;'> {{"%.2f"|format(key[4] + key[7])}} </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+<!--			<tr><td colspan="4" style='border:none;'> </td></tr>-->
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+
+			</tr>
+		{% endfor %}
+			</tr>
+
+	</table>
+	</td>
+
+	<td>
+     	<table>
+        	<tr>
+		<th colspan="4"> Semi Final</th>
+		</tr>
+
+			<tr style="display:inline-block;vertical-align:middle;">
+		{% for key in get_list5 %}
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+
+			{% if key[0] + key[3] > key[4] + key[7] %}
+
+			<td class="middle border-lb" style="color:yellow;">{{"%.2f"|format(key[0])}}</td>
+			<td class="middle border-udb"><img src="{{ key[1] }}" width="30" height="30"></td>
+			<td class="middle border-udb" style="color:yellow;">{{key[2]}}</td>
+			<td class="middle border-rb" style="color:yellow;">{{"%.2f"|format(key[3])}}</td>
+
+			{% else %}
+
+			<td class="middle border-lb" style="color:white;">{{"%.2f"|format(key[0])}}</td>
+			<td class="middle border-udb"><img src="{{ key[1] }}" width="30" height="30"></td>
+			<td class="middle border-udb" style="color:white;">{{key[2]}}</td>
+			<td class="middle border-rb" style="color:white;">{{"%.2f"|format(key[3])}}</td>
+
+			{% endif %}
+
+			</tr>
+			<tr><td colspan="4" style='border:none;'> {{"%.2f"|format(key[0] + key[3])}} </td>
+			</tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'>X</td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr>
+
+			{% if key[4] + key[7] > key[0] + key[3] %}
+
+			<td class="middle border-lb" style="color:yellow;">{{"%.2f"|format(key[4])}}</td>
+			<td class="middle border-udb"><img src="{{ key[5] }}" width="30" height="30"></td>
+			<td class="middle border-udb" style="color:yellow;">{{key[6]}}</td>
+			<td class="middle border-rb" style="color:yellow;">{{"%.2f"|format(key[7])}}</td>
+
+			{% else %}
+
+			<td class="middle border-lb" style="color:white;">{{"%.2f"|format(key[4])}}</td>
+			<td class="middle border-udb"><img src="{{ key[5] }}" width="30" height="30"></td>
+			<td class="middle border-udb" style="color:white;">{{key[6]}}</td>
+			<td class="middle border-rb" style="color:white;">{{"%.2f"|format(key[7])}}</td>
+
+			{% endif %}
+
+			<tr><td colspan="4" style='border:none;'> {{"%.2f"|format(key[4] + key[7])}} </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+
+			</tr>
+		{% endfor %}
+			</tr>
+
+	</table>
+	</td>
+
+	<td>
+	<table>
+        	<tr>
+		<th colspan="4"> Final</th>
+		</tr>
+
+		<tr style="display:inline-block;vertical-align:middle;">
+		{% for key in get_list7 %}
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+<!--			<tr><td colspan="4" style='border:none;'> {{"%.2f"|format(key[0] + key[3])}} </td></tr>-->
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+
+			{% if esq_maior == True %}
+
+			<tr><td class="middle border-lb" style="color:yellow;">{{"%.2f"|format(key[0])}}</td>
+			<td class="middle border-udb" style="color:yellow;">{{key[2]}}</td>
+			<td class="middle border-udb"><img src="{{ key[1] }}" width="30" height="30">
+			</td><td class="middle border-rb" style="color:yellow;">{{"%.2f"|format(key[3])}}</td>
+
+			{% else %}
+
+			<tr><td class="middle border-lb" style="color:white;">{{"%.2f"|format(key[0])}}</td>
+			<td class="middle border-udb" style="color:white;">{{key[2]}}</td>
+			<td class="middle border-udb"><img src="{{ key[1] }}" width="30" height="30">
+			</td><td class="middle border-rb" style="color:white;">{{"%.2f"|format(key[3])}}</td>
+
+			{% endif %}
+
+			</tr>
+			<tr><td colspan="4" style='border:none;'> {{"%.2f"|format(key[0] + key[3])}} </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+
+			</tr>
+		{% endfor %}
+			</tr>
+
+	</table>
+	</td>
+
+</table>
+
+</td>
+
+<td></td>
+<td></td>
+<td></td>
+
+	{% if final == True %}
+
+		<td>
+<table style="border:none;" class="table table-bordered table-sm w-auto">
+<td>
+	<table>
+	<tr><td colspan="4" style='border:none;'><img src="https://s2.glbimg.com/RFLp8KMDP6oAekoaZ4fkoVG89eA=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_186/flamula/41/32/17/0078894120210511183217" width="150" height="150"></td></tr>
+	<tr><td colspan="4" style='border:none;'> </td></tr>
+	<tr><td colspan="4" style='border:none; font-size:30px' class="middle"> Campeão </td></tr>
+		<tr>
+		{% for key in campeao %}
+			<td class="middle border-lb"> <img src="{{ key[0] }}" width="30" height="30"> </td>
+			<td style='font-size:30px' class="middle border-rb"> {{ key[1] }} </td>
+		{% endfor %}
+		</tr>
+	<tr><td colspan="4" style='border:none;'> </td></tr>
+	<tr><td colspan="4" style='border:none;'> </td></tr>
+	<tr><td colspan="4" style='border:none;'> </td></tr>
+	<tr><td colspan="4" style='border:none;'> </td></tr>
+	<tr><td colspan="4" style='border:none;'> </td></tr>
+	<tr><td colspan="4" style='border:none; font-size:20px' class="middle"> Vice-Campeão </td></tr>
+	<tr>
+		{% for key in vice %}
+			<td class="middle border-lb"> <img src="{{ key[0] }}" width="30" height="30"> </td>
+			<td style='font-size:20px' class="middle border-rb"> {{ key[1] }} </td>
+		{% endfor %}
+		</tr>
+
+	</table>
+</td>
+</table>
+</td>
+
+	{% else %}
+
+<td>
+<table style="border:none;" class="table table-bordered table-sm w-auto">
+<td>
+	<table>
+	<tr><td colspan="4" style='border:none;'><img src="https://s2.glbimg.com/RFLp8KMDP6oAekoaZ4fkoVG89eA=/https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_186/flamula/41/32/17/0078894120210511183217" width="150" height="150"></td></tr>
+	<tr><td colspan="4" style='border:none;'> </td></tr>
+	<tr><td colspan="4" style='border:none; font-size:30px' class="middle"> Campeão </td></tr>
+		<tr>
+		{% for key in campeao %}
+			<td class="middle border-lb"> <img src="{{ key[0] }}" width="30" height="30"> </td>
+			<td style='font-size:30px' class="middle border-rb"> {{ key[1] }} </td>
+		{% endfor %}
+		</tr>
+	<tr><td colspan="4" style='border:none;'> </td></tr>
+	<tr><td colspan="4" style='border:none;'> </td></tr>
+	<tr><td colspan="4" style='border:none;'> </td></tr>
+	<tr><td colspan="4" style='border:none;'> </td></tr>
+	<tr><td colspan="4" style='border:none;'> </td></tr>
+	<tr><td colspan="4" style='border:none; font-size:20px' class="middle"> Vice-Campeão </td></tr>
+	<tr>
+		{% for key in vice %}
+			<td class="middle border-lb"> <img src="{{ key[0] }}" width="30" height="30"> </td>
+			<td style='font-size:20px' class="middle border-rb"> {{ key[1] }} </td>
+		{% endfor %}
+		</tr>
+
+	</table>
+</td>
+</table>
+</td>
+
+	{% endif %}
+
+<td></td>
+<td></td>
+<td></td>
+
+<td>
+
+<table style="border:none;" class="table table-bordered table-sm w-auto h-auto">
+	<td>
+
+	<table>
+        	<tr>
+		<th colspan="4"> Final </th>
+		</tr>
+
+		<tr style="display:inline-block;vertical-align:middle;">
+		{% for key in get_list8 %}
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+<!--			<tr><td colspan="4" style='border:none;'> {{"%.2f"|format(key[0] + key[3])}} </td></tr>-->
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+
+			{% if esq_maior == False %}
+
+			<tr><td class="middle border-lb" style="color:yellow;">{{"%.2f"|format(key[0])}}</td>
+			<td class="middle border-udb" style="color:yellow;">{{key[2]}}</td>
+			<td class="middle border-udb"><img src="{{ key[1] }}" width="30" height="30"></td>
+			<td class="middle border-rb" style="color:yellow;">{{"%.2f"|format(key[3])}}</td>
+
+			{% else %}
+
+			<tr><td class="middle border-lb" style="color:white;">{{"%.2f"|format(key[0])}}</td>
+			<td class="middle border-udb" style="color:white;">{{key[2]}}</td>
+			<td class="middle border-udb"><img src="{{ key[1] }}" width="30" height="30"></td>
+			<td class="middle border-rb" style="color:white;">{{"%.2f"|format(key[3])}}</td>
+
+			{% endif %}
+
+			</tr>
+			<tr><td colspan="4" style='border:none;'> {{"%.2f"|format(key[0] + key[3])}} </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+
+			</tr>
+		{% endfor %}
+			</tr>
+
+    	</table>
+	</td>
+
+	<td>
+
+     	<table>
+        	<tr>
+		<th colspan="4"> Semi Final </th>
+		</tr>
+
+			<tr style="display:inline-block;vertical-align:middle;">
+		{% for key in get_list6 %}
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+
+			{% if key[0] + key[3] > key[4] + key[7] %}
+
+			<td class="middle border-lb" style="color:yellow;">{{"%.2f"|format(key[0])}}</td>
+			<td class="middle border-udb" style="color:yellow;">{{key[2]}}</td>
+			<td class="middle border-udb"><img src="{{ key[1] }}" width="30" height="30"></td>
+			<td class="middle border-rb" style="color:yellow;">{{"%.2f"|format(key[3])}}</td>
+
+			{% else %}
+
+			<td class="middle border-lb" style="color:white;">{{"%.2f"|format(key[0])}}</td>
+			<td class="middle border-udb" style="color:white;">{{key[2]}}</td>
+			<td class="middle border-udb"><img src="{{ key[1] }}" width="30" height="30"></td>
+			<td class="middle border-rb" style="color:white;">{{"%.2f"|format(key[3])}}</td>
+
+			{% endif %}
+
+			</tr>
+			<tr><td colspan="4" style='border:none;'> {{"%.2f"|format(key[0] + key[3])}} </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'>X</td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr>
+
+			{% if key[4] + key[7] > key[0] + key[3] %}
+
+			<td class="middle border-lb" style="color:yellow;">{{"%.2f"|format(key[4])}}</td>
+			<td class="middle border-udb" style="color:yellow;">{{key[6]}}</td>
+			<td class="middle border-udb"><img src="{{ key[5] }}" width="30" height="30"></td>
+			<td class="middle border-rb" style="color:yellow;">{{"%.2f"|format(key[7])}}</td>
+
+			{% else %}
+
+			<td class="middle border-lb" style="color:white;">{{"%.2f"|format(key[4])}}</td>
+			<td class="middle border-udb" style="color:white;">{{key[6]}}</td>
+			<td class="middle border-udb"><img src="{{ key[5] }}" width="30" height="30"></td>
+			<td class="middle border-rb" style="color:white;">{{"%.2f"|format(key[7])}}</td>
+
+			{% endif %}
+
+			<tr><td colspan="4" style='border:none;'> {{"%.2f"|format(key[4] + key[7])}} </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+
+			</tr>
+		{% endfor %}
+			</tr>
+
+	</table>
+	</td>
+
+	<td>
+     	<table>
+        	<tr>
+		<th colspan="4"> Quartas </th>
+		</tr>
+
+			<tr style="display:inline-block;vertical-align:middle;">
+		{% for key in get_list4 %}
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+
+			{% if key[0] + key[3] > key[4] + key[7] %}
+
+			<td class="middle border-lb" style="color:yellow;">{{"%.2f"|format(key[0])}}</td>
+			<td class="middle border-udb" style="color:yellow;">{{key[2]}}</td>
+			<td class="middle border-udb"><img src="{{ key[1] }}" width="30" height="30"></td>
+			<td class="middle border-rb" style="color:yellow;">{{"%.2f"|format(key[3])}}</td>
+
+			{% else %}
+
+			<td class="middle border-lb" style="color:white;">{{"%.2f"|format(key[0])}}</td>
+			<td class="middle border-udb" style="color:white;">{{key[2]}}</td>
+			<td class="middle border-udb"><img src="{{ key[1] }}" width="30" height="30"></td>
+			<td class="middle border-rb" style="color:white;">{{"%.2f"|format(key[3])}}</td>
+
+			{% endif %}
+
+			</tr>
+			<tr><td colspan="4" style='border:none;'> {{"%.2f"|format(key[0] + key[3])}} </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+<!--			<tr><td colspan="4" style='border:none;'> </td></tr>-->
+			<tr><td colspan="4" style='border:none;'>X</td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+<!--			<tr><td colspan="4" style='border:none;'> </td></tr>-->
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr>
+
+			{% if key[4] + key[7] > key[0] + key[3] %}
+
+			<td class="middle border-lb" style="color:yellow;">{{"%.2f"|format(key[4])}}</td>
+			<td class="middle border-udb" style="color:yellow;">{{key[6]}}</td>
+			<td class="middle border-udb"><img src="{{ key[5] }}" width="30" height="30"></td>
+			<td class="middle border-rb" style="color:yellow;">{{"%.2f"|format(key[7])}}</td>
+
+			{% else %}
+
+			<td class="middle border-lb" style="color:white;">{{"%.2f"|format(key[4])}}</td>
+			<td class="middle border-udb" style="color:white;">{{key[6]}}</td>
+			<td class="middle border-udb"><img src="{{ key[5] }}" width="30" height="30"></td>
+			<td class="middle border-rb" style="color:white;">{{"%.2f"|format(key[7])}}</td>
+
+			{% endif %}
+
+			<tr><td colspan="4" style='border:none;'> {{"%.2f"|format(key[4] + key[7])}} </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+			<tr><td colspan="4" style='border:none;'> </td></tr>
+
+			</tr>
+		{% endfor %}
+			</tr>
+
+	</table>
+	</td>
+
+	<td>
+	<table>
+        	<tr>
+		<th colspan="4"> Oitavas </th>
+		</tr>
+
+<tr>
+		{% for key in get_list2 %}
+			<tr><td height="20" colspan="4" style='border:none;'> </td></tr>
+			{% if key[0] + key[3] > key[4] + key[7] %}
+				<td class="border-oit_first_left middle" style="color:yellow;">{{"%.2f"|format(key[0])}}</td>
+				<td class="border-oit_first middle" style="color:yellow;">{{ key[2] }}</td>
+				<td class="border-oit_first middle"><img src="{{key[1]}}" width="30" height="30"></td>
+				<td class="border-oit_first_right middle" style="color:yellow;">{{"%.2f"|format(key[3])}}</td>
+			{% else %}
+				<td class="border-oit_first_left middle" style="color:white;">{{"%.2f"|format(key[0])}}</td>
+				<td class="border-oit_first middle" style="color:white;">{{ key[2] }}</td>
+				<td class="border-oit_first middle"><img src="{{key[1]}}" width="30" height="30"></td>
+				<td class="border-oit_first_right middle" style="color:white;">{{"%.2f"|format(key[3])}}</td>
+			{% endif %}
+			</tr>
+			<tr><td colspan="4" class="border-oit_x">X</td></tr>
+			<tr>
+			{% if key[4] + key[7] > key[0] + key[3] %}
+				<td class="border-oit_sec_left middle" style="color:yellow;">{{"%.2f"|format(key[4])}}</td>
+				<td class="border-oit_sec middle" style="color:yellow;">{{ key[6] }}</td>
+				<td class="border-oit_sec middle"><img src="{{key[5]}}" width="30" height="30"></td>
+				<td class="border-oit_sec_right middle" style="color:yellow;">{{"%.2f"|format(key[7])}}</td>
+			{% else %}
+				<td class="border-oit_sec_left middle" style="color:white;">{{"%.2f"|format(key[4])}}</td>
+				<td class="border-oit_sec middle" style="color:white;">{{ key[6] }}</td>
+				<td class="border-oit_sec middle"><img src="{{key[5]}}" width="30" height="30"></td>
+				<td class="border-oit_sec_right middle" style="color:white;">{{"%.2f"|format(key[7])}}</td>
+
+			{% endif %}
+			</tr>
+		{% endfor %}
+
+	</table>
+	</td>
+
+</table>
+</td>
+</table>
+
+
+</div>
+
+</body>
+</html>

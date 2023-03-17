@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:color="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Liga Heineken 2022 - Comparação</title>
+
+</head>
+<body style="background-color:black; color:#ffffff;">
+<div style="background-color:black;color:white;align:center">
+    <br/>
+    <br/>
+<center>
+         <table border="1">
+
+       <tr> <th colspan="11"><h1>{{get_time}}</h1></th></tr>
+             <tr>
+       {% for k, value in get_data.items() %}
+                 <tr>
+                 <td align="center">Média:<br/>{{k[1]}}</td>
+                 <td align="center">
+                <table>
+                    <th>GOL</th>
+                    <th>LAT</th>
+                    <th>ZAG</th>
+                    <th>MEIA</th>
+                    <th>ATA</th>
+                    <th>TEC</th>
+                     <tr>
+        {% for v in value %}
+                <td align="center" width="50"> {{"%.2f"|format(v)}}</td>
+        {% endfor %}
+                         </table>
+                 </td>
+         </tr>
+
+        {% endfor %}
+
+             <tr>
+                 <td colspan="2" align="center">
+                 <img src="{{ url_for('static', filename = '/media.jpg') }}" border="0" height = "384" width="512">
+</td>
+             </tr>
+</table>
+</center>
+</div>
+
+</body>
+</html>

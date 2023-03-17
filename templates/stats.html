@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:color="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Liga Heineken 2022 - Estatísticas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+    <style id="compiled-css" type="text/css">
+
+body {
+font-family: 'Roboto', sans-serif;
+font-size: 11px;
+width: 100%;
+margin:0 auto;
+}
+
+    .table-responsive {
+          font-size: 11px;
+          font-family: 'Roboto', sans-serif;
+}
+
+
+    .col-fixed {
+      position: sticky;
+      position: -webkit-sticky;
+      left: 0px;
+      background-color: black;
+      font-size: 12px;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .col-text {
+      *min-width: 100px;
+      font-size: 11px;
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+    }
+
+  thead tr:nth-child(1) th{
+    background: black;
+    position: sticky;
+    text-align: center;
+    top: 0;
+    z-index: 10;
+  }
+
+  td, tr {
+  text-align:center;
+  }
+
+      .enty-table:hover > td:not([rowspan]) {
+    background-color: lightgrey;
+    color: black;
+    font-weight: bold;
+    }
+
+    .enty-table > td[rowspan]:hover ~ td {
+    background-color: #fff;
+    /* reset the background */
+    }
+
+  </style>
+
+</head>
+<body style="background-color:black; color:#ffffff;">
+<div style="background-color:black;color:white;">
+    <br/>
+    <div class="table-responsive">
+        <center>
+
+
+     <table border="1" class="table table-hover table-sm table-striped table-dark">
+        <tr> <th colspan="21" align="center"> Estatísticas </th>
+             <th colspan="1" align="center">  </th>
+             <th colspan="20" align="center"> Estatísticas - Pontos </th> </tr>
+        <tr> <th colspan="1" align="center"> Time </th>
+            <th colspan="1" align="center"> PI </th>
+            <th colspan="1" align="center"> I </th>
+            <th colspan="1" align="center"> PP </th>
+            <th colspan="1" align="center"> PC </th>
+            <th colspan="1" align="center"> FC </th>
+            <th colspan="1" align="center"> CA </th>
+            <th colspan="1" align="center"> CV </th>
+            <th colspan="1" align="center"> GC </th>
+            <th colspan="1" align="center"> GS </th>
+            <th colspan="1" align="center"> G </th>
+            <th colspan="1" align="center"> A </th>
+            <th colspan="1" align="center"> FT </th>
+            <th colspan="1" align="center"> FD </th>
+            <th colspan="1" align="center"> FF </th>
+            <th colspan="1" align="center"> FS </th>
+            <th colspan="1" align="center"> PS </th>
+            <th colspan="1" align="center"> DS </th>
+            <th colspan="1" align="center"> SG </th>
+            <th colspan="1" align="center"> DE </th>
+            <th colspan="1" align="center"> DP </th>
+            <th colspan="1" align="center" style="width: 20px">  </th>
+            <th colspan="1" align="center"> PI </th>
+            <th colspan="1" align="center"> I </th>
+            <th colspan="1" align="center"> PP </th>
+            <th colspan="1" align="center"> PC </th>
+            <th colspan="1" align="center"> FC </th>
+            <th colspan="1" align="center"> CA </th>
+            <th colspan="1" align="center"> CV </th>
+            <th colspan="1" align="center"> GC </th>
+            <th colspan="1" align="center"> GS </th>
+            <th colspan="1" align="center"> G </th>
+            <th colspan="1" align="center"> A </th>
+            <th colspan="1" align="center"> FT </th>
+            <th colspan="1" align="center"> FD </th>
+            <th colspan="1" align="center"> FF </th>
+            <th colspan="1" align="center"> FS </th>
+            <th colspan="1" align="center"> PS </th>
+            <th colspan="1" align="center"> DS </th>
+            <th colspan="1" align="center"> SG </th>
+            <th colspan="1" align="center"> DE </th>
+            <th colspan="1" align="center"> DP </th>
+        </tr>
+        <tr>
+        {% for keys, values in get_list.items() %}
+                <tr  class="enty-table">
+
+                    <td style="white-space: nowrap; text-align: left">{{keys}}</td>
+
+                {% for x in range(values|length) %}
+                    {% if values[x] is mapping %}
+
+                        {% for k, v in values[x].items() %}
+                        <td>{{v}}</td>
+                        {% endfor %}
+
+                    {% else %}
+
+                        {% for v in values[x] %}
+                        <td>{{v}}</td>
+                        {% endfor %}
+
+                    {% endif %}
+                {% endfor %}
+                </tr>
+        {% endfor %}
+
+
+
+
+        </tr>
+    </table>
+
+
+</center>
+         </div>
+</div>
+
+
+</body>
+</html>
+

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:color="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Liga Heineken 2022 - Destaques</title>
+<link rel="icon" href="data:,">
+
+<style>
+
+.card {
+  width: 100%;
+  justify-content: center;
+  margin:0 auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.myFormat tr td { font-size: 12px; font-family: 'Roboto', sans-serif; text-align: center;}
+th { font-size: 12px; font-family: 'Roboto', sans-serif;}
+
+td { white-space: nowrap; }
+td>.truncate { white-space: nowrap; }
+
+@media screen and (max-width: 425px) {
+  .card {
+  width: auto;
+  justify-content: center;
+}
+
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body {
+font-family: 'Roboto', sans-serif;
+font-size: 11px;
+overflow-x: hidden;
+}
+
+</style>
+
+</head>
+<body style="background-color:black; color:#ffffff;display: flex;justify-content: center;">
+<div class="card" style="background-color:black;color:white;">
+    <br/>
+<center>
+
+    <table>
+    <td>
+     <table border="1" style="float: left">
+        <thead>
+        <tr> <th colspan="8" align="center"> Destaques </th> </tr>
+         <tr> <th colspan="3" align="center"> Atleta </th>
+            <th colspan="1" align="center"> Posição </th>
+<!--            <th colspan="1" align="center"> Clube </th>-->
+            <th colspan="1" align="center"> Escalações </th>
+            <th colspan="1" align="center"> Confronto </th>
+            <th colspan="1" align="center"> Mín. Valorizar </th>
+        </tr>
+        </thead>
+        <tr>
+            {% for dict_item in get_list %}
+            <tr>
+         <td align="center">{{loop.index}}</td>
+          <td align="center">
+                {% for k, v in dict_item['atleta'].items() %}
+                {% if k == 'foto' %}
+                <img src="{{ v | replace('FORMATO', '140x140') }}" width="60" height="60">
+                {% endif %}
+                {% endfor %}
+
+            </td>
+          <td>
+                {% for k, v in dict_item['atleta'].items() %}
+                {% if k == 'apelido' %}
+                {{ v }}
+                {% endif %}
+                {% endfor %}
+            </td>
+            <td> {{ dict_item['posicao'] }} </td>
+<!--            <td> {{ dict_item['clube_nome'] }} </td>-->
+            <td align="right"> {{ '{0:,}'.format(dict_item['escalacoes'] | int ) | replace(',', '.') }} </td>
+            {% if dict_item['mand'] == true %}
+                <td> <img style="vertical-align: middle" src="{{ dict_item['escudo_clube'] }}" width="30" height="30"> x <img style="vertical-align: middle" src="{{ dict_item['adv'] }}" width="30" height="30"> </td>
+            {% else %}
+                <td> <img style="vertical-align: middle" src="{{ dict_item['adv'] }}" width="30" height="30"> x <img style="vertical-align: middle" src="{{ dict_item['escudo_clube'] }}" width="30" height="30"> </td>
+            {% endif %}
+            <td align="center"> {{ "%.2f" | format(dict_item['minimo_para_valorizar']) }} </td>
+
+       </tr>
+{% endfor %}
+        </tr>
+    </table>
+        </td>
+
+        <td></td>
+
+        <td valign = "top">
+
+    <table border="1" style="float: left">
+                <thead>
+        <tr> <th colspan="8" align="center"> Capitães </th> </tr>
+         <tr> <th colspan="3" align="center"> Atleta </th>
+            <th colspan="1" align="center"> Posição </th>
+<!--            <th colspan="1" align="center"> Clube </th>-->
+            <th colspan="1" align="center"> Escalações </th>
+            <th colspan="1" align="center"> Confronto </th>
+            <th colspan="1" align="center"> Mín. Valorizar </th>
+        </tr>
+        </thead>
+
+        <tr>
+            {% for dict_item in get_capitaes %}
+            <tr>
+         <td align="center">{{loop.index}}</td>
+          <td align="center">
+                {% for k, v in dict_item['atleta'].items() %}
+                {% if k == 'foto' %}
+                <img src="{{ v | replace('FORMATO', '140x140') }}" width="60" height="60">
+                {% endif %}
+                {% endfor %}
+
+            </td>
+          <td>
+                {% for k, v in dict_item['atleta'].items() %}
+                {% if k == 'apelido' %}
+                {{ v }}
+                {% endif %}
+                {% endfor %}
+            </td>
+            <td> {{ dict_item['posicao'] }} </td>
+<!--            <td> {{ dict_item['clube_nome'] }} </td>-->
+            <td align="right"> {{ '{0:,}'.format(dict_item['escalacoes'] | int ) | replace(',', '.') }} </td>
+<!--            <td> {{ dict_item['adv'] }} </td>-->
+            {% if dict_item['mand'] == true %}
+                <td> <img style="vertical-align: middle" src="{{ dict_item['escudo_clube'] }}" width="30" height="30"> x <img style="vertical-align: middle" src="{{ dict_item['adv'] }}" width="30" height="30"> </td>
+            {% else %}
+                <td> <img style="vertical-align: middle" src="{{ dict_item['adv'] }}" width="30" height="30"> x <img style="vertical-align: middle" src="{{ dict_item['escudo_clube'] }}" width="30" height="30"> </td>
+            {% endif %}
+            <td align="center"> {{ "%.2f" | format(dict_item['minimo_para_valorizar']) }} </td>
+
+       </tr>
+{% endfor %}
+        </tr>
+
+
+    </table>
+        </td>
+
+              <td></td>
+
+        <td valign = "top">
+
+    <table border="1" style="float: left">
+                <thead>
+        <tr> <th colspan="8" align="center"> Reservas </th> </tr>
+         <tr> <th colspan="3" align="center"> Atleta </th>
+            <th colspan="1" align="center"> Posição </th>
+<!--            <th colspan="1" align="center"> Clube </th>-->
+            <th colspan="1" align="center"> Escalações </th>
+            <th colspan="1" align="center"> Confronto </th>
+            <th colspan="1" align="center"> Mín. Valorizar </th>
+        </tr>
+        </thead>
+
+                <tr>
+            {% for dict_item in get_reservas %}
+            <tr>
+         <td align="center">{{loop.index}}</td>
+          <td align="center">
+                {% for k, v in dict_item['atleta'].items() %}
+                {% if k == 'foto' %}
+                <img src="{{ v | replace('FORMATO', '140x140') }}" width="60" height="60">
+                {% endif %}
+                {% endfor %}
+
+            </td>
+          <td>
+                {% for k, v in dict_item['atleta'].items() %}
+                {% if k == 'apelido' %}
+                {{ v }}
+                {% endif %}
+                {% endfor %}
+            </td>
+            <td> {{ dict_item['posicao'] }} </td>
+<!--            <td> {{ dict_item['clube_nome'] }} </td>-->
+            <td align="right"> {{ '{0:,}'.format(dict_item['escalacoes'] | int ) | replace(',', '.') }} </td>
+<!--            <td align="left"> {{ dict_item['adv'] }} </td>-->
+            {% if dict_item['mand'] == true %}
+                <td> <img style="vertical-align: middle" src="{{ dict_item['escudo_clube'] }}" width="30" height="30"> x <img style="vertical-align: middle" src="{{ dict_item['adv'] }}" width="30" height="30"> </td>
+            {% else %}
+                <td> <img style="vertical-align: middle" src="{{ dict_item['adv'] }}" width="30" height="30"> x <img style="vertical-align: middle" src="{{ dict_item['escudo_clube'] }}" width="30" height="30"> </td>
+            {% endif %}
+            <td align="center"> {{ "%.2f" | format(dict_item['minimo_para_valorizar']) }} </td>
+
+       </tr>
+{% endfor %}
+        </tr>
+
+    </table>
+        </td>
+
+</table>
+</center>
+</div>
+
+</body>
+</html>

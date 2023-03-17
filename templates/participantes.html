@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:color="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Liga Heineken 2022 - Participantes</title>
+<link rel="icon" href="data:,">
+
+<style>
+
+.card {
+  width: 100%;
+  justify-content: center;
+  margin:0 auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.myFormat tr td { font-size: 12px; font-family: 'Roboto', sans-serif; text-align: center;}
+th { font-size: 12px; font-family: 'Roboto', sans-serif;}
+
+td { white-space: nowrap; }
+td>.truncate { white-space: nowrap; }
+
+@media screen and (max-width: 425px) {
+  .card {
+  width: 100%;
+  justify-content: center;
+}
+
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body {
+font-family: 'Roboto', sans-serif;
+font-size: 11px;
+}
+
+</style>
+
+</head>
+<body style="background-color:black; color:#ffffff;">
+<div style="background-color:black;color:white;">
+    <br/>
+<center>
+
+<table>
+    <td>
+        <td valign = "top">
+
+    <table border="1" style="float: left">
+        <tr> <th colspan="2"> <img src="{{get_escudo}}" width="50" height="50"> </th> <th colspan="2" align="center">Liga Heineken 2023 </th> </tr>
+        <tr>{% for k, v in get_list.items() %}
+            <tr>
+         <td align="center">{{loop.index}}</td>
+        <td align="center"><img src="{{v}}" height="30" width="30"></td>
+        <td>{{k}}</td>
+
+
+            </tr>
+            {% endfor %}
+        </tr>
+
+    </table>
+        </td>
+        </td>
+</table>
+
+</center>
+
+
+</body>
+</html>

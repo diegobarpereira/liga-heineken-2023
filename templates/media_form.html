@@ -1,0 +1,37 @@
+<html lang="pt-br" xmlns:color="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body style="background-color:black; color:#ffffff;">
+
+<div style="margin: 0 auto;background-color:black;color:white;">
+
+<center>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+  <form action="/media_result" method="post" target="iframe">
+
+    <select name="time">
+    {% for times in dropdown_times %}
+    <option value="{{ times }}">{{ times }}</option>
+    {% endfor %}
+    </select>
+
+<input type="submit" value="Press Me!"/>
+
+
+    </form>
+
+        <iframe id="iframe" name="iframe" width="560" height="800" src="post_field" frameborder="0" allowfullscreen></iframe>
+
+
+    </center>
+</div>
+</body>
+</html>

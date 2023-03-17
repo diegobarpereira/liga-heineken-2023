@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:color="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Liga Heineken 2022 - Liga</title>
+
+    <link rel="icon" href="data:,">
+<!--<meta name="viewport" content="width=device-width, initial-scale=1" />-->
+
+<style>
+
+
+.card {
+  width: 100%;
+  justify-content: center;
+  margin:0 auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.myFormat tr td { font-size: 12px; font-family: 'Roboto', sans-serif; text-align: center;}
+th { font-size: 12px; font-family: 'Roboto', sans-serif;}
+
+td { white-space: nowrap; }
+td>.truncate { white-space: nowrap; }
+
+@media screen and (max-width: 425px) {
+  .card {
+  width: auto;
+  justify-content: center;
+}
+
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body {
+font-family: 'Roboto', sans-serif;
+font-size: 11px;
+overflow-x: hidden;
+}
+
+</style>
+
+</head>
+<body style="background-color:black; color:#ffffff;">
+<div style="background-color:black;color:white;">
+<center>
+    <table>
+
+        <td valign="top">
+<table border="1" style="float: left">
+    <tr> <th colspan="5" align="center"> 1° Turno </th> </tr>
+
+        <tr>
+
+            {% for keys, values in get_prim_turno %}
+                <tr>
+                    <td align="center">{{loop.index}}</td>
+                    <td align="center"><img src="{{ values[0] }}" width="30" height="30"></td>
+                    <td style="white-space: nowrap;" align="center"><font color="white">{{keys}}</font></td>
+                    <td align="center"><font color="white">{{'%0.2f'| format(values[1]|float)}}</font></td>
+
+                </tr>
+            {% endfor %}
+
+        </tr>
+    </table>
+</td>
+
+
+        <td width="100"> </td>
+        <td valign="top">
+      <table border="1" style="float: left">
+        <tr> <th colspan="5" align="center"> 2° Turno </th> </tr>
+
+        <tr>
+
+            {% for keys, values in get_seg_turno %}
+                <tr>
+                    <td align="center">{{loop.index}}</td>
+                    <td align="center"><img src="{{ values[0] }}" width="30" height="30"></td>
+                    <td style="white-space: nowrap;" align="center"><font color="white">{{keys}}</font></td>
+                    <td align="center"><font color="white">{{'%0.2f'| format(values[2]|float)}}</font></td>
+                    <td align="center"><font color="white">{{'%0.2f'| format(values[1]|float)}}</font></td>
+
+                </tr>
+            {% endfor %}
+
+        </tr>
+    </table>
+        </td>
+
+
+
+
+
+
+
+<td width="100"> </td>
+        <td valign="top">
+      <table border="1" style="float: left">
+        <tr> <th colspan="5" align="center"> Liga </th> </tr>
+
+        <tr>
+
+            {% for keys, values in get_total %}
+                <tr>
+                    <td align="center">{{loop.index}}</td>
+                    <td align="center"><img src="{{ values[0] }}" width="30" height="30"></td>
+                    <td style="white-space: nowrap;" align="center"><font color="white">{{keys}}</font></td>
+                    <td align="center"><font color="white">{{'%0.2f'| format(values[2]|float)}}</font></td>
+                    <td align="center"><font color="white">{{'%0.2f'| format(values[1]|float)}}</font></td>
+
+                </tr>
+            {% endfor %}
+
+        </tr>
+    </table>
+        </td>
+<td width="50"> </td>
+<!--<td valign="top">-->
+<!--<table border="1" style="float: left">-->
+<!--    <tr> <th colspan="5" align="center"> 1° Turno </th> </tr>-->
+
+<!--        <tr>-->
+
+<!--            {% for keys, values in get_turno %}-->
+<!--                <tr>-->
+<!--                    <td align="center">{{loop.index}}</td>-->
+<!--                    <td align="center"><img src="{{ values[0] }}" width="30" height="30"></td>-->
+<!--                    <td style="white-space: nowrap;" align="center"><font color="white">{{keys}}</font></td>-->
+<!--                    <td align="center"><font color="white">{{'%0.2f'| format(values[1]|float)}}</font></td>-->
+<!--                    <td align="center"><font color="white">{{'%0.2f'| format(values[2]|float)}}</font></td>-->
+
+<!--                </tr>-->
+<!--            {% endfor %}-->
+
+<!--        </tr>-->
+<!--    </table>-->
+<!--</td>-->
+
+
+
+<td width="50"> </td>
+        <td valign = "top">
+<table border="1" style="float: left">
+    <tr> <th colspan="5" align="center"> Sem Capitão </th> </tr>
+
+        <tr>
+
+            {% for keys, values in get_semcapitao %}
+                <tr>
+                    <td align="center">{{loop.index}}</td>
+                    <td align="center"><img src="{{ values[0] }}" width="30" height="30"></td>
+                    <td style="white-space: nowrap;" align="center"><font color="white">{{keys}}</font></td>
+                    <td align="center"><font color="white">{{'%0.2f'| format(values[1]|float)}}</font></td>
+
+                </tr>
+
+            {% endfor %}
+        </tr>
+    </table>
+        </td>
+
+</table>
+    </center>
+</div>
+</body>
+</html>

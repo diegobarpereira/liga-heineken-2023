@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:color="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Liga Heineken 2022 - Pontuações</title>
+    <link rel="icon" href="data:,">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+    <style id="compiled-css" type="text/css">
+
+    body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    width: 100%;
+    margin:0 auto;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    .table-responsive {
+        overflow-x:scroll;
+        font-size: 12px;
+        font-family: 'Roboto', sans-serif;
+}
+
+
+    .col-fixed {
+      position: sticky;
+      position: -webkit-sticky;
+      left: 0px;
+      background-color: black;
+      font-size: 12px;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .col-text {
+      *min-width: 100px;
+      font-size: 12px;
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+    }
+
+  thead tr:nth-child(1) th{
+    background: black;
+    position: sticky;
+    text-align: center;
+    top: 0;
+    z-index: 10;
+  }
+
+  td, tr {
+  text-align:center;
+  vertical-align: middle;
+  }
+
+      .enty-table:hover > td:not([rowspan]) {
+    background-color: lightgrey;
+    color: black;
+    font-weight: bold;
+    }
+
+    .enty-table > td[rowspan]:hover ~ td {
+    background-color: #fff;
+    /* reset the background */
+    }
+
+    .teste:hover {
+    color: black;
+    font-weight: bold;
+    background-color: lightgrey;
+}
+
+  </style>
+
+
+
+</head>
+<body style="background-color:black; color:#ffffff;">
+<div style="background-color:black;color:white;">
+  <div class="table-responsive">
+<br/>
+    <center>
+
+     <table class="table table-hover table-sm" border="1">
+         <thead>
+        <tr> <th class="col-fixed" colspan="40" align="center"> Pontuações </th> </tr>
+        <tr> <th class="col-fixed" colspan="1" align="center"> Time </th>
+
+            {% for x in range(1, 39) %}
+        <th colspan="1" align="center"> {{x}} </th>
+
+            {% endfor %}
+         </tr>
+        </thead>
+ <tr>
+             {% for keys, values in get_list.items() %}
+
+                <tr class="enty-table">
+
+                    <td class="col-fixed" width="12%" style="white-space: nowrap; text-align: left; font-weight:bold;">
+                        <img style="vertical-align: middle" src="{{ values[0] }}" width="20" height="20">
+                        {{keys}}
+
+                    </td>
+
+                         {% for val in values[1] %}
+
+                    <td style="vertical-align: middle;" >{{ "%.2f"|format(val) }}</td>
+                        {% endfor %}
+
+            {% endfor %}
+
+
+        </tr>
+
+
+         <tr>
+             <td class="col-fixed"> </td>
+         {% for keys in get_media %}
+
+           <td class="teste" style="white-space: nowrap; font-weight:bold">{{ "%.2f"|format(keys) }}</td>
+
+         {% endfor %}
+         </tr>
+
+         <tr>
+             <td class="col-fixed"> </td>
+             {% for keys in get_max %}
+
+                    <td class="teste" style="white-space: nowrap; font-weight:bold">{{ keys }}</td>
+
+             {% endfor %}
+         </tr>
+    </table>
+
+</center>
+ </div>
+ </div>
+
+</body>
+</html>
