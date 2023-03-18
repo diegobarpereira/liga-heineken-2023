@@ -2980,5 +2980,5 @@ def mata_mata_seg_turno():
     return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)
