@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     { "src": "./flask_app.py", "use": "@vercel/python" },
-    { "src": "data/*.json", "use": "@vercel/static" }
+    { "src": "static/*.json", "use": "@vercel/static" }
   ],
   "routes": [{ "src": "/(.*)", "dest": "./flask_app.py" }]
 }
