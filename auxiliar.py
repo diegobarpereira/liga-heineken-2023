@@ -230,9 +230,10 @@ def get_partidas():
 
 
 start_time = timeit.default_timer()
-get_escudo()
-get_nomes()
-salvar_participantes()
+# get_escudo()
+# get_nomes()
+# salvar_participantes()
+get_partidas()
 
 ########################### rodar_tudo
 
