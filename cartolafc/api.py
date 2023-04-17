@@ -439,7 +439,7 @@ class Api(object):
                                 break
 
                     if atleta.is_capitao:
-                        atleta.pontos *= 2
+                        atleta.pontos *= 1.5
 
                     time.pontos += atleta.pontos
 

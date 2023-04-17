@@ -26,7 +26,7 @@
                 {% for i in item %}
                     {% if i is not mapping %}
                         {% if i.startswith('https') %}
-                            <td><center><img src="{{ i | replace('FORMATO', '140x140') }}" width="30" height="30"></center></td>
+                            <td><center><img src="{{ i | replace('FORMATO', '220x220') }}" width="30" height="30"></center></td>
                         {% else %}
                             <td><font color="white">{{ i }}</font></td>
                         {% endif %}

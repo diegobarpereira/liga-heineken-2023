@@ -32,13 +32,20 @@ if api.mercado().status.nome != 'Mercado em manutenção':
 def get_times(id_):
     data = []
 
-    if mercado_status == 'Mercado aberto':
-        for r in range(1, rod):
+    if rod == 1:
+        for r in range(1, 2):
             data.append(requests.get(f'https://api.cartolafc.globo.com/time/id/{id_}/{r}').json())
 
-    if mercado_status == 'Final de temporada':
-        for r in range(1, rod + 1):
-            data.append(requests.get(f'https://api.cartolafc.globo.com/time/id/{id_}/{r}').json())
+    else:
+
+        if mercado_status == 'Mercado aberto':
+
+            for r in range(1, rod):
+                data.append(requests.get(f'https://api.cartolafc.globo.com/time/id/{id_}/{r}').json())
+
+        if mercado_status == 'Final de temporada':
+            for r in range(1, rod + 1):
+                data.append(requests.get(f'https://api.cartolafc.globo.com/time/id/{id_}/{r}').json())
 
     return data
 
@@ -52,7 +59,19 @@ def salvar_times_rodadas():
         for time in times:
             teams.append(time)
 
+    if mercado_status == 'Mercado fechado' and rod == 1:
+
+        for rodada in range(1, 2):
+            inner_dict = {}
+            for d in teams:
+                for data in d:
+                    if data['rodada_atual'] == rodada:
+                        inner_dict[data['time']['time_id']] = 0
+
+            outer_dict[rodada] = inner_dict
+
     if mercado_status == 'Mercado aberto':
+
         for rodada in range(1, rod):
             inner_dict = {}
             for d in teams:
@@ -74,7 +93,6 @@ def salvar_times_rodadas():
 
     with open(f'static/times_rodada.json', 'w') as f:
         json.dump(outer_dict, f)
-    # return outer_dict
 
 
 def get_escudo():
@@ -99,8 +117,8 @@ def get_nomes():
     for time in times:
         dict_nome[time.info.id] = time.info.nome
 
-    with open(f'static/nomes.json', 'w') as f:
-        json.dump(dict_nome, f)
+    with open(f'static/nomes.json', 'w', encoding='utf-8') as f:
+        json.dump(dict_nome, f, ensure_ascii=False)
 
 
 def get_times_rodada():
@@ -133,7 +151,6 @@ def salvar_participantes():
 
     with open(f'static/participantes.json', 'w') as f:
         json.dump(participantes, f)
-    # return participantes
 
 
 def get_sem_capitao():
@@ -233,7 +250,7 @@ start_time = timeit.default_timer()
 # get_escudo()
 # get_nomes()
 # salvar_participantes()
-get_partidas()
+# get_partidas()
 
 ########################### rodar_tudo
 
@@ -246,7 +263,9 @@ def rodar_tudo():
 ########################### rodar_tudo
 
 
-# rodar_tudo()
+# salvar_times_rodadas()
+
+rodar_tudo()
 #
 # dict_matamata_oitavas = {}
 # # list_oitavas_seg_turno = []
