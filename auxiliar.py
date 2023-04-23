@@ -200,11 +200,17 @@ def retornar_estats_liga():
         for d in times:
             for data in d:
 
-                scout = {'PI': 0, 'I': 0, 'PP': 0, 'PC': 0, 'FC': 0, 'CA': 0, 'CV': 0, 'GC': 0, 'GS': 0, 'G': 0, 'A': 0,
-                         'FT': 0, 'FD': 0, 'FF': 0, 'FS': 0, 'PS': 0, 'DS': 0, 'SG': 0, 'DE': 0, 'DP': 0}
-                scout_points = {'PI': -0.1, 'I': -0.1, 'PP': -4, 'PC': -1, 'FC': -0.3, 'CA': -1, 'CV': -3, 'GC': -3,
+                # scout = {'PI': 0, 'I': 0, 'PP': 0, 'PC': 0, 'FC': 0, 'CA': 0, 'CV': 0, 'GC': 0, 'GS': 0, 'G': 0, 'A': 0,
+                #          'FT': 0, 'FD': 0, 'FF': 0, 'FS': 0, 'PS': 0, 'DS': 0, 'SG': 0, 'DE': 0, 'DP': 0}
+                # scout_points = {'PI': -0.1, 'I': -0.1, 'PP': -4, 'PC': -1, 'FC': -0.3, 'CA': -1, 'CV': -3, 'GC': -3,
+                #                 'GS': -1, 'G': 8, 'A': 5, 'FT': 3, 'FD': 1.2, 'FF': 0.8, 'FS': 0.5, 'PS': 1, 'DS': 1.2,
+                #                 'SG': 5, 'DE': 1, 'DP': 7}
+
+                scout = {'I': 0, 'PP': 0, 'PC': 0, 'FC': 0, 'CA': 0, 'CV': 0, 'GC': 0, 'GS': 0, 'G': 0, 'A': 0,
+                         'FT': 0, 'FD': 0, 'FF': 0, 'FS': 0, 'PS': 0, 'DS': 0, 'SG': 0, 'DE': 0, 'DP': 0, 'V': 0}
+                scout_points = {'I': -0.1, 'PP': -4, 'PC': -1, 'FC': -0.3, 'CA': -1, 'CV': -3, 'GC': -3,
                                 'GS': -1, 'G': 8, 'A': 5, 'FT': 3, 'FD': 1.2, 'FF': 0.8, 'FS': 0.5, 'PS': 1, 'DS': 1.2,
-                                'SG': 5, 'DE': 1, 'DP': 7}
+                                'SG': 5, 'DE': 1, 'DP': 7, 'V': 1}
 
                 for at in data['atletas']:
                     if data['time']['nome'] in dict_time_stats:
@@ -263,9 +269,9 @@ def rodar_tudo():
 ########################### rodar_tudo
 
 
-# salvar_times_rodadas()
+retornar_estats_liga()
 
-rodar_tudo()
+# rodar_tudo()
 #
 # dict_matamata_oitavas = {}
 # # list_oitavas_seg_turno = []

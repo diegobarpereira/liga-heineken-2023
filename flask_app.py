@@ -13,7 +13,7 @@ from cartolafc.constants import rodadas_campeonato, rodadas_primeiro_turno, roda
     rodadas_quartas_prim_turno, list_quartas_prim_turno, rodadas_semis_prim_turno, list_semis_prim_turno, \
     rodadas_finais_prim_turno, \
     list_finais_prim_turno, dict_prem, rodadas_liberta_seg_turno, grupo_liberta_seg_turno, rodadas_oitavas_seg_turno, \
-    dict_matamata, rodadas_quartas_seg_turno, rodadas_semis_seg_turno, rodadas_finais_seg_turno
+    dict_matamata, rodadas_quartas_seg_turno, rodadas_semis_seg_turno, rodadas_finais_seg_turno, premios
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -37,7 +37,7 @@ todos_ids = [1241021, 1245808, 8912058, 1889674, 13957925, 47620752, 1893918, 21
 
 rar = ['Peixão Irado', 'Diego Pereira FC', 'Markitos Bar', '0VINTE1 FC',
 'oSantista', 'RR Football Club', 'Christimao', 'Camisa21FC', 'JevyGoal FC',
-'Gonella Verde', 'Denoris F.C.', 'Gabitreta F C', 'Eae Malandro FC',
+'Gonella Verde ', 'Denoris F.C.', 'Gabitreta F C', 'Eae Malandro FC',
 'Contra Tudo e Todos Avanti!', 'Capítulo4 Versículo3', 'Santa Cruz Bahamas FC',
 'ThiagoRolo FC']
 
@@ -151,12 +151,14 @@ def premiacao_page():
     # print(prem)
     # print(campeao_prim_turno)
     # print(vice_prim_turno)
+    valores = premios
 
     return render_template('premiacao.html', lider_prim_turno=lider_prim_turno, lider_seg_turno=lider_seg_turno,
                            get_prem=prem,
                            campeao=campeao_prim_turno, vice=vice_prim_turno, campeao_seg_turno=campeao_seg_turno,
                            vice_seg_turno=vice_seg_turno, get_lider=campeao_geral, vice_campeao=vice_campeao,
-                           terc_colocado=terc_colocado, quarto_colocado=quarto_colocado, premiacao_total=premiacao_total)
+                           terc_colocado=terc_colocado, quarto_colocado=quarto_colocado, premiacao_total=premiacao_total,
+                           valores=valores)
 
 
 @app.route("/liberta")
@@ -429,7 +431,7 @@ def pontos():
             res_ = res / len(dict_temp_pontos.keys())
             media.append(res_)
 
-        list_to_delete = ['Raça Timão!!!', 'FAFA SHOW FC', 'Sóh Taapa FC', 'RIVA 77 ']
+        list_to_delete = ['Real Beach Soccer', 'Raça Timão!!!', 'FAFA SHOW FC', 'Sóh Taapa FC', 'RIVA 77 ']
 
         for ltd in list_to_delete:
             for id, nome in json.loads(nomes).items():
@@ -461,16 +463,16 @@ def pontos():
             res_ = res / len(dict_temp_pontos.keys())
             media.append(res_)
 
-        list_to_delete = ['Raça Timão!!!', 'FAFA SHOW FC', 'Sóh Taapa FC', 'RIVA 77 ']
+        list_to_delete = ['Real Beach Soccer', 'Raça Timão!!!', 'FAFA SHOW FC', 'Sóh Taapa FC', 'RIVA 77 ']
 
         for ltd in list_to_delete:
             for id, nome in json.loads(nomes).items():
                 if ltd == nome:
-                    dict_temp_pontos.pop(int(id))
+                    dict_temp_pontos.pop(id)
 
         for chave, valor in dict_temp_pontos.items():
             for id, nome in json.loads(nomes).items():
-                if chave == int(id):
+                if chave == id:
                     dict_nome[nome] = valor
 
         for x in range(0, api.mercado().rodada_atual):
@@ -484,7 +486,7 @@ def pontos():
                     max_val.append(max_cada_rodada[0][0])
 
     if api.mercado().status.nome == 'Final de temporada':
-        list_to_delete = ['Raça Timão!!!', 'FAFA SHOW FC', 'Sóh Taapa FC', 'RIVA 77 ']
+        list_to_delete = ['Real Beach Soccer', 'Raça Timão!!!', 'FAFA SHOW FC', 'Sóh Taapa FC', 'RIVA 77 ']
 
         for ltd in list_to_delete:
             for id, nome in json.loads(nomes).items():
@@ -661,8 +663,11 @@ def liga_class():
         lider_prim_turno = next(iter(primeiro_turno))
         lider_seg_turno = next(iter(segundo_turno))
 
-        dict_prem['primeiro_turno']['lider'] = lider_prim_turno
-        dict_prem['segundo_turno']['lider'] = lider_seg_turno
+        if rod >= 19:
+            dict_prem['primeiro_turno']['lider'] = lider_prim_turno
+
+        if rod >= 38:
+            dict_prem['segundo_turno']['lider'] = lider_seg_turno
 
         with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
             json.dump(dict_prem, f)
@@ -728,7 +733,8 @@ def liga_class():
 
         lider_prim_turno = next(iter(primeiro_turno))
 
-        dict_prem['primeiro_turno']['lider'] = lider_prim_turno
+        if rod >= 19:
+            dict_prem['primeiro_turno']['lider'] = lider_prim_turno
 
         with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
             json.dump(dict_prem, f)
@@ -992,15 +998,29 @@ def premiacao():
     campeao_seg_turno = json.loads(data)['liberta_seg_turno']['campeao']
     vice_seg_turno = json.loads(data)['liberta_seg_turno']['vice']
 
-    campeao_geral = next(iter(dict_pontos))
-    vice_campeao = list(dict_pontos.keys())[1]
-    terc_colocado = list(dict_pontos.keys())[2]
-    quarto_colocado = list(dict_pontos.keys())[3]
+    if rod >= 38:
 
-    dict_prem['geral']['campeao'] = campeao_geral
-    dict_prem['geral']['seg_lugar'] = vice_campeao
-    dict_prem['geral']['terc_lugar'] = terc_colocado
-    dict_prem['geral']['quarto_lugar'] = quarto_colocado
+        campeao_geral = next(iter(dict_pontos))
+        vice_campeao = list(dict_pontos.keys())[1]
+        terc_colocado = list(dict_pontos.keys())[2]
+        quarto_colocado = list(dict_pontos.keys())[3]
+
+        dict_prem['geral']['campeao'] = campeao_geral
+        dict_prem['geral']['seg_lugar'] = vice_campeao
+        dict_prem['geral']['terc_lugar'] = terc_colocado
+        dict_prem['geral']['quarto_lugar'] = quarto_colocado
+
+    else:
+
+        campeao_geral = ""
+        vice_campeao = ""
+        terc_colocado = ""
+        quarto_colocado = ""
+
+        dict_prem['geral']['campeao'] = ""
+        dict_prem['geral']['seg_lugar'] = ""
+        dict_prem['geral']['terc_lugar'] = ""
+        dict_prem['geral']['quarto_lugar'] = ""
 
     with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
         json.dump(dict_prem, f)
@@ -1033,18 +1053,22 @@ def premiacao():
                 dict_rar_[r]['valor'] += float("{:.2f}".format(len(rar) * 1 * 1))
 
     premios = {
-        'prem_camp_geral': 1155.70,
-        'prem_vice_geral': 513.65,
-        'prem_terc_geral': 256.82,
-        'prem_quarto_geral': 128.41,
-        'prem_camp_turno': 256.82,
-        'prem_camp_mm': 481.54,
-        'prem_vice_mm': 160.51
+        'prem_camp_geral': 945.00,
+        'prem_vice_geral': 420.00,
+        'prem_terc_geral': 210.00,
+        'prem_quarto_geral': 105.00,
+        'prem_camp_turno': 210.00,
+        'prem_camp_mm': 393.75,
+        'prem_vice_mm': 131.25
     }
 
     dict_ganhadores = {}
     for t in campeoes:
         dict_ganhadores[t] = {'valor': 0.00}
+
+        if t == '':
+            dict_ganhadores.pop(t)
+            break
 
         if t == campeao_geral:
             dict_ganhadores[t]['valor'] += premios['prem_camp_geral']
@@ -1085,7 +1109,7 @@ def premiacao():
     for k in ordenar_dict:
         premiacao_total[k[0]] = k[1]
 
-    print(premiacao_total)
+    # print(premiacao_total)
 
     return lider_prim_turno, lider_seg_turno, dict_rar_, campeao_prim_turno, vice_prim_turno, campeao_seg_turno, \
            vice_seg_turno, campeao_geral, vice_campeao, terc_colocado, quarto_colocado, premiacao_total
