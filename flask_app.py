@@ -33,13 +33,14 @@ if api.mercado().status.nome != 'Mercado em manutenção':
     for lig in ligas.times:
         times_ids.append(lig.ids)
 
-todos_ids = [1241021, 1245808, 8912058, 1889674, 13957925, 47620752, 1893918, 219929, 25582672, 28919430, 44509672, 44558779, 71375, 3646412, 48733, 1235701, 279314, 315637, 18796615, 47803719, 977136, 19190102]
+todos_ids = [1241021, 1245808, 8912058, 1889674, 13957925, 47620752, 1893918, 219929, 25582672, 28919430, 44509672,
+             44558779, 71375, 3646412, 48733, 1235701, 279314, 315637, 18796615, 47803719, 977136, 19190102]
 
 rar = ['Peixão Irado', 'Diego Pereira FC', 'Markitos Bar', '0VINTE1 FC',
-'oSantista', 'RR Football Club', 'Christimao', 'Camisa21FC', 'JevyGoal FC',
-'Gonella Verde ', 'Denoris F.C.', 'Gabitreta F C', 'Eae Malandro FC',
-'Contra Tudo e Todos Avanti!', 'Capítulo4 Versículo3', 'Santa Cruz Bahamas FC',
-'ThiagoRolo FC']
+       'oSantista', 'RR Football Club', 'Christimao', 'Camisa21FC', 'JevyGoal FC',
+       'Gonella Verde ', 'Denoris F.C.', 'Gabitreta F C', 'Eae Malandro FC',
+       'Contra Tudo e Todos Avanti!', 'Capítulo4 Versículo3', 'Santa Cruz Bahamas FC',
+       'ThiagoRolo FC']
 
 
 @app.route('/')
@@ -146,7 +147,7 @@ def premiacao_page():
     # lider_prim_turno, lider_seg_turno, prem, campeao_geral, vice_campeao, terc_colocado, quarto_colocado, campeao, vice = premiacao()
     # lider_prim_turno, prem, campeao, vice = premiacao()
     lider_prim_turno, lider_seg_turno, prem, campeao_prim_turno, vice_prim_turno, campeao_seg_turno, vice_seg_turno, \
-    campeao_geral, vice_campeao, terc_colocado, quarto_colocado, premiacao_total = premiacao()
+        campeao_geral, vice_campeao, terc_colocado, quarto_colocado, premiacao_total = premiacao()
     # print(lider_prim_turno)
     # print(prem)
     # print(campeao_prim_turno)
@@ -157,7 +158,8 @@ def premiacao_page():
                            get_prem=prem,
                            campeao=campeao_prim_turno, vice=vice_prim_turno, campeao_seg_turno=campeao_seg_turno,
                            vice_seg_turno=vice_seg_turno, get_lider=campeao_geral, vice_campeao=vice_campeao,
-                           terc_colocado=terc_colocado, quarto_colocado=quarto_colocado, premiacao_total=premiacao_total,
+                           terc_colocado=terc_colocado, quarto_colocado=quarto_colocado,
+                           premiacao_total=premiacao_total,
                            valores=valores)
 
 
@@ -669,7 +671,8 @@ def liga_class():
         if rod >= 38:
             dict_prem['segundo_turno']['lider'] = lider_seg_turno
 
-        with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+        # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+        with open(os.path.join(root_dir, 'static', 'dict_prem.json'), 'w', encoding='utf-8') as f:
             json.dump(dict_prem, f)
 
         return primeiro_turno, segundo_turno, campeonato, sem_capitao
@@ -679,8 +682,8 @@ def liga_class():
         if api.mercado().status.nome == 'Mercado aberto' or api.mercado().status.nome == 'Final de temporada':
 
             for (c1, v1), (chave, valor), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
-                                                                                        campeonato_.items(),
-                                                                                        dict_sem_capitao.items()):
+                                                                      campeonato_.items(),
+                                                                      dict_sem_capitao.items()):
                 for c, e in json.loads(escudos).items():
                     for k, n in json.loads(nomes).items():
                         if chave == c:
@@ -712,8 +715,8 @@ def liga_class():
                     team_dict[teams.info.id] = teams.pontos
 
                 for (c1, v1), (chave, valor), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
-                                                                                            campeonato_.items(),
-                                                                                            dict_sem_capitao.items()):
+                                                                          campeonato_.items(),
+                                                                          dict_sem_capitao.items()):
                     for c, e in json.loads(escudos).items():
                         for k, n in json.loads(nomes).items():
                             for key, value in team_dict.items():
@@ -736,13 +739,11 @@ def liga_class():
         if rod >= 19:
             dict_prem['primeiro_turno']['lider'] = lider_prim_turno
 
-        with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+        with open(os.path.join(root_dir, 'static', 'dict_prem.json'), 'w', encoding='utf-8') as f:
+        # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
             json.dump(dict_prem, f)
 
         return primeiro_turno, campeonato, sem_capitao
-
-
-
 
 
 def retornar_estats_liga():
@@ -1022,7 +1023,8 @@ def premiacao():
         dict_prem['geral']['terc_lugar'] = ""
         dict_prem['geral']['quarto_lugar'] = ""
 
-    with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+    with open(os.path.join(root_dir, 'static', 'dict_prem.json'), 'w', encoding='utf-8') as f:
+    # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
         json.dump(dict_prem, f)
 
     campeoes = []
@@ -1112,7 +1114,7 @@ def premiacao():
     # print(premiacao_total)
 
     return lider_prim_turno, lider_seg_turno, dict_rar_, campeao_prim_turno, vice_prim_turno, campeao_seg_turno, \
-           vice_seg_turno, campeao_geral, vice_campeao, terc_colocado, quarto_colocado, premiacao_total
+        vice_seg_turno, campeao_geral, vice_campeao, terc_colocado, quarto_colocado, premiacao_total
 
 
 def get_times_rodada():
@@ -1484,7 +1486,7 @@ def get_liberta_prim_turno():
 
 def get_class_liberta_prim_turno():
     jogos_rodada_6, jogos_rodada_7, jogos_rodada_8, jogos_rodada_9, jogos_rodada_10, jogos_rodada_11, \
-    g1, g2, g3, g4, g5, g6 = get_liberta_prim_turno()
+        g1, g2, g3, g4, g5, g6 = get_liberta_prim_turno()
 
     data1 = sorted(g1, key=lambda y: (y[4], y[5]), reverse=True)
     data2 = sorted(g2, key=lambda y: (y[4], y[5]), reverse=True)
@@ -2056,7 +2058,8 @@ def mata_mata_prim_turno():
     dict_prem['liberta_prim_turno']['campeao'] = campeao_prim_turno
     dict_prem['liberta_prim_turno']['vice'] = vice_prim_turno
 
-    with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+    # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+    with open(os.path.join(root_dir, 'static', 'dict_prem.json'), 'w', encoding='utf-8') as f:
         json.dump(dict_prem, f)
 
     # print(jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior)
@@ -3088,7 +3091,9 @@ def mata_mata_seg_turno():
     dict_prem['liberta_seg_turno']['campeao'] = campeao_prim_turno
     dict_prem['liberta_seg_turno']['vice'] = vice_prim_turno
 
-    with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+    # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+    with open(os.path.join(root_dir, 'static', 'dict_prem.json'), 'w', encoding='utf-8') as f:
+
         json.dump(dict_prem, f)
 
     # print(jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior)
