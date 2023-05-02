@@ -256,7 +256,7 @@ start_time = timeit.default_timer()
 # get_escudo()
 # get_nomes()
 # salvar_participantes()
-# get_partidas()
+get_partidas()
 
 ########################### rodar_tudo
 
@@ -271,7 +271,7 @@ def rodar_tudo():
 
 # retornar_estats_liga()
 
-rodar_tudo()
+# rodar_tudo()
 #
 # dict_matamata_oitavas = {}
 # # list_oitavas_seg_turno = []

@@ -1,6 +1,7 @@
 import collections
 import json
 import os
+import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import numpy as np
@@ -41,6 +42,13 @@ rar = ['Peixão Irado', 'Diego Pereira FC', 'Markitos Bar', '0VINTE1 FC',
        'Gonella Verde ', 'Denoris F.C.', 'Gabitreta F C', 'Eae Malandro FC',
        'Contra Tudo e Todos Avanti!', 'Capítulo4 Versículo3', 'Santa Cruz Bahamas FC',
        'ThiagoRolo FC']
+
+
+def json_default(value):
+    if isinstance(value, datetime.date):
+        return dict(year=value.year, month=value.month, day=value.day)
+    else:
+        return value.__dict__
 
 
 @app.route('/')
@@ -531,6 +539,7 @@ def liga_class():
     teams = []
     team_dict = {}
     dict_times_rodadas = {}
+    dict_prem = {}
 
     with open('static/times_rodada.json', encoding='utf-8', mode='r') as currentFile:
         data = currentFile.read().replace('\n', '')
@@ -672,8 +681,10 @@ def liga_class():
             dict_prem['segundo_turno']['lider'] = lider_seg_turno
 
         # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-        with open(f'tmp/dict_prem.json', 'w', encoding='utf-8') as f:
-            json.dump(dict_prem, f)
+        with open(f'./tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+        # with open(f'static/partidas.json', 'w', encoding='utf-8') as f:
+        #     json.dump(list_partidas, f, default=json_default, ensure_ascii=False)
+            json.dump(dict_prem, f, ensure_ascii=False)
 
         return primeiro_turno, segundo_turno, campeonato, sem_capitao
 
@@ -739,9 +750,15 @@ def liga_class():
         if rod >= 19:
             dict_prem['primeiro_turno']['lider'] = lider_prim_turno
 
-        with open(f'tmp/dict_prem.json', 'w', encoding='utf-8') as f:
-        # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-            json.dump(dict_prem, f)
+        # with open(f'tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+        # # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+        #     json.dump(dict_prem, f)
+
+        with open(f'./tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+        # with open(f'static/partidas.json', 'w', encoding='utf-8') as f:
+        #     json.dump(list_partidas, f, default=json_default, ensure_ascii=False)
+            json.dump(dict_prem, f, ensure_ascii=False)
+
 
         return primeiro_turno, campeonato, sem_capitao
 
@@ -985,7 +1002,7 @@ def retornar_reservas():
 
 def premiacao():
     # with open('static/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
-    with open('tmp/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
+    with open(f'./tmp/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
         data = currentFile.read().replace('\n', '')
 
     with open('static/nomes.json', encoding='utf-8', mode='r') as currentFile:
@@ -1024,7 +1041,7 @@ def premiacao():
         dict_prem['geral']['terc_lugar'] = ""
         dict_prem['geral']['quarto_lugar'] = ""
 
-    with open(f'tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+    with open(f'./tmp/dict_prem.json', 'w', encoding='utf-8') as f:
     # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
         json.dump(dict_prem, f)
 
@@ -2060,7 +2077,7 @@ def mata_mata_prim_turno():
     dict_prem['liberta_prim_turno']['vice'] = vice_prim_turno
 
     # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-    with open(f'tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+    with open(f'./tmp/dict_prem.json', 'w', encoding='utf-8') as f:
         json.dump(dict_prem, f)
 
     # print(jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior)
@@ -3093,7 +3110,7 @@ def mata_mata_seg_turno():
     dict_prem['liberta_seg_turno']['vice'] = vice_prim_turno
 
     # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-    with open(f'tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+    with open(f'./tmp/dict_prem.json', 'w', encoding='utf-8') as f:
 
         json.dump(dict_prem, f)
 
