@@ -21,6 +21,11 @@ with open('static/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
     for k, v in json.loads(data).items():
         dict_prem[k] = v
 
+with open('./tmp/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
+    data = currentFile.read().replace('\n', '')
+    for k, v in json.loads(data).items():
+        dict_prem[k] = v
+
 rodadas_campeonato = range(1, 39)
 rodadas_primeiro_turno = range(1, 20)
 rodadas_segundo_turno = range(20, 39)

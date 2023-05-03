@@ -539,7 +539,7 @@ def liga_class():
     teams = []
     team_dict = {}
     dict_times_rodadas = {}
-    dict_prem = {}
+    # dict_prem = {}
 
     with open('static/times_rodada.json', encoding='utf-8', mode='r') as currentFile:
         data = currentFile.read().replace('\n', '')
