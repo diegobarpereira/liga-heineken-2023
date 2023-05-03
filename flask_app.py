@@ -681,7 +681,7 @@ def liga_class():
             dict_prem['segundo_turno']['lider'] = lider_seg_turno
 
         # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-        with open(f'./tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+        with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
         # with open(f'static/partidas.json', 'w', encoding='utf-8') as f:
         #     json.dump(list_partidas, f, default=json_default, ensure_ascii=False)
             json.dump(dict_prem, f, ensure_ascii=False)
@@ -754,7 +754,7 @@ def liga_class():
         # # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
         #     json.dump(dict_prem, f)
 
-        with open(f'./tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+        with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
         # with open(f'static/partidas.json', 'w', encoding='utf-8') as f:
         #     json.dump(list_partidas, f, default=json_default, ensure_ascii=False)
             json.dump(dict_prem, f, ensure_ascii=False)
@@ -1002,7 +1002,7 @@ def retornar_reservas():
 
 def premiacao():
     # with open('static/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
-    with open(f'./tmp/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
+    with open(f'/tmp/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
         data = currentFile.read().replace('\n', '')
 
     with open('static/nomes.json', encoding='utf-8', mode='r') as currentFile:
@@ -1041,7 +1041,7 @@ def premiacao():
         dict_prem['geral']['terc_lugar'] = ""
         dict_prem['geral']['quarto_lugar'] = ""
 
-    with open(f'./tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+    with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
     # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
         json.dump(dict_prem, f)
 
@@ -2077,7 +2077,7 @@ def mata_mata_prim_turno():
     dict_prem['liberta_prim_turno']['vice'] = vice_prim_turno
 
     # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-    with open(f'./tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+    with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
         json.dump(dict_prem, f)
 
     # print(jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior)
@@ -3110,7 +3110,7 @@ def mata_mata_seg_turno():
     dict_prem['liberta_seg_turno']['vice'] = vice_prim_turno
 
     # with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-    with open(f'./tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+    with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
 
         json.dump(dict_prem, f)
 
