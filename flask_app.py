@@ -51,13 +51,6 @@ def json_default(value):
         return value.__dict__
 
 
-global local
-global prod
-
-
-# local = False
-# prod = False
-
 @app.route('/')
 def index_page():
     if api.mercado().status.nome == 'Mercado em manutenção':
@@ -1010,6 +1003,7 @@ def retornar_reservas():
 
 
 def premiacao():
+    global local
     if 'C:\\' in os.getcwd():
         local = True
     else:
