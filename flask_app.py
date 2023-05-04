@@ -23,6 +23,8 @@ api = cartolafc.Api(
 
 rod = api.mercado().rodada_atual
 mercado_status = api.mercado().status.nome
+local = False
+prod = False
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -539,6 +541,8 @@ def liga_class():
     teams = []
     team_dict = {}
     dict_times_rodadas = {}
+    global local
+    global prod
 
     if 'C:\\' in os.getcwd():
         local = True
@@ -1004,6 +1008,8 @@ def retornar_reservas():
 
 def premiacao():
     global local
+    global prod
+
     if 'C:\\' in os.getcwd():
         local = True
     else:
@@ -2072,6 +2078,10 @@ def finais_prim_turno():
 
 
 def mata_mata_prim_turno():
+
+    global local
+    global prod
+
     if 'C:\\' in os.getcwd():
         local = True
     else:
@@ -3113,6 +3123,10 @@ def finais_seg_turno():
 
 
 def mata_mata_seg_turno():
+
+    global local
+    global prod
+
     if 'C:\\' in os.getcwd():
         local = True
     else:
