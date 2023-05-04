@@ -51,8 +51,12 @@ def json_default(value):
         return value.__dict__
 
 
-local = False
-prod = False
+global local
+global prod
+
+
+# local = False
+# prod = False
 
 @app.route('/')
 def index_page():
@@ -1006,7 +1010,6 @@ def retornar_reservas():
 
 
 def premiacao():
-
     if 'C:\\' in os.getcwd():
         local = True
     else:
@@ -2075,7 +2078,6 @@ def finais_prim_turno():
 
 
 def mata_mata_prim_turno():
-
     if 'C:\\' in os.getcwd():
         local = True
     else:
@@ -3117,7 +3119,6 @@ def finais_seg_turno():
 
 
 def mata_mata_seg_turno():
-
     if 'C:\\' in os.getcwd():
         local = True
     else:
