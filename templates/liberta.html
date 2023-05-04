@@ -69,7 +69,7 @@ body::after {
 <div class="card">
     <center>
 <table cellpadding="1" cellspacing="1">
-    <tr> <th colspan="1" align="center"> Liga Heineken 2022 - Mata Mata - Classificação </th> </tr>
+    <tr> <th colspan="1" align="center"> Liga Heineken 2023 - Mata Mata - Classificação </th> </tr>
     <tr>
         <td>
         <table align="center" class="myFormat" border="1">
@@ -84,7 +84,9 @@ body::after {
                     <th align="center">E</th>
                     <th align="center">D</th>
                     <th align="center">Pontos</th>
+                    <th align="center">Aproveitamento</th>
                     <th align="center">Pontos Cartola</th>
+                    <th align="center">Média</th>
 
                     </tr>
                     <tr>
@@ -106,12 +108,14 @@ body::after {
             <td valign = "top">
                 <table border="1" width="100%">
                 <tr>
-                <th align="center">Time</th>
-                <th align="center">V</th>
-                <th align="center">E</th>
-                <th align="center">D</th>
-                <th align="center">Pontos</th>
-                <th align="center">Pontos Cartola</th>
+                    <th align="center">Time</th>
+                    <th align="center">V</th>
+                    <th align="center">E</th>
+                    <th align="center">D</th>
+                    <th align="center">Pontos</th>
+                    <th align="center">Aproveitamento</th>
+                    <th align="center">Pontos Cartola</th>
+                    <th align="center">Média</th>
 
                 </tr>
                 <tr>
@@ -140,12 +144,14 @@ body::after {
                 <tr><th colspan="9" align="center">Grupo 3</th></tr>
 
                 <tr>
-                <th align="center">Time</th>
-                <th align="center">V</th>
-                <th align="center">E</th>
-                <th align="center">D</th>
-                <th align="center">Pontos</th>
-                <th align="center">Pontos Cartola</th>
+                    <th align="center">Time</th>
+                    <th align="center">V</th>
+                    <th align="center">E</th>
+                    <th align="center">D</th>
+                    <th align="center">Pontos</th>
+                    <th align="center">Aproveitamento</th>
+                    <th align="center">Pontos Cartola</th>
+                    <th align="center">Média</th>
 
                 </tr>
                 <tr>
@@ -171,12 +177,14 @@ body::after {
                 <tr><th colspan="9" align="center">Grupo 4</th></tr>
 
                 <tr>
-                <th align="center">Time</th>
-                <th align="center">V</th>
-                <th align="center">E</th>
-                <th align="center">D</th>
-                <th align="center">Pontos</th>
-                <th align="center">Pontos Cartola</th>
+                    <th align="center">Time</th>
+                    <th align="center">V</th>
+                    <th align="center">E</th>
+                    <th align="center">D</th>
+                    <th align="center">Pontos</th>
+                    <th align="center">Aproveitamento</th>
+                    <th align="center">Pontos Cartola</th>
+                    <th align="center">Média</th>
 
                 </tr>
                 <tr>
@@ -211,7 +219,9 @@ body::after {
                     <th align="center">E</th>
                     <th align="center">D</th>
                     <th align="center">Pontos</th>
+                    <th align="center">Aproveitamento</th>
                     <th align="center">Pontos Cartola</th>
+                    <th align="center">Média</th>
 
                     </tr>
                     <tr>
@@ -231,36 +241,36 @@ body::after {
                 </table>
             </td>
 
-            <td valign = "top">
-                <table border="1" width="100%">
-                <tr><th colspan="9" align="center">Grupo 6</th></tr>
+<!--            <td valign = "top">-->
+<!--                <table border="1" width="100%">-->
+<!--                <tr><th colspan="9" align="center">Grupo 6</th></tr>-->
 
-                <tr>
-                <th align="center">Time</th>
-                <th align="center">V</th>
-                <th align="center">E</th>
-                <th align="center">D</th>
-                <th align="center">Pontos</th>
-                <th align="center">Pontos Cartola</th>
+<!--                <tr>-->
+<!--                <th align="center">Time</th>-->
+<!--                <th align="center">V</th>-->
+<!--                <th align="center">E</th>-->
+<!--                <th align="center">D</th>-->
+<!--                <th align="center">Pontos</th>-->
+<!--                <th align="center">Pontos Cartola</th>-->
 
-                </tr>
-                <tr>
-                {% for keys in data6 %}
-                <tr>
-                {% for k in keys %}
-                    {% if k is float() %}
-                        <td><font color="white">{{ "%.2f"|format(k) }}</font></td>
-                    {% else %}
-                        <td><font color="white">{{k}}</font></td>
-                    {% endif %}
-                {% endfor %}
-                </tr>
-                {% endfor %}
-                </tr>
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                {% for keys in data6 %}-->
+<!--                <tr>-->
+<!--                {% for k in keys %}-->
+<!--                    {% if k is float() %}-->
+<!--                        <td><font color="white">{{ "%.2f"|format(k) }}</font></td>-->
+<!--                    {% else %}-->
+<!--                        <td><font color="white">{{k}}</font></td>-->
+<!--                    {% endif %}-->
+<!--                {% endfor %}-->
+<!--                </tr>-->
+<!--                {% endfor %}-->
+<!--                </tr>-->
 
 
-                </table>
-            </td>
+<!--                </table>-->
+<!--            </td>-->
 
             </tr>
 
@@ -274,83 +284,83 @@ body::after {
     <td>
 
         <table style="margin: 0 auto" class="myFormat" border="1">
-         <tr> <th colspan="1" align="center"> Rodada 6 </th>
-               <th colspan="1" align="center"> Rodada 7 </th>
-               <th colspan="1" align="center"> Rodada 8 </th>
+         <tr> <th colspan="1" align="center"> Rodada 2 </th>
+               <th colspan="1" align="center"> Rodada 3 </th>
+               <th colspan="1" align="center"> Rodada 4 </th>
          </tr>
 
          <td valign = "top">
              <table border="1">
             <tr>
-            {% for keys in get_list[0] %}
+            {% for keys in rod_2[0] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list[1] %}
+            {% for keys in rod_2[1] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list[2] %}
+            {% for keys in rod_2[2] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list[3] %}
+            {% for keys in rod_2[3] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list[4] %}
+            {% for keys in rod_2[4] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list[5] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-            <tr>
-            {% for keys in get_list[6] %}
+            {% for keys in rod_2[5] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
 
             <tr>
-            {% for keys in get_list[7] %}
+            {% for keys in rod_2[6] %}
+            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
+            {% endfor %}
+            </tr>
+
+
+            <tr>
+            {% for keys in rod_2[7] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list[8] %}
+            {% for keys in rod_2[8] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list[9] %}
+            {% for keys in rod_2[9] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list[10] %}
+            {% for keys in rod_2[10] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list[11] %}
+            {% for keys in rod_2[11] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
@@ -361,73 +371,73 @@ body::after {
             <td>
             <table border="1">
             <tr>
-            {% for keys in get_list2[0] %}
+            {% for keys in rod_3[0] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list2[1] %}
+            {% for keys in rod_3[1] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list2[2] %}
+            {% for keys in rod_3[2] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list2[3] %}
+            {% for keys in rod_3[3] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list2[4] %}
+            {% for keys in rod_3[4] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list2[5] %}
+            {% for keys in rod_3[5] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list2[6] %}
+            {% for keys in rod_3[6] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list2[7] %}
+            {% for keys in rod_3[7] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list2[8] %}
+            {% for keys in rod_3[8] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list2[9] %}
+            {% for keys in rod_3[9] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list2[10] %}
+            {% for keys in rod_3[10] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list2[11] %}
+            {% for keys in rod_3[11] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
@@ -441,73 +451,73 @@ body::after {
              <td>
             <table border="1">
             <tr>
-            {% for keys in get_list3[0] %}
+            {% for keys in rod_4[0] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list3[1] %}
+            {% for keys in rod_4[1] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list3[2] %}
+            {% for keys in rod_4[2] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list3[3] %}
+            {% for keys in rod_4[3] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list3[4] %}
+            {% for keys in rod_4[4] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list3[5] %}
+            {% for keys in rod_4[5] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list3[6] %}
+            {% for keys in rod_4[6] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list3[7] %}
+            {% for keys in rod_4[7] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list3[8] %}
+            {% for keys in rod_4[8] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list3[9] %}
+            {% for keys in rod_4[9] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list3[10] %}
+            {% for keys in rod_4[10] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
 
             <tr>
-            {% for keys in get_list3[11] %}
+            {% for keys in rod_4[11] %}
             <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
             {% endfor %}
             </tr>
@@ -525,264 +535,6 @@ body::after {
             <br/>
 
 
-            <table style="margin: 0 auto" class="myFormat" border="1">
-         <tr> <th colspan="1" align="center"> Rodada 9 </th>
-               <th colspan="1" align="center"> Rodada 10 </th>
-               <th colspan="1" align="center"> Rodada 11 </th>
-         </tr>
-
-                <td>
-            <table border="1">
-            <tr>
-            {% for keys in get_list4[0] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list4[1] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list4[2] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list4[3] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list4[4] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list4[5] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list4[6] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list4[7] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list4[8] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list4[9] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list4[10] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list4[11] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-
-    </table>
-            </td>
-
-                     <td valign = "top">
-             <table border="1">
-            <tr>
-            {% for keys in get_list5[0] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list5[1] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list5[2] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list5[3] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list5[4] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list5[5] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-            <tr>
-            {% for keys in get_list5[6] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-            <tr>
-            {% for keys in get_list5[7] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-
-            <tr>
-            {% for keys in get_list5[8] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-
-            <tr>
-            {% for keys in get_list5[9] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-
-            <tr>
-            {% for keys in get_list5[10] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-
-            <tr>
-            {% for keys in get_list5[11] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-             </table>
-         </td>
-
-         <td valign = "top">
-             <table border="1">
-            <tr>
-            {% for keys in get_list6[0] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list6[1] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list6[2] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list6[3] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list6[4] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-            <tr>
-            {% for keys in get_list6[5] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-            <tr>
-            {% for keys in get_list6[6] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-            <tr>
-            {% for keys in get_list6[7] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-            <tr>
-            {% for keys in get_list6[8] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-            <tr>
-            {% for keys in get_list6[9] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-            <tr>
-            {% for keys in get_list6[10] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-
-            <tr>
-            {% for keys in get_list6[11] %}
-            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>
-            {% endfor %}
-            </tr>
-
-             </table>
-         </td>
-
-
-
-            </table>
 </td>
 </tr>
         </table>

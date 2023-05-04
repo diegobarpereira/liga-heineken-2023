@@ -29,7 +29,8 @@ with open('./tmp/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
 rodadas_campeonato = range(1, 39)
 rodadas_primeiro_turno = range(1, 20)
 rodadas_segundo_turno = range(20, 39)
-rodadas_liberta_prim_turno = range(6, 12)
+# rodadas_liberta_prim_turno = range(6, 12)
+rodadas_liberta_prim_turno = range(2, 12)
 rodadas_oitavas_prim_turno = range(12, 14)
 rodadas_quartas_prim_turno = range(14, 16)
 rodadas_semis_prim_turno = range(16, 18)
@@ -40,12 +41,11 @@ rodadas_quartas_seg_turno = range(33, 35)
 rodadas_semis_seg_turno = range(35, 37)
 rodadas_finais_seg_turno = range(37, 39)
 
-grupo_liberta_prim_turno = [8912058, 44558779, 14439636, 71375,
-                            18796615, 25588958, 25582672, 1245808,
-                            28919430, 1235701, 1241021, 19317259,
-                            44514741, 579336, 19190102, 315637,
-                            48733, 3646412, 977136, 13957925,
-                            219929, 1889674, 1893918, 44509672]
+grupo_liberta_prim_turno = [44558779, 1241021, 1893918, 1889674,
+                            19190102, 47620752, 219929, 279314,
+                            1245808, 44509672, 18796615, 13957925,
+                            47803719, 25582672, 48733, 3646412, 8912058,
+                            315637, 71375, 1235701, 977136, 28919430]
 
 list_oitavas_prim_turno = ['1245808', '71375', '3646412', '28919430', '977136', '1241021', '219929', '44558779',
                            '25588958',
