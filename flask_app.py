@@ -183,10 +183,12 @@ def liberta_primeiro_turno():
     g5_ = sorted(g5, key=lambda y: (y[4], y[5], y[7]), reverse=True)
     # g6_ = sorted(g6, key=lambda y: (y[4], y[5]), reverse=True)
 
-    for item1, item2, item3, item4, item5 in zip(g1_, g2_, g3_, g4_, g5_):
+    for item1, item2, item3 in zip(g1_, g2_, g3_):
         item1[5] = "%s%%" % item1[5]
         item2[5] = "%s%%" % item2[5]
         item3[5] = "%s%%" % item3[5]
+
+    for item4, item5 in zip(g4_, g5_):
         item4[5] = "%s%%" % item4[5]
         item5[5] = "%s%%" % item5[5]
 
@@ -1426,11 +1428,11 @@ def get_liberta_prim_turno():
 
     jogos_rodada_7.append([rodada_7[13][0], rodada_7[13][1], 'x', rodada_7[12][1], rodada_7[12][0]])
     jogos_rodada_7.append([rodada_7[15][0], rodada_7[15][1], 'x', rodada_7[14][1], rodada_7[14][0]])
-    jogos_rodada_7.append(['', '', 'x', rodada_7[16][0], rodada_7[16][1]])
+    jogos_rodada_7.append(['', '', 'x', '', rodada_7[16][0]])
 
     jogos_rodada_7.append([rodada_7[18][0], rodada_7[18][1], 'x', rodada_7[17][1], rodada_7[17][0]])
     jogos_rodada_7.append([rodada_7[20][0], rodada_7[20][1], 'x', rodada_7[19][1], rodada_7[19][0]])
-    jogos_rodada_7.append(['', '', 'x', rodada_7[21][0], rodada_7[21][1]])
+    jogos_rodada_7.append(['', '', 'x', '', rodada_7[21][0]])
 
     empate = False
     for x in jogos_rodada_7:
@@ -1465,11 +1467,11 @@ def get_liberta_prim_turno():
 
     jogos_rodada_8.append([rodada_8[16][0], rodada_8[16][1], 'x', rodada_8[12][1], rodada_8[12][0]])
     jogos_rodada_8.append([rodada_8[14][0], rodada_8[14][1], 'x', rodada_8[13][1], rodada_8[13][0]])
-    jogos_rodada_8.append(['', '', 'x', rodada_8[15][0], rodada_8[15][1]])
+    jogos_rodada_8.append(['', '', 'x', '', rodada_8[15][0]])
 
     jogos_rodada_8.append([rodada_8[21][0], rodada_8[21][1], 'x', rodada_8[17][1], rodada_8[17][0]])
     jogos_rodada_8.append([rodada_8[19][0], rodada_8[19][1], 'x', rodada_8[18][1], rodada_8[18][0]])
-    jogos_rodada_8.append(['', '', 'x', rodada_8[20][0], rodada_8[20][1]])
+    jogos_rodada_8.append(['', '', 'x', '', rodada_8[20][0]])
 
     for x in jogos_rodada_8:
         maior_man = x[1] > x[3]
