@@ -1656,8 +1656,8 @@ def get_liberta_prim_turno():
 
 
 def get_class_liberta_prim_turno():
-    jogos_rodada_6, jogos_rodada_7, jogos_rodada_8, jogos_rodada_9, jogos_rodada_10, jogos_rodada_11, \
-        g1, g2, g3, g4, g5 = get_liberta_prim_turno()
+    jogos_rodada_2, jogos_rodada_3, jogos_rodada_4, jogos_rodada_5, jogos_rodada_6, jogos_rodada_7, jogos_rodada_8, \
+        jogos_rodada_9, jogos_rodada_10, jogos_rodada_11, g1, g2, g3, g4, g5 = get_liberta_prim_turno()
 
     data1 = sorted(g1, key=lambda y: (y[4], y[5], y[7]), reverse=True)
     data2 = sorted(g2, key=lambda y: (y[4], y[5], y[7]), reverse=True)
