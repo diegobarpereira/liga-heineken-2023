@@ -266,6 +266,7 @@ def rodar_tudo():
     salvar_times_rodadas()
     retornar_estats_liga()
     get_partidas()
+
 ########################### rodar_tudo
 
 
