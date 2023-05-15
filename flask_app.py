@@ -1519,11 +1519,11 @@ def get_liberta_prim_turno():
 
     jogos_rodada_9.append([rodada_9[15][0], rodada_9[15][1], 'x', rodada_9[12][1], rodada_9[12][0]])
     jogos_rodada_9.append([rodada_9[16][0], rodada_9[16][1], 'x', rodada_9[13][1], rodada_9[13][0]])
-    jogos_rodada_9.append(['', '', 'x', rodada_9[14][0], rodada_9[14][1]])
+    jogos_rodada_9.append(['', '', 'x', '', rodada_9[14][0]])
 
     jogos_rodada_9.append([rodada_9[20][0], rodada_9[20][1], 'x', rodada_9[17][1], rodada_9[17][0]])
     jogos_rodada_9.append([rodada_9[21][0], rodada_9[21][1], 'x', rodada_9[18][1], rodada_9[18][0]])
-    jogos_rodada_9.append(['', '', 'x', rodada_9[19][0], rodada_9[19][1]])
+    jogos_rodada_9.append(['', '', 'x', '', rodada_9[19][0]])
 
     for x in jogos_rodada_9:
         maior_man = x[1] > x[3]
@@ -1557,11 +1557,11 @@ def get_liberta_prim_turno():
 
     jogos_rodada_10.append([rodada_10[14][0], rodada_10[14][1], 'x', rodada_10[12][1], rodada_10[12][0]])
     jogos_rodada_10.append([rodada_10[15][0], rodada_10[15][1], 'x', rodada_10[16][1], rodada_10[16][0]])
-    jogos_rodada_10.append(['', '', 'x', rodada_10[13][0], rodada_10[13][1]])
+    jogos_rodada_10.append(['', '', 'x', '', rodada_10[13][0]])
 
     jogos_rodada_10.append([rodada_10[19][0], rodada_10[19][1], 'x', rodada_10[17][1], rodada_10[17][0]])
     jogos_rodada_10.append([rodada_10[20][0], rodada_10[20][1], 'x', rodada_10[21][1], rodada_10[21][0]])
-    jogos_rodada_10.append(['', '', 'x', rodada_10[18][0], rodada_10[18][1]])
+    jogos_rodada_10.append(['', '', 'x', '', rodada_10[18][0]])
 
     for x in jogos_rodada_10:
         maior_man = x[1] > x[3]
@@ -1586,11 +1586,11 @@ def get_liberta_prim_turno():
 
     jogos_rodada_11.append([rodada_11[15][0], rodada_11[15][1], 'x', rodada_11[13][1], rodada_11[13][0]])
     jogos_rodada_11.append([rodada_11[16][0], rodada_11[16][1], 'x', rodada_11[14][1], rodada_11[14][0]])
-    jogos_rodada_11.append(['', '', 'x', rodada_11[12][0], rodada_11[12][1]])
+    jogos_rodada_11.append(['', '', 'x', '', rodada_11[12][0]])
 
     jogos_rodada_11.append([rodada_11[20][0], rodada_11[20][1], 'x', rodada_11[18][1], rodada_11[18][0]])
     jogos_rodada_11.append([rodada_11[21][0], rodada_11[21][1], 'x', rodada_11[19][1], rodada_11[19][0]])
-    jogos_rodada_11.append(['', '', 'x', rodada_11[17][0], rodada_11[17][1]])
+    jogos_rodada_11.append(['', '', 'x', '', rodada_11[17][0]])
 
     for x in jogos_rodada_11:
         maior_man = x[1] > x[3]
