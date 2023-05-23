@@ -257,3 +257,87 @@
 
 
 <!--            </table>-->
+
+
+<!--         <td valign = "top">-->
+<!--             <table border="1">-->
+<!--            <tr>-->
+<!--            {% for keys in rod_7[0] %}-->
+<!--            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>-->
+<!--            {% endfor %}-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--            {% for keys in rod_7[1] %}-->
+<!--            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>-->
+<!--            {% endfor %}-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--            {% for keys in rod_7[2] %}-->
+<!--            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>-->
+<!--            {% endfor %}-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--            {% for keys in rod_7[3] %}-->
+<!--            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>-->
+<!--            {% endfor %}-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--            {% for keys in rod_7[4] %}-->
+<!--            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>-->
+<!--            {% endfor %}-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--            {% for keys in rod_7[5] %}-->
+<!--            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>-->
+<!--            {% endfor %}-->
+<!--            </tr>-->
+
+
+<!--            <tr>-->
+<!--            {% for keys in rod_7[6] %}-->
+<!--            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>-->
+<!--            {% endfor %}-->
+<!--            </tr>-->
+
+
+<!--            <tr>-->
+<!--            {% for keys in rod_7[7] %}-->
+<!--            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>-->
+<!--            {% endfor %}-->
+<!--            </tr>-->
+
+
+<!--            <tr>-->
+<!--            {% for keys in rod_7[8] %}-->
+<!--            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>-->
+<!--            {% endfor %}-->
+<!--            </tr>-->
+
+
+<!--            <tr>-->
+<!--            {% for keys in rod_7[9] %}-->
+<!--            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>-->
+<!--            {% endfor %}-->
+<!--            </tr>-->
+
+
+<!--            <tr>-->
+<!--            {% for keys in rod_7[10] %}-->
+<!--            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>-->
+<!--            {% endfor %}-->
+<!--            </tr>-->
+
+
+<!--            <tr>-->
+<!--            {% for keys in rod_7[11] %}-->
+<!--            <td><font color="white">{% if keys is number %} {{"%.2f"|format(keys)|replace('None', '') }} {% else %} {{keys|replace('None', '')}} {% endif %}</font></td>-->
+<!--            {% endfor %}-->
+<!--            </tr>-->
+
+<!--             </table>-->
+<!--         </td>-->
