@@ -203,24 +203,25 @@ def liberta_primeiro_turno():
 
 @app.route('/matamataprimturno')
 def matamata_page():
-    oit_a, oit_b, qua_a, qua_b, semi_a, semi_b, final_a, final_b, esq_maior = mata_mata_prim_turno()
+    # oit_a, oit_b, qua_a, qua_b, semi_a, semi_b, final_a, final_b, esq_maior = mata_mata_prim_turno()
+    oit_a, oit_b = mata_mata_prim_turno()
     final = True
 
-    campeao = []
-    vice = []
+    # campeao = []
+    # vice = []
+    #
+    # for f_a, f_b in zip(final_a, final_b):
+    #     if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
+    #         campeao = [[f_a[1], f_a[2]]]
+    #         vice = [[f_b[1], f_b[2]]]
+    #     else:
+    #         campeao = [[f_b[1], f_b[2]]]
+    #         vice = [[f_a[1], f_a[2]]]
 
-    for f_a, f_b in zip(final_a, final_b):
-        if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
-            campeao = [[f_a[1], f_a[2]]]
-            vice = [[f_b[1], f_b[2]]]
-        else:
-            campeao = [[f_b[1], f_b[2]]]
-            vice = [[f_a[1], f_a[2]]]
-
-    return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b, get_list3=qua_a,
-                           get_list4=qua_b, get_list5=semi_a, get_list6=semi_b, get_list7=final_a,
-                           get_list8=final_b, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
-
+    # return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b, get_list3=qua_a,
+    #                        get_list4=qua_b, get_list5=semi_a, get_list6=semi_b, get_list7=final_a,
+    #                        get_list8=final_b, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
+    return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b)
 
 @app.route("/liberta2")
 def liberta_segundo_turno():
@@ -2099,11 +2100,11 @@ def get_class_liberta_prim_turno():
     jogos_rodada_2, jogos_rodada_3, jogos_rodada_4, jogos_rodada_5, jogos_rodada_6, jogos_rodada_7, jogos_rodada_8, \
         jogos_rodada_9, jogos_rodada_10, jogos_rodada_11, g1, g2, g3, g4, g5 = get_liberta_prim_turno()
 
-    data1 = sorted(g1, key=lambda y: (y[4], y[5], y[7]), reverse=True)
-    data2 = sorted(g2, key=lambda y: (y[4], y[5], y[7]), reverse=True)
-    data3 = sorted(g3, key=lambda y: (y[4], y[5], y[7]), reverse=True)
-    data4 = sorted(g4, key=lambda y: (y[4], y[5], y[7]), reverse=True)
-    data5 = sorted(g5, key=lambda y: (y[4], y[5], y[7]), reverse=True)
+    data1 = sorted(g1, key=lambda y: (y[5], y[7]), reverse=True)
+    data2 = sorted(g2, key=lambda y: (y[5], y[7]), reverse=True)
+    data3 = sorted(g3, key=lambda y: (y[5], y[7]), reverse=True)
+    data4 = sorted(g4, key=lambda y: (y[5], y[7]), reverse=True)
+    data5 = sorted(g5, key=lambda y: (y[5], y[7]), reverse=True)
     # data6 = sorted(g6, key=lambda y: (y[4], y[5]), reverse=True)
 
     d1 = []
@@ -2121,27 +2122,27 @@ def get_class_liberta_prim_turno():
 
     for data in data1[0:2]:
         d1.append(data)
-    for data in data1[2:4]:
+    for data in data1[2:3]:
         r1.append(data)
 
     for data in data2[0:2]:
         d2.append(data)
-    for data in data2[2:4]:
+    for data in data2[2:3]:
         r2.append(data)
 
     for data in data3[0:2]:
         d3.append(data)
-    for data in data3[2:4]:
+    for data in data3[2:3]:
         r3.append(data)
 
     for data in data4[0:3]:
         d4.append(data)
-    for data in data4[3:5]:
+    for data in data4[3:4]:
         r4.append(data)
 
     for data in data5[0:3]:
         d5.append(data)
-    for data in data5[3:5]:
+    for data in data5[3:4]:
         r5.append(data)
 
     # for data in data6[0:2]:
@@ -2152,8 +2153,8 @@ def get_class_liberta_prim_turno():
     classificados = d1 + d2 + d3 + d4 + d5
     repescagem = r1 + r2 + r3 + r4 + r5
 
-    classi = sorted(classificados, key=lambda x: (x[4], x[5]), reverse=True)
-    rep = sorted(repescagem, key=lambda x: (x[4], x[5]), reverse=True)
+    classi = sorted(classificados, key=lambda x: (x[5], x[7]), reverse=True)
+    rep = sorted(repescagem, key=lambda x: (x[5], x[7]), reverse=True)
     classi.append(rep[0])
     classi.append(rep[1])
     classi.append(rep[2])
@@ -2176,10 +2177,12 @@ def get_class_liberta_prim_turno():
             if class_mm[x] in nomes:
                 list_oitavas.append(ids)
 
+    # print(list_oitavas)
     return list_oitavas
 
 
 def oitavas_de_final_prim_turno():
+    get_class_liberta_prim_turno()
     dict_oitavas_ = collections.defaultdict(list)
     dict_oitavas_pts = {}
     ordered_dict_oitavas = {}
@@ -2660,22 +2663,22 @@ def mata_mata_prim_turno():
         prod = True
 
     jogos_oitavas_a, jogos_oitavas_b = oitavas_de_final_prim_turno()
-    jogos_quartas_a, jogos_quartas_b = quartas_de_final_prim_turno()
-    jogos_semis_a, jogos_semis_b = semi_finais_prim_turno()
-    jogos_final_a, jogos_final_b, esq_maior = finais_prim_turno()
-    campeao_prim_turno = ''
-    vice_prim_turno = ''
-
-    for f_a, f_b in zip(jogos_final_a, jogos_final_b):
-        if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
-            campeao_prim_turno = f_a[2]
-            vice_prim_turno = f_b[2]
-        else:
-            campeao_prim_turno = f_b[2]
-            vice_prim_turno = f_a[2]
-
-    dict_prem['liberta_prim_turno']['campeao'] = campeao_prim_turno
-    dict_prem['liberta_prim_turno']['vice'] = vice_prim_turno
+    # jogos_quartas_a, jogos_quartas_b = quartas_de_final_prim_turno()
+    # jogos_semis_a, jogos_semis_b = semi_finais_prim_turno()
+    # jogos_final_a, jogos_final_b, esq_maior = finais_prim_turno()
+    # campeao_prim_turno = ''
+    # vice_prim_turno = ''
+    #
+    # for f_a, f_b in zip(jogos_final_a, jogos_final_b):
+    #     if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
+    #         campeao_prim_turno = f_a[2]
+    #         vice_prim_turno = f_b[2]
+    #     else:
+    #         campeao_prim_turno = f_b[2]
+    #         vice_prim_turno = f_a[2]
+    #
+    # dict_prem['liberta_prim_turno']['campeao'] = campeao_prim_turno
+    # dict_prem['liberta_prim_turno']['vice'] = vice_prim_turno
 
     if not local:
         with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
@@ -2685,8 +2688,8 @@ def mata_mata_prim_turno():
             json.dump(dict_prem, f, ensure_ascii=False)
 
     # print(jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior)
-    return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior
-
+    # return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior
+    return jogos_oitavas_a, jogos_oitavas_b
 
 def get_parciais(time_id):
     # return_parciais = [api.time_parcial(time_id)]
