@@ -504,7 +504,7 @@ def pontos():
                                      reverse=True)
 
             if max_cada_rodada[0][0] in rar:
-                if max_cada_rodada[0][1] == max_cada_rodada[1][1]:
+                if round(max_cada_rodada[0][1],2) == round(max_cada_rodada[1][1],2):
                     max_val.append(f'{max_cada_rodada[0][0]} / {max_cada_rodada[1][0]}')
                 else:
                     max_val.append(max_cada_rodada[0][0])
