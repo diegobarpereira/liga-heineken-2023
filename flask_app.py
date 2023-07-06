@@ -1767,7 +1767,7 @@ def get_class_liberta_prim_turno():
 
 
 def oitavas_de_final_prim_turno():
-    get_class_liberta_prim_turno()
+    # get_class_liberta_prim_turno()
     dict_oitavas_ = collections.defaultdict(list)
     dict_oitavas_pts = {}
     ordered_dict_oitavas = {}
@@ -1806,7 +1806,6 @@ def oitavas_de_final_prim_turno():
                     if chave == id:
                         dict_oitavas_pts[nome] = [v, valor]
 
-
     if api.mercado().status.nome == 'Mercado fechado':
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(api.time_parcial, list_oitavas_prim_turno)
@@ -1820,48 +1819,6 @@ def oitavas_de_final_prim_turno():
                         value[1][2] if api.mercado().status.nome == 'Mercado fechado' and rod == 12 else value[1][0],
                         value[1][2] if api.mercado().status.nome == 'Mercado fechado' and rod == 13 else value[1][1]]
                        )
-
-
-    # if api.mercado().status.nome == 'Mercado fechado':
-    #     with ThreadPoolExecutor(max_workers=40) as executor:
-    #         threads = executor.map(api.time_parcial, list_oitavas_prim_turno)
-    #
-    #     for teams in threads:
-    #         dict_oitavas_pts[teams.info.nome].append(teams.pontos)
-    #
-    # for key, value in dict_oitavas_pts.items():
-    #     if not value[1]:
-    #         oitavas.append([key, value[0], 0.00, 0.00])
-    #     else:
-    #         if len(value[1]) == 1:
-    #             oitavas.append([key, value[0], value[1][0], 0.00])
-    #         else:
-    #             oitavas.append([key, value[0], value[1][0], value[1][1]])
-
-
-
-
-
-    # if api.mercado().status.nome == 'Mercado fechado':
-    #
-    #     with ThreadPoolExecutor(max_workers=40) as executor:
-    #         threads = executor.map(api.time_parcial, list_oitavas_prim_turno)
-    #
-    #         for teams in threads:
-    #             ordered_dict_oitavas[str(teams.info.id)].append(teams.pontos)
-    #
-    #     for chave, valor in ordered_dict_oitavas.items():
-    #         for c, v in json.loads(escudos).items():
-    #             for id, nome in json.loads(nomes).items():
-    #                 if chave == c:
-    #                     if chave == id:
-    #                         dict_oitavas_pts[nome] = [v, valor]
-    #
-    #     for key, value in dict_oitavas_pts.items():
-    #         oitavas.append([key, value[1][2] if rod == 12 else float(value[1][0])])
-
-
-
 
     jogos_oitavas_a = []
     jogos_oitavas_a.append(
