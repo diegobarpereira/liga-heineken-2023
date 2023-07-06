@@ -1767,11 +1767,29 @@ def get_class_liberta_prim_turno():
 
 
 def oitavas_de_final_prim_turno():
-    # get_class_liberta_prim_turno()
+
     dict_oitavas_ = collections.defaultdict(list)
     dict_oitavas_pts = {}
     ordered_dict_oitavas = {}
     oitavas = []
+    dict_matamata_oitavas = {}
+
+    with open('static/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
+        data_matamata = currentFile.read().replace('\n', '')
+
+        for x, y in json.loads(data_matamata).items():
+            dict_matamata_oitavas[x] = y
+
+    if len(dict_matamata_oitavas['oitavas']) == 0:
+        dict_matamata['oitavas'] = get_class_liberta_prim_turno()
+
+        with open(f'static/dict_matamata.json', 'w') as f:
+            json.dump(dict_matamata, f)
+
+        list_oitavas_prim_turno = dict_matamata['oitavas']
+
+    else:
+        list_oitavas_prim_turno = dict_matamata_oitavas['oitavas']
 
     with open('static/escudos.json', encoding='utf-8', mode='r') as currentFile:
         escudos = currentFile.read().replace('\n', '')
@@ -1779,11 +1797,11 @@ def oitavas_de_final_prim_turno():
     with open('static/nomes.json', encoding='utf-8', mode='r') as currentFile:
         nomes = currentFile.read().replace('\n', '')
 
-    for item in rodadas_oitavas_prim_turno:
+    for rod_oit in rodadas_oitavas_prim_turno:
 
-        if str(item) in get_times_rodada():
+        if str(rod_oit) in get_times_rodada():
             for key, v in get_times_rodada()['1'].items():
-                adict = get_times_rodada()[str(item)]
+                adict = get_times_rodada()[str(rod_oit)]
                 dict_oitavas_[key].append(adict[key])
 
         else:
@@ -1809,6 +1827,7 @@ def oitavas_de_final_prim_turno():
     if api.mercado().status.nome == 'Mercado fechado':
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(api.time_parcial, list_oitavas_prim_turno)
+            # threads = executor.map(get_parciais, list_oitavas_seg_turno)
 
         for teams in threads:
             dict_oitavas_pts[teams.info.nome][1].append(teams.pontos)
@@ -1847,6 +1866,98 @@ def oitavas_de_final_prim_turno():
     jogos_oitavas_b.append(
         [oitavas[5][3], oitavas[5][1], oitavas[5][0], oitavas[5][2], oitavas[10][3], oitavas[10][1], oitavas[10][0],
          oitavas[10][2]])
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # dict_oitavas_ = collections.defaultdict(list)
+    # dict_oitavas_pts = {}
+    # ordered_dict_oitavas = {}
+    # oitavas = []
+    #
+    # with open('static/escudos.json', encoding='utf-8', mode='r') as currentFile:
+    #     escudos = currentFile.read().replace('\n', '')
+    #
+    # with open('static/nomes.json', encoding='utf-8', mode='r') as currentFile:
+    #     nomes = currentFile.read().replace('\n', '')
+    #
+    # for item in rodadas_oitavas_prim_turno:
+    #
+    #     if str(item) in get_times_rodada():
+    #         for key, v in get_times_rodada()['1'].items():
+    #             adict = get_times_rodada()[str(item)]
+    #             dict_oitavas_[key].append(adict[key])
+    #
+    #     else:
+    #         for key, v in get_times_rodada()['1'].items():
+    #             dict_oitavas_[key].append(0.00)
+    #
+    # novo_dict_oitavas = dict(dict_oitavas_)
+    #
+    # for time_id in list(novo_dict_oitavas):
+    #     if time_id not in list_oitavas_prim_turno:
+    #         novo_dict_oitavas.pop(str(time_id))
+    #
+    # for item in list_oitavas_prim_turno:
+    #     ordered_dict_oitavas[str(item)] = novo_dict_oitavas[str(item)]
+    #
+    # for chave, valor in ordered_dict_oitavas.items():
+    #     for c, v in json.loads(escudos).items():
+    #         for id, nome in json.loads(nomes).items():
+    #             if chave == c:
+    #                 if chave == id:
+    #                     dict_oitavas_pts[nome] = [v, valor]
+    #
+    # if api.mercado().status.nome == 'Mercado fechado':
+    #     with ThreadPoolExecutor(max_workers=40) as executor:
+    #         threads = executor.map(api.time_parcial, list_oitavas_prim_turno)
+    #
+    #     for teams in threads:
+    #         dict_oitavas_pts[teams.info.nome][1].append(teams.pontos)
+    #
+    # for key, value in dict_oitavas_pts.items():
+    #     oitavas.append([key,
+    #                     value[0],
+    #                     value[1][2] if api.mercado().status.nome == 'Mercado fechado' and rod == 12 else value[1][0],
+    #                     value[1][2] if api.mercado().status.nome == 'Mercado fechado' and rod == 13 else value[1][1]]
+    #                    )
+    #
+    # jogos_oitavas_a = []
+    # jogos_oitavas_a.append(
+    #     [oitavas[0][2], oitavas[0][1], oitavas[0][0], oitavas[0][3], oitavas[15][2], oitavas[15][1], oitavas[15][0],
+    #      oitavas[15][3]])
+    # jogos_oitavas_a.append(
+    #     [oitavas[6][2], oitavas[6][1], oitavas[6][0], oitavas[6][3], oitavas[9][2], oitavas[9][1], oitavas[9][0],
+    #      oitavas[9][3]])
+    # jogos_oitavas_a.append(
+    #     [oitavas[2][2], oitavas[2][1], oitavas[2][0], oitavas[2][3], oitavas[13][2], oitavas[13][1], oitavas[13][0],
+    #      oitavas[13][3]])
+    # jogos_oitavas_a.append(
+    #     [oitavas[4][2], oitavas[4][1], oitavas[4][0], oitavas[4][3], oitavas[11][2], oitavas[11][1], oitavas[11][0],
+    #      oitavas[11][3]])
+    #
+    # jogos_oitavas_b = []
+    # jogos_oitavas_b.append(
+    #     [oitavas[1][3], oitavas[1][1], oitavas[1][0], oitavas[1][2], oitavas[14][3], oitavas[14][1], oitavas[14][0],
+    #      oitavas[14][2]])
+    # jogos_oitavas_b.append(
+    #     [oitavas[7][3], oitavas[7][1], oitavas[7][0], oitavas[7][2], oitavas[8][3], oitavas[8][1], oitavas[8][0],
+    #      oitavas[8][2]])
+    # jogos_oitavas_b.append(
+    #     [oitavas[3][3], oitavas[3][1], oitavas[3][0], oitavas[3][2], oitavas[12][3], oitavas[12][1], oitavas[12][0],
+    #      oitavas[12][2]])
+    # jogos_oitavas_b.append(
+    #     [oitavas[5][3], oitavas[5][1], oitavas[5][0], oitavas[5][2], oitavas[10][3], oitavas[10][1], oitavas[10][0],
+    #      oitavas[10][2]])
 
     # print(jogos_oitavas_a, jogos_oitavas_b)
     return jogos_oitavas_a, jogos_oitavas_b
@@ -1909,16 +2020,33 @@ def get_class_oitavas():
             if quartas[x] in nomes:
                 list_quartas.append(ids)
 
-    print(list_quartas)
+    # print(list_quartas)
     return list_quartas
 
 
 def quartas_de_final_prim_turno():
-    # get_class_oitavas()
     dict_quartas_ = collections.defaultdict(list)
     dict_quartas_pts = {}
     ordered_dict_quartas = {}
     quartas = []
+    dict_matamata_quartas = {}
+
+    with open('static/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
+        data_matamata = currentFile.read().replace('\n', '')
+
+        for x, y in json.loads(data_matamata).items():
+            dict_matamata_quartas[x] = y
+
+    if len(dict_matamata_quartas['quartas']) == 0:
+        dict_matamata['quartas'] = get_class_oitavas()
+
+        with open(f'static/dict_matamata.json', 'w') as f:
+            json.dump(dict_matamata, f)
+
+        list_quartas_prim_turno = dict_matamata['quartas']
+
+    else:
+        list_quartas_prim_turno = dict_matamata_quartas['quartas']
 
     with open('static/escudos.json', encoding='utf-8', mode='r') as currentFile:
         escudos = currentFile.read().replace('\n', '')
@@ -1926,11 +2054,11 @@ def quartas_de_final_prim_turno():
     with open('static/nomes.json', encoding='utf-8', mode='r') as currentFile:
         nomes = currentFile.read().replace('\n', '')
 
-    for item in rodadas_quartas_prim_turno:
+    for rod_qua in rodadas_quartas_prim_turno:
 
-        if str(item) in get_times_rodada():
+        if str(rod_qua) in get_times_rodada():
             for key, v in get_times_rodada()['1'].items():
-                adict = get_times_rodada()[str(item)]
+                adict = get_times_rodada()[str(rod_qua)]
                 dict_quartas_[key].append(adict[key])
 
         else:
@@ -1956,18 +2084,17 @@ def quartas_de_final_prim_turno():
     if api.mercado().status.nome == 'Mercado fechado':
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(api.time_parcial, list_quartas_prim_turno)
+            # threads = executor.map(get_parciais, list_oitavas_seg_turno)
 
         for teams in threads:
-            dict_quartas_pts[teams.info.nome].append(teams.pontos)
+            dict_quartas_pts[teams.info.nome][1].append(teams.pontos)
 
     for key, value in dict_quartas_pts.items():
-        if not value[1]:
-            quartas.append([key, value[0], 0.00, 0.00])
-        else:
-            if len(value[1]) == 1:
-                quartas.append([key, value[0], value[1][0], 0.00])
-            else:
-                quartas.append([key, value[0], value[1][0], value[1][1]])
+        quartas.append([key,
+                        value[0],
+                        value[1][2] if api.mercado().status.nome == 'Mercado fechado' and rod == 14 else value[1][0],
+                        value[1][2] if api.mercado().status.nome == 'Mercado fechado' and rod == 15 else value[1][1]]
+                       )
 
     jogos_quartas_a = []
     jogos_quartas_a.append(
@@ -1985,7 +2112,6 @@ def quartas_de_final_prim_turno():
         [quartas[6][3], quartas[6][1], quartas[6][0], quartas[6][2], quartas[7][3], quartas[7][1], quartas[7][0],
          quartas[7][2]])
 
-    # print(jogos_quartas_a, jogos_quartas_b)
     return jogos_quartas_a, jogos_quartas_b
 
 
