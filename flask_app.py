@@ -1768,17 +1768,39 @@ def get_class_liberta_prim_turno():
 
 def oitavas_de_final_prim_turno():
 
+    global local
+    global prod
+
+    if 'C:\\' in os.getcwd():
+        local = True
+    else:
+        prod = True
+
     dict_oitavas_ = collections.defaultdict(list)
     dict_oitavas_pts = {}
     ordered_dict_oitavas = {}
     oitavas = []
     dict_matamata_oitavas = {}
 
-    with open('static/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
-        data_matamata = currentFile.read().replace('\n', '')
+    if not local:
+        with open('f/tmp/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
+            data_matamata = currentFile.read().replace('\n', '')
 
-        for x, y in json.loads(data_matamata).items():
-            dict_matamata_oitavas[x] = y
+            for x, y in json.loads(data_matamata).items():
+                dict_matamata_oitavas[x] = y
+    else:
+        with open('static/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
+            data_matamata = currentFile.read().replace('\n', '')
+
+            for x, y in json.loads(data_matamata).items():
+                dict_matamata_oitavas[x] = y
+
+
+    # with open('static/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
+    #     data_matamata = currentFile.read().replace('\n', '')
+    #
+    #     for x, y in json.loads(data_matamata).items():
+    #         dict_matamata_oitavas[x] = y
 
     if len(dict_matamata_oitavas['oitavas']) == 0:
         dict_matamata['oitavas'] = get_class_liberta_prim_turno()
