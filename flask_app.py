@@ -204,7 +204,7 @@ def liberta_primeiro_turno():
 @app.route('/matamataprimturno')
 def matamata_page():
     # oit_a, oit_b, qua_a, qua_b, semi_a, semi_b, final_a, final_b, esq_maior = mata_mata_prim_turno()
-    oit_a, oit_b = mata_mata_prim_turno()
+    oit_a, oit_b, qua_a, qua_b = mata_mata_prim_turno()
     final = True
 
     # campeao = []
@@ -221,7 +221,7 @@ def matamata_page():
     # return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b, get_list3=qua_a,
     #                        get_list4=qua_b, get_list5=semi_a, get_list6=semi_b, get_list7=final_a,
     #                        get_list8=final_b, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
-    return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b)
+    return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b, get_list3=qua_a, get_list4=qua_b)
 
 @app.route("/liberta2")
 def liberta_segundo_turno():
@@ -1909,11 +1909,12 @@ def get_class_oitavas():
             if quartas[x] in nomes:
                 list_quartas.append(ids)
 
-    # print(list_quartas)
+    print(list_quartas)
     return list_quartas
 
 
 def quartas_de_final_prim_turno():
+    # get_class_oitavas()
     dict_quartas_ = collections.defaultdict(list)
     dict_quartas_pts = {}
     ordered_dict_quartas = {}
@@ -2246,7 +2247,7 @@ def mata_mata_prim_turno():
         prod = True
 
     jogos_oitavas_a, jogos_oitavas_b = oitavas_de_final_prim_turno()
-    # jogos_quartas_a, jogos_quartas_b = quartas_de_final_prim_turno()
+    jogos_quartas_a, jogos_quartas_b = quartas_de_final_prim_turno()
     # jogos_semis_a, jogos_semis_b = semi_finais_prim_turno()
     # jogos_final_a, jogos_final_b, esq_maior = finais_prim_turno()
     # campeao_prim_turno = ''
@@ -2263,16 +2264,16 @@ def mata_mata_prim_turno():
     # dict_prem['liberta_prim_turno']['campeao'] = campeao_prim_turno
     # dict_prem['liberta_prim_turno']['vice'] = vice_prim_turno
 
-    # if not local:
-    #     with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
-    #         json.dump(dict_prem, f, ensure_ascii=False)
-    # else:
-    #     with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-    #         json.dump(dict_prem, f, ensure_ascii=False)
+    if not local:
+        with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+            json.dump(dict_prem, f, ensure_ascii=False)
+    else:
+        with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+            json.dump(dict_prem, f, ensure_ascii=False)
 
     # print(jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior)
     # return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior
-    return jogos_oitavas_a, jogos_oitavas_b
+    return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b
 
 def get_parciais(time_id):
     # return_parciais = [api.time_parcial(time_id)]
