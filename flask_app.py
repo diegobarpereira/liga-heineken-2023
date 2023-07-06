@@ -2263,12 +2263,12 @@ def mata_mata_prim_turno():
     # dict_prem['liberta_prim_turno']['campeao'] = campeao_prim_turno
     # dict_prem['liberta_prim_turno']['vice'] = vice_prim_turno
 
-    if not local:
-        with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
-            json.dump(dict_prem, f, ensure_ascii=False)
-    else:
-        with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-            json.dump(dict_prem, f, ensure_ascii=False)
+    # if not local:
+    #     with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+    #         json.dump(dict_prem, f, ensure_ascii=False)
+    # else:
+    #     with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+    #         json.dump(dict_prem, f, ensure_ascii=False)
 
     # print(jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior)
     # return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior
