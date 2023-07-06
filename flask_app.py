@@ -10,8 +10,8 @@ from matplotlib import pyplot as plt
 
 import cartolafc.models
 from cartolafc.constants import rodadas_campeonato, rodadas_primeiro_turno, rodadas_segundo_turno, \
-    rodadas_liberta_prim_turno, grupo_liberta_prim_turno, rodadas_oitavas_prim_turno, list_oitavas_prim_turno, \
-    rodadas_quartas_prim_turno, list_quartas_prim_turno, rodadas_semis_prim_turno, list_semis_prim_turno, \
+    rodadas_liberta_prim_turno, grupo_liberta_prim_turno, rodadas_oitavas_prim_turno, \
+    rodadas_quartas_prim_turno, rodadas_semis_prim_turno, list_semis_prim_turno, \
     rodadas_finais_prim_turno, \
     list_finais_prim_turno, dict_prem, rodadas_liberta_seg_turno, grupo_liberta_seg_turno, rodadas_oitavas_seg_turno, \
     dict_matamata, rodadas_quartas_seg_turno, rodadas_semis_seg_turno, rodadas_finais_seg_turno, premios
@@ -1782,20 +1782,6 @@ def oitavas_de_final_prim_turno():
     oitavas = []
     dict_matamata_oitavas = {}
 
-    # if not local:
-    #     with open('f/tmp/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
-    #         data_matamata = currentFile.read().replace('\n', '')
-    #
-    #         for x, y in json.loads(data_matamata).items():
-    #             dict_matamata_oitavas[x] = y
-    # else:
-    #     with open('static/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
-    #         data_matamata = currentFile.read().replace('\n', '')
-    #
-    #         for x, y in json.loads(data_matamata).items():
-    #             dict_matamata_oitavas[x] = y
-
-
     with open('static/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
         data_matamata = currentFile.read().replace('\n', '')
 
@@ -1804,9 +1790,6 @@ def oitavas_de_final_prim_turno():
 
     if len(dict_matamata_oitavas['oitavas']) == 0:
         dict_matamata['oitavas'] = get_class_liberta_prim_turno()
-
-        # with open(f'static/dict_matamata.json', 'w') as f:
-        #     json.dump(dict_matamata, f)
 
         if not local:
             with open(f'/tmp/dict_matamata.json', 'w', encoding='utf-8') as f:
@@ -1856,7 +1839,6 @@ def oitavas_de_final_prim_turno():
     if api.mercado().status.nome == 'Mercado fechado':
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(api.time_parcial, list_oitavas_prim_turno)
-            # threads = executor.map(get_parciais, list_oitavas_seg_turno)
 
         for teams in threads:
             dict_oitavas_pts[teams.info.nome][1].append(teams.pontos)
@@ -2054,6 +2036,15 @@ def get_class_oitavas():
 
 
 def quartas_de_final_prim_turno():
+
+    global local
+    global prod
+
+    if 'C:\\' in os.getcwd():
+        local = True
+    else:
+        prod = True
+
     dict_quartas_ = collections.defaultdict(list)
     dict_quartas_pts = {}
     ordered_dict_quartas = {}
@@ -2069,8 +2060,12 @@ def quartas_de_final_prim_turno():
     if len(dict_matamata_quartas['quartas']) == 0:
         dict_matamata['quartas'] = get_class_oitavas()
 
-        with open(f'static/dict_matamata.json', 'w') as f:
-            json.dump(dict_matamata, f)
+        if not local:
+            with open(f'/tmp/dict_matamata.json', 'w', encoding='utf-8') as f:
+                json.dump(dict_matamata, f, ensure_ascii=False)
+        else:
+            with open(f'static/dict_matamata.json', 'w', encoding='utf-8') as f:
+                json.dump(dict_matamata, f, ensure_ascii=False)
 
         list_quartas_prim_turno = dict_matamata['quartas']
 
