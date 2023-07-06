@@ -2124,8 +2124,8 @@ def quartas_de_final_prim_turno():
         for key, value in dict_quartas_pts.items():
             quartas.append([key,
                             value[0],
-                            value[1][2] if rod == 12 else value[1][0],
-                            value[1][2] if rod == 13 else value[1][1]]
+                            value[1][2] if rod == 14 else value[1][0],
+                            value[1][2] if rod == 15 else value[1][1]]
                             # value[1][2] if api.mercado().status.nome == 'Mercado fechado' and rod == 12 else value[1][0],
                             # value[1][2] if api.mercado().status.nome == 'Mercado fechado' and rod == 13 else value[1][1]]
                            )
