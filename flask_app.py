@@ -1782,31 +1782,38 @@ def oitavas_de_final_prim_turno():
     oitavas = []
     dict_matamata_oitavas = {}
 
-    if not local:
-        with open('f/tmp/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
-            data_matamata = currentFile.read().replace('\n', '')
-
-            for x, y in json.loads(data_matamata).items():
-                dict_matamata_oitavas[x] = y
-    else:
-        with open('static/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
-            data_matamata = currentFile.read().replace('\n', '')
-
-            for x, y in json.loads(data_matamata).items():
-                dict_matamata_oitavas[x] = y
-
-
-    # with open('static/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
-    #     data_matamata = currentFile.read().replace('\n', '')
+    # if not local:
+    #     with open('f/tmp/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
+    #         data_matamata = currentFile.read().replace('\n', '')
     #
-    #     for x, y in json.loads(data_matamata).items():
-    #         dict_matamata_oitavas[x] = y
+    #         for x, y in json.loads(data_matamata).items():
+    #             dict_matamata_oitavas[x] = y
+    # else:
+    #     with open('static/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
+    #         data_matamata = currentFile.read().replace('\n', '')
+    #
+    #         for x, y in json.loads(data_matamata).items():
+    #             dict_matamata_oitavas[x] = y
+
+
+    with open('static/dict_matamata.json', encoding='utf-8', mode='r') as currentFile:
+        data_matamata = currentFile.read().replace('\n', '')
+
+        for x, y in json.loads(data_matamata).items():
+            dict_matamata_oitavas[x] = y
 
     if len(dict_matamata_oitavas['oitavas']) == 0:
         dict_matamata['oitavas'] = get_class_liberta_prim_turno()
 
-        with open(f'static/dict_matamata.json', 'w') as f:
-            json.dump(dict_matamata, f)
+        # with open(f'static/dict_matamata.json', 'w') as f:
+        #     json.dump(dict_matamata, f)
+
+        if not local:
+            with open(f'/tmp/dict_matamata.json', 'w', encoding='utf-8') as f:
+                json.dump(dict_matamata, f, ensure_ascii=False)
+        else:
+            with open(f'static/dict_matamata.json', 'w', encoding='utf-8') as f:
+                json.dump(dict_matamata, f, ensure_ascii=False)
 
         list_oitavas_prim_turno = dict_matamata['oitavas']
 
