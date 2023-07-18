@@ -1837,8 +1837,9 @@ def oitavas_de_final_prim_turno():
                     if chave == id:
                         dict_oitavas_pts[nome] = [v, valor]
 
+    if 12 <= rod < 14 and api.mercado().status.nome == 'Mercado fechado':
     # if api.mercado().status.nome == 'Mercado fechado':
-    if mercado_status == 'Mercado fechado':
+    # if mercado_status == 'Mercado fechado':
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(api.time_parcial, list_oitavas_prim_turno)
 
@@ -1851,8 +1852,10 @@ def oitavas_de_final_prim_turno():
                             value[1][2] if rod == 12 else value[1][0],
                             value[1][2] if rod == 13 else value[1][1]])
 
+    elif rod > 14 or api.mercado().status.nome == 'Mercado aberto':
+
     # if api.mercado().status.nome == 'Mercado aberto':
-    else:
+
         for key, value in dict_oitavas_pts.items():
             oitavas.append([key,
                             value[0], value[1][0], value[1][1]])
@@ -2019,8 +2022,10 @@ def quartas_de_final_prim_turno():
                     if chave == id:
                         dict_quartas_pts[nome] = [v, valor]
 
+    # if 14 <= rod < 16:
     # if api.mercado().status.nome == 'Mercado fechado':
-    if mercado_status == 'Mercado fechado':
+    # if mercado_status == 'Mercado fechado':
+    if 14 <= rod < 16 and api.mercado().status.nome == 'Mercado fechado':
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(api.time_parcial, list_quartas_prim_turno)
 
@@ -2033,8 +2038,10 @@ def quartas_de_final_prim_turno():
                             value[1][2] if rod == 14 else value[1][0],
                             value[1][2] if rod == 15 else value[1][1]])
 
-    # if api.mercado().status.nome == 'Mercado aberto':
-    else:
+    elif rod > 16 or api.mercado().status.nome == 'Mercado aberto':
+
+        # if api.mercado().status.nome == 'Mercado aberto':
+    # else:
         for key, value in dict_quartas_pts.items():
             quartas.append([key, value[0], value[1][0], value[1][1]])
 
