@@ -205,7 +205,7 @@ def liberta_primeiro_turno():
 def matamata_page():
     mercado_status = api.mercado().status.nome
     # oit_a, oit_b, qua_a, qua_b, semi_a, semi_b, final_a, final_b, esq_maior = mata_mata_prim_turno()
-    oit_a, oit_b, qua_a, qua_b = mata_mata_prim_turno()
+    oit_a, oit_b, qua_a, qua_b, semi_a, semi_b = mata_mata_prim_turno()
     final = True
 
     # campeao = []
@@ -222,7 +222,8 @@ def matamata_page():
     # return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b, get_list3=qua_a,
     #                        get_list4=qua_b, get_list5=semi_a, get_list6=semi_b, get_list7=final_a,
     #                        get_list8=final_b, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
-    return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b, get_list3=qua_a, get_list4=qua_b)
+    return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b, get_list3=qua_a, get_list4=qua_b,
+                           get_list5=semi_a, get_list6=semi_b)
 
 
 @app.route("/liberta2")
@@ -2142,7 +2143,7 @@ def semi_finais_prim_turno():
             dict_matamata_semis[x] = y
 
     if len(dict_matamata_semis['semis']) == 0:
-        dict_matamata['semis'] = get_class_oitavas()
+        dict_matamata['semis'] = get_class_quartas()
 
         if not local:
             with open(f'/tmp/dict_matamata.json', 'w', encoding='utf-8') as f:
@@ -2388,7 +2389,7 @@ def mata_mata_prim_turno():
 
     jogos_oitavas_a, jogos_oitavas_b = oitavas_de_final_prim_turno()
     jogos_quartas_a, jogos_quartas_b = quartas_de_final_prim_turno()
-    # jogos_semis_a, jogos_semis_b = semi_finais_prim_turno()
+    jogos_semis_a, jogos_semis_b = semi_finais_prim_turno()
     # jogos_final_a, jogos_final_b, esq_maior = finais_prim_turno()
     # campeao_prim_turno = ''
     # vice_prim_turno = ''
@@ -2413,7 +2414,7 @@ def mata_mata_prim_turno():
 
     # print(jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior)
     # return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior
-    return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b
+    return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b
 
 
 def get_parciais(time_id):
