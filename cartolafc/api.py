@@ -402,8 +402,9 @@ class Api(object):
                     for partida in partidas:
                         if atleta.clube != '' and (
                                 atleta.clube.nome == partida.clube_casa.nome or atleta.clube.nome == partida.clube_visitante.nome):
-                            # if partida.fim_de_jogo == 'veja como foi':
-                            if partida.status_transmissao_tr == 'ENCERRADA' or not partida.valida:
+
+                            # if partida.status_transmissao_tr == 'ENCERRADA' or not partida.valida:
+                            if (partida.fim_de_jogo == 'veja como foi' or partida.status_transmissao_tr == 'ENCERRADA') or not partida.valida:
                                 jogo_finalizou = True
                             else:
                                 jogo_finalizou = False

@@ -2039,7 +2039,7 @@ def quartas_de_final_prim_turno():
                             value[1][2] if rod == 14 else value[1][0],
                             value[1][2] if rod == 15 else value[1][1]])
 
-    elif rod > 16 or api.mercado().status.nome == 'Mercado aberto':
+    elif rod >= 16 or api.mercado().status.nome == 'Mercado aberto':
 
         # if api.mercado().status.nome == 'Mercado aberto':
     # else:
@@ -2190,7 +2190,7 @@ def semi_finais_prim_turno():
                     if chave == id:
                         dict_semis_pts[nome] = [v, valor]
 
-    if api.mercado().status.nome == 'Mercado fechado':
+    if 16 <= rod < 18 and api.mercado().status.nome == 'Mercado fechado':
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(api.time_parcial, list_semis_prim_turno)
 
@@ -2203,10 +2203,10 @@ def semi_finais_prim_turno():
                             value[1][2] if rod == 16 else value[1][0],
                             value[1][2] if rod == 17 else value[1][1]])
 
-    if api.mercado().status.nome == 'Mercado aberto':
+    elif rod >= 18 or api.mercado().status.nome == 'Mercado aberto':
+
         for key, value in dict_semis_pts.items():
-            semis.append([key,
-                            value[0], value[1][0], value[1][1]])
+            semis.append([key, value[0], value[1][0], value[1][1]])
 
     jogos_semis_a = []
     jogos_semis_a.append(

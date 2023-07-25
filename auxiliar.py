@@ -273,6 +273,8 @@ def rodar_tudo():
 # retornar_estats_liga()
 
 rodar_tudo()
+# print(api.partidas(16))
+
 #
 # dict_matamata_oitavas = {}
 # # list_oitavas_seg_turno = []
