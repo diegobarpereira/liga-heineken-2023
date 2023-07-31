@@ -204,26 +204,26 @@ def liberta_primeiro_turno():
 @app.route('/matamataprimturno')
 def matamata_page():
     mercado_status = api.mercado().status.nome
-    # oit_a, oit_b, qua_a, qua_b, semi_a, semi_b, final_a, final_b, esq_maior = mata_mata_prim_turno()
-    oit_a, oit_b, qua_a, qua_b, semi_a, semi_b = mata_mata_prim_turno()
-    final = True
-
+    oit_a, oit_b, qua_a, qua_b, semi_a, semi_b, final_a, final_b, esq_maior = mata_mata_prim_turno()
+    # oit_a, oit_b, qua_a, qua_b, semi_a, semi_b = mata_mata_prim_turno()
+    # final = True
+    #
     # campeao = []
     # vice = []
     #
     # for f_a, f_b in zip(final_a, final_b):
     #     if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
-    #         campeao = [[f_a[1], f_a[2]]]
-    #         vice = [[f_b[1], f_b[2]]]
+    #         campeao = [[f_a[1], f_a[2]] if rod >= 19 else []]
+    #         vice = [[f_b[1], f_b[2]] if rod >= 19 else []]
     #     else:
-    #         campeao = [[f_b[1], f_b[2]]]
-    #         vice = [[f_a[1], f_a[2]]]
+    #         campeao = [[f_b[1], f_b[2]] if rod >= 19 else []]
+    #         vice = [[f_a[1], f_a[2]] if rod >= 19 else []]
 
-    # return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b, get_list3=qua_a,
-    #                        get_list4=qua_b, get_list5=semi_a, get_list6=semi_b, get_list7=final_a,
-    #                        get_list8=final_b, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
-    return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b, get_list3=qua_a, get_list4=qua_b,
-                           get_list5=semi_a, get_list6=semi_b)
+    return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b, get_list3=qua_a,
+                           get_list4=qua_b, get_list5=semi_a, get_list6=semi_b, get_list7=final_a,
+                           get_list8=final_b)#, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
+    # return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b, get_list3=qua_a, get_list4=qua_b,
+    #                        get_list5=semi_a, get_list6=semi_b)
 
 
 @app.route("/liberta2")
@@ -2215,8 +2215,8 @@ def semi_finais_prim_turno():
 
     jogos_semis_b = []
     jogos_semis_b.append(
-        [semis[2][2], semis[2][1], semis[2][0], semis[2][3], semis[3][2], semis[3][1], semis[3][0],
-         semis[3][3]])
+        [semis[2][3], semis[2][1], semis[2][0], semis[2][2], semis[3][3], semis[3][1], semis[3][0],
+         semis[3][2]])
 
     # print(jogos_semis_a, jogos_semis_b)
     return jogos_semis_a, jogos_semis_b
@@ -2390,31 +2390,32 @@ def mata_mata_prim_turno():
     jogos_oitavas_a, jogos_oitavas_b = oitavas_de_final_prim_turno()
     jogos_quartas_a, jogos_quartas_b = quartas_de_final_prim_turno()
     jogos_semis_a, jogos_semis_b = semi_finais_prim_turno()
-    # jogos_final_a, jogos_final_b, esq_maior = finais_prim_turno()
-    # campeao_prim_turno = ''
-    # vice_prim_turno = ''
-    #
-    # for f_a, f_b in zip(jogos_final_a, jogos_final_b):
-    #     if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
-    #         campeao_prim_turno = f_a[2]
-    #         vice_prim_turno = f_b[2]
-    #     else:
-    #         campeao_prim_turno = f_b[2]
-    #         vice_prim_turno = f_a[2]
-    #
-    # dict_prem['liberta_prim_turno']['campeao'] = campeao_prim_turno
-    # dict_prem['liberta_prim_turno']['vice'] = vice_prim_turno
+    jogos_final_a, jogos_final_b, esq_maior = finais_prim_turno()
+    campeao_prim_turno = ''
+    vice_prim_turno = ''
 
-    # if not local:
-    #     with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
-    #         json.dump(dict_prem, f, ensure_ascii=False)
-    # else:
-    #     with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-    #         json.dump(dict_prem, f, ensure_ascii=False)
+    for f_a, f_b in zip(jogos_final_a, jogos_final_b):
+        if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
+            campeao_prim_turno = f_a[2]
+            vice_prim_turno = f_b[2]
+        else:
+            campeao_prim_turno = f_b[2]
+            vice_prim_turno = f_a[2]
+
+    if rod >= 19:
+        dict_prem['liberta_prim_turno']['campeao'] = campeao_prim_turno
+        dict_prem['liberta_prim_turno']['vice'] = vice_prim_turno
+
+    if not local:
+        with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+            json.dump(dict_prem, f, ensure_ascii=False)
+    else:
+        with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+            json.dump(dict_prem, f, ensure_ascii=False)
 
     # print(jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior)
-    # return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior
-    return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b
+    return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior
+    # return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b
 
 
 def get_parciais(time_id):
