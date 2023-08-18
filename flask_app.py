@@ -206,22 +206,22 @@ def matamata_page():
     mercado_status = api.mercado().status.nome
     oit_a, oit_b, qua_a, qua_b, semi_a, semi_b, final_a, final_b, esq_maior = mata_mata_prim_turno()
     # oit_a, oit_b, qua_a, qua_b, semi_a, semi_b = mata_mata_prim_turno()
-    # final = True
-    #
-    # campeao = []
-    # vice = []
-    #
-    # for f_a, f_b in zip(final_a, final_b):
-    #     if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
-    #         campeao = [[f_a[1], f_a[2]] if rod >= 19 else []]
-    #         vice = [[f_b[1], f_b[2]] if rod >= 19 else []]
-    #     else:
-    #         campeao = [[f_b[1], f_b[2]] if rod >= 19 else []]
-    #         vice = [[f_a[1], f_a[2]] if rod >= 19 else []]
+    final = True
+
+    campeao = []
+    vice = []
+
+    for f_a, f_b in zip(final_a, final_b):
+        if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
+            campeao = [[f_a[1], f_a[2]] if rod >= 19 else []]
+            vice = [[f_b[1], f_b[2]] if rod >= 19 else []]
+        else:
+            campeao = [[f_b[1], f_b[2]] if rod >= 19 else []]
+            vice = [[f_a[1], f_a[2]] if rod >= 19 else []]
 
     return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b, get_list3=qua_a,
                            get_list4=qua_b, get_list5=semi_a, get_list6=semi_b, get_list7=final_a,
-                           get_list8=final_b)#, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
+                           get_list8=final_b, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
     # return render_template('matamata.html', get_list1=oit_a, get_list2=oit_b, get_list3=qua_a, get_list4=qua_b,
     #                        get_list5=semi_a, get_list6=semi_b)
 
@@ -573,6 +573,216 @@ def liga_class():
     with open('static/nomes.json', encoding='utf-8', mode='r') as currentFile:
         nomes = currentFile.read().replace('\n', '')
 
+    # for prim_turno in rodadas_primeiro_turno:
+    #     for key, value in json.loads(data).items():
+    #         if key == str(prim_turno):
+    #             for v in value.items():
+    #                 if v[0] in dict_prim_turno:
+    #                     dict_prim_turno[v[0]].append(v[1])
+    #                 else:
+    #                     dict_prim_turno[v[0]] = [v[1]]
+    #
+    # ordenar_dict = sorted(dict_prim_turno.items(), key=lambda t: sum(t[1]), reverse=True)
+    # for k in ordenar_dict:
+    #     primeiro_turno_[k[0]] = sum(k[1])
+    #
+    # if rod > 19:
+    #
+    #     for seg_turno in rodadas_segundo_turno:
+    #         for key, value in json.loads(data).items():
+    #             if key == str(seg_turno):
+    #                 for v in value.items():
+    #                     if v[0] in dict_seg_turno:
+    #                         dict_seg_turno[v[0]].append(v[1])
+    #                     else:
+    #                         dict_seg_turno[v[0]] = [v[1]]
+    #
+    #     ordenar_dict = sorted(dict_seg_turno.items(), key=lambda t: sum(t[1]), reverse=True)
+    #     for k_ in ordenar_dict:
+    #         segundo_turno_[k_[0]] = sum(k_[1])
+    #
+    # for camp in rodadas_campeonato:
+    #     for key, value in json.loads(data).items():
+    #         if key == str(camp):
+    #             for v in value.items():
+    #                 if v[0] in dict_campeonato:
+    #                     dict_campeonato[v[0]].append(v[1])
+    #                 else:
+    #                     dict_campeonato[v[0]] = [v[1]]
+    #
+    # ordenar_dict = sorted(dict_campeonato.items(), key=lambda t: sum(t[1]), reverse=True)
+    # for k__ in ordenar_dict:
+    #     campeonato_[k__[0]] = sum(k__[1])
+    #
+    # with open('static/sem_capitao.json', encoding='utf-8', mode='r') as currentFile:
+    #     data_sem_capitao = currentFile.read().replace('\n', '')
+    #
+    #     for x, y in json.loads(data_sem_capitao).items():
+    #         dict_sem_capitao[x] = y
+    #
+    # if rod > 19:
+    #
+    #     if api.mercado().status.nome == 'Mercado aberto' or api.mercado().status.nome == 'Final de temporada':
+    #
+    #         for (c1, v1), (chave, valor), (chave_, valor_), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
+    #                                                                                     campeonato_.items(),
+    #                                                                                     segundo_turno_.items(),
+    #                                                                                     dict_sem_capitao.items()):
+    #             for c, e in json.loads(escudos).items():
+    #                 for k, n in json.loads(nomes).items():
+    #                     if chave_ == c:
+    #                         if chave_ == k:
+    #                             segundo_turno[n] = [e, valor_]
+    #                     if chave == c:
+    #                         if chave == k:
+    #                             campeonato[n] = [e, valor]
+    #                     if chave_sc == c:
+    #                         if chave_sc == k:
+    #                             sem_capitao[n] = [e, valor_sc]
+    #                     if c1 == c:
+    #                         if c1 == k:
+    #                             primeiro_turno[n] = [e, v1]
+    #
+    #         data_times_rodadas = dict(json.loads(data).items())
+    #         pen_rod = list(data_times_rodadas.keys())[-1]
+    #
+    #         for key_, value_ in segundo_turno_.items():
+    #             for key2_, value2_ in data_times_rodadas[pen_rod].items():
+    #                 if key_ == key2_:
+    #                     for k2, n2 in json.loads(nomes).items():
+    #                         if k2 == key_:
+    #                             segundo_turno[n2].append(data_times_rodadas[pen_rod][key_])
+    #
+    #         for key_, value_ in campeonato_.items():
+    #             for key2_, value2_ in data_times_rodadas[pen_rod].items():
+    #                 if key_ == key2_:
+    #                     for k2, n2 in json.loads(nomes).items():
+    #                         if k2 == key_:
+    #                             campeonato[n2].append(data_times_rodadas[pen_rod][key_])
+    #
+    # if api.mercado().status.nome == 'Mercado fechado':
+    #
+    #     with ThreadPoolExecutor(max_workers=40) as executor:
+    #         threads = executor.map(api.time_parcial, todos_ids)
+    #
+    #         for teams in threads:
+    #             team_dict[teams.info.id] = teams.pontos
+    #
+    #         for (c1, v1), (chave, valor), (chave_, valor_), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
+    #                                                                                     campeonato_.items(),
+    #                                                                                     segundo_turno_.items(),
+    #                                                                                     dict_sem_capitao.items()):
+    #             for c, e in json.loads(escudos).items():
+    #                 for k, n in json.loads(nomes).items():
+    #                     for key, value in team_dict.items():
+    #                         if chave_ == c:
+    #                             if chave_ == k:
+    #                                 if chave_ == str(key):
+    #                                     segundo_turno[n] = [e, valor_ + value, value]
+    #                         if chave == c:
+    #                             if chave == k:
+    #                                 if chave == str(key):
+    #                                     campeonato[n] = [e, valor + value, value]
+    #                         if chave_sc == c:
+    #                             if chave_sc == k:
+    #                                 sem_capitao[n] = [e, valor_sc]
+    #                         if c1 == c:
+    #                             if c1 == k:
+    #                                 primeiro_turno[n] = [e, v1]
+    #
+    #     primeiro_turno.pop('Contra Tudo e Todos Avanti!')
+    #     segundo_turno.pop('Contra Tudo e Todos Avanti!')
+    #     campeonato.pop('Contra Tudo e Todos Avanti!')
+    #
+    #     lider_prim_turno = next(iter(primeiro_turno))
+    #     lider_seg_turno = next(iter(segundo_turno))
+    #
+    #     if rod >= 19:
+    #         dict_prem['primeiro_turno']['lider'] = lider_prim_turno
+    #
+    #     if rod >= 38:
+    #         dict_prem['segundo_turno']['lider'] = lider_seg_turno
+    #
+    #     if not local:
+    #         with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+    #             json.dump(dict_prem, f, ensure_ascii=False)
+    #     else:
+    #         with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+    #             json.dump(dict_prem, f, ensure_ascii=False)
+    #
+    #     return primeiro_turno, segundo_turno, campeonato, sem_capitao
+    #
+    # else:
+    #
+    #     if api.mercado().status.nome == 'Mercado aberto' or api.mercado().status.nome == 'Final de temporada':
+    #
+    #         for (c1, v1), (chave, valor), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
+    #                                                                   campeonato_.items(),
+    #                                                                   dict_sem_capitao.items()):
+    #             for c, e in json.loads(escudos).items():
+    #                 for k, n in json.loads(nomes).items():
+    #                     if chave == c:
+    #                         if chave == k:
+    #                             campeonato[n] = [e, valor]
+    #                     if chave_sc == c:
+    #                         if chave_sc == k:
+    #                             sem_capitao[n] = [e, valor_sc]
+    #                     if c1 == c:
+    #                         if c1 == k:
+    #                             primeiro_turno[n] = [e, v1]
+    #
+    #         data_times_rodadas = dict(json.loads(data).items())
+    #         pen_rod = list(data_times_rodadas.keys())[-1]
+    #
+    #         for key_, value_ in campeonato_.items():
+    #             for key2_, value2_ in data_times_rodadas[pen_rod].items():
+    #                 if key_ == key2_:
+    #                     for k2, n2 in json.loads(nomes).items():
+    #                         if k2 == key_:
+    #                             campeonato[n2].append(data_times_rodadas[pen_rod][key_])
+    #
+    #     if api.mercado().status.nome == 'Mercado fechado':
+    #
+    #         with ThreadPoolExecutor(max_workers=40) as executor:
+    #             threads = executor.map(api.time_parcial, todos_ids)
+    #
+    #             for teams in threads:
+    #                 team_dict[teams.info.id] = teams.pontos
+    #
+    #             for (c1, v1), (chave, valor), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
+    #                                                                       campeonato_.items(),
+    #                                                                       dict_sem_capitao.items()):
+    #                 for c, e in json.loads(escudos).items():
+    #                     for k, n in json.loads(nomes).items():
+    #                         for key, value in team_dict.items():
+    #                             if chave == c:
+    #                                 if chave == k:
+    #                                     if chave == str(key):
+    #                                         campeonato[n] = [e, valor + value, value]
+    #                             if chave_sc == c:
+    #                                 if chave_sc == k:
+    #                                     sem_capitao[n] = [e, valor_sc]
+    #                             if c1 == c:
+    #                                 if c1 == k:
+    #                                     primeiro_turno[n] = [e, v1]
+    #
+    #     primeiro_turno.pop('Contra Tudo e Todos Avanti!')
+    #     campeonato.pop('Contra Tudo e Todos Avanti!')
+    #
+    #     lider_prim_turno = next(iter(primeiro_turno))
+    #
+    #     if rod >= 19:
+    #         dict_prem['primeiro_turno']['lider'] = lider_prim_turno
+    #
+    #     if not local:
+    #         with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+    #             json.dump(dict_prem, f, ensure_ascii=False)
+    #     else:
+    #         with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+    #             json.dump(dict_prem, f, ensure_ascii=False)
+    #
+    #     return primeiro_turno, campeonato, sem_capitao
+
     for prim_turno in rodadas_primeiro_turno:
         for key, value in json.loads(data).items():
             if key == str(prim_turno):
@@ -586,20 +796,18 @@ def liga_class():
     for k in ordenar_dict:
         primeiro_turno_[k[0]] = sum(k[1])
 
-    if rod > 19:
+    for seg_turno in rodadas_segundo_turno:
+        for key, value in json.loads(data).items():
+            if key == str(seg_turno):
+                for v in value.items():
+                    if v[0] in dict_seg_turno:
+                        dict_seg_turno[v[0]].append(v[1])
+                    else:
+                        dict_seg_turno[v[0]] = [v[1]]
 
-        for seg_turno in rodadas_segundo_turno:
-            for key, value in json.loads(data).items():
-                if key == str(seg_turno):
-                    for v in value.items():
-                        if v[0] in dict_seg_turno:
-                            dict_seg_turno[v[0]].append(v[1])
-                        else:
-                            dict_seg_turno[v[0]] = [v[1]]
-
-        ordenar_dict = sorted(dict_seg_turno.items(), key=lambda t: sum(t[1]), reverse=True)
-        for k_ in ordenar_dict:
-            segundo_turno_[k_[0]] = sum(k_[1])
+    ordenar_dict = sorted(dict_seg_turno.items(), key=lambda t: sum(t[1]), reverse=True)
+    for k_ in ordenar_dict:
+        segundo_turno_[k_[0]] = sum(k_[1])
 
     for camp in rodadas_campeonato:
         for key, value in json.loads(data).items():
@@ -620,9 +828,51 @@ def liga_class():
         for x, y in json.loads(data_sem_capitao).items():
             dict_sem_capitao[x] = y
 
-    if rod > 19:
+    if api.mercado().status.nome == 'Mercado aberto' or api.mercado().status.nome == 'Final de temporada':
 
-        if api.mercado().status.nome == 'Mercado aberto' or api.mercado().status.nome == 'Final de temporada':
+        for (c1, v1), (chave, valor), (chave_, valor_), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
+                                                                                    campeonato_.items(),
+                                                                                    segundo_turno_.items(),
+                                                                                    dict_sem_capitao.items()):
+            for c, e in json.loads(escudos).items():
+                for k, n in json.loads(nomes).items():
+                    if chave_ == c:
+                        if chave_ == k:
+                            segundo_turno[n] = [e, valor_]
+                    if chave == c:
+                        if chave == k:
+                            campeonato[n] = [e, valor]
+                    if chave_sc == c:
+                        if chave_sc == k:
+                            sem_capitao[n] = [e, valor_sc]
+                    if c1 == c:
+                        if c1 == k:
+                            primeiro_turno[n] = [e, v1]
+
+        data_times_rodadas = dict(json.loads(data).items())
+        pen_rod = list(data_times_rodadas.keys())[-1]
+
+        for key_, value_ in segundo_turno_.items():
+            for key2_, value2_ in data_times_rodadas[pen_rod].items():
+                if key_ == key2_:
+                    for k2, n2 in json.loads(nomes).items():
+                        if k2 == key_:
+                            segundo_turno[n2].append(data_times_rodadas[pen_rod][key_])
+
+        for key_, value_ in campeonato_.items():
+            for key2_, value2_ in data_times_rodadas[pen_rod].items():
+                if key_ == key2_:
+                    for k2, n2 in json.loads(nomes).items():
+                        if k2 == key_:
+                            campeonato[n2].append(data_times_rodadas[pen_rod][key_])
+
+    if api.mercado().status.nome == 'Mercado fechado':
+
+        with ThreadPoolExecutor(max_workers=40) as executor:
+            threads = executor.map(api.time_parcial, todos_ids)
+
+            for teams in threads:
+                team_dict[teams.info.id] = teams.pontos
 
             for (c1, v1), (chave, valor), (chave_, valor_), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
                                                                                         campeonato_.items(),
@@ -630,158 +880,43 @@ def liga_class():
                                                                                         dict_sem_capitao.items()):
                 for c, e in json.loads(escudos).items():
                     for k, n in json.loads(nomes).items():
-                        if chave_ == c:
-                            if chave_ == k:
-                                segundo_turno[n] = [e, valor_]
-                        if chave == c:
-                            if chave == k:
-                                campeonato[n] = [e, valor]
-                        if chave_sc == c:
-                            if chave_sc == k:
-                                sem_capitao[n] = [e, valor_sc]
-                        if c1 == c:
-                            if c1 == k:
-                                primeiro_turno[n] = [e, v1]
+                        for key, value in team_dict.items():
+                            if chave_ == c:
+                                if chave_ == k:
+                                    if chave_ == str(key):
+                                        segundo_turno[n] = [e, valor_ + value, value]
+                            if chave == c:
+                                if chave == k:
+                                    if chave == str(key):
+                                        campeonato[n] = [e, valor + value, value]
+                            if chave_sc == c:
+                                if chave_sc == k:
+                                    sem_capitao[n] = [e, valor_sc]
+                            if c1 == c:
+                                if c1 == k:
+                                    primeiro_turno[n] = [e, v1]
 
-            data_times_rodadas = dict(json.loads(data).items())
-            pen_rod = list(data_times_rodadas.keys())[-1]
+    primeiro_turno.pop('Contra Tudo e Todos Avanti!')
+    segundo_turno.pop('Contra Tudo e Todos Avanti!')
+    campeonato.pop('Contra Tudo e Todos Avanti!')
 
-            for key_, value_ in segundo_turno_.items():
-                for key2_, value2_ in data_times_rodadas[pen_rod].items():
-                    if key_ == key2_:
-                        for k2, n2 in json.loads(nomes).items():
-                            if k2 == key_:
-                                segundo_turno[n2].append(data_times_rodadas[pen_rod][key_])
+    lider_prim_turno = next(iter(primeiro_turno))
+    lider_seg_turno = next(iter(segundo_turno))
 
-            for key_, value_ in campeonato_.items():
-                for key2_, value2_ in data_times_rodadas[pen_rod].items():
-                    if key_ == key2_:
-                        for k2, n2 in json.loads(nomes).items():
-                            if k2 == key_:
-                                campeonato[n2].append(data_times_rodadas[pen_rod][key_])
+    if rod >= 19:
+        dict_prem['primeiro_turno']['lider'] = lider_prim_turno
 
-        if api.mercado().status.nome == 'Mercado fechado':
+    if rod >= 38:
+        dict_prem['segundo_turno']['lider'] = lider_seg_turno
 
-            with ThreadPoolExecutor(max_workers=40) as executor:
-                threads = executor.map(api.time_parcial, todos_ids)
-
-                for teams in threads:
-                    team_dict[teams.info.id] = teams.pontos
-
-                for (c1, v1), (chave, valor), (chave_, valor_), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
-                                                                                            campeonato_.items(),
-                                                                                            segundo_turno_.items(),
-                                                                                            dict_sem_capitao.items()):
-                    for c, e in json.loads(escudos).items():
-                        for k, n in json.loads(nomes).items():
-                            for key, value in team_dict.items():
-                                if chave_ == c:
-                                    if chave_ == k:
-                                        if chave_ == str(key):
-                                            segundo_turno[n] = [e, valor_ + value, value]
-                                if chave == c:
-                                    if chave == k:
-                                        if chave == str(key):
-                                            campeonato[n] = [e, valor + value, value]
-                                if chave_sc == c:
-                                    if chave_sc == k:
-                                        sem_capitao[n] = [e, valor_sc]
-                                if c1 == c:
-                                    if c1 == k:
-                                        primeiro_turno[n] = [e, v1]
-
-        primeiro_turno.pop('Contra Tudo e Todos Avanti!')
-        segundo_turno.pop('Contra Tudo e Todos Avanti!')
-        campeonato.pop('Contra Tudo e Todos Avanti!')
-
-        lider_prim_turno = next(iter(primeiro_turno))
-        lider_seg_turno = next(iter(segundo_turno))
-
-        if rod >= 19:
-            dict_prem['primeiro_turno']['lider'] = lider_prim_turno
-
-        if rod >= 38:
-            dict_prem['segundo_turno']['lider'] = lider_seg_turno
-
-        if not local:
-            with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
-                json.dump(dict_prem, f, ensure_ascii=False)
-        else:
-            with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-                json.dump(dict_prem, f, ensure_ascii=False)
-
-        return primeiro_turno, segundo_turno, campeonato, sem_capitao
-
+    if not local:
+        with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+            json.dump(dict_prem, f, ensure_ascii=False)
     else:
+        with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+            json.dump(dict_prem, f, ensure_ascii=False)
 
-        if api.mercado().status.nome == 'Mercado aberto' or api.mercado().status.nome == 'Final de temporada':
-
-            for (c1, v1), (chave, valor), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
-                                                                      campeonato_.items(),
-                                                                      dict_sem_capitao.items()):
-                for c, e in json.loads(escudos).items():
-                    for k, n in json.loads(nomes).items():
-                        if chave == c:
-                            if chave == k:
-                                campeonato[n] = [e, valor]
-                        if chave_sc == c:
-                            if chave_sc == k:
-                                sem_capitao[n] = [e, valor_sc]
-                        if c1 == c:
-                            if c1 == k:
-                                primeiro_turno[n] = [e, v1]
-
-            data_times_rodadas = dict(json.loads(data).items())
-            pen_rod = list(data_times_rodadas.keys())[-1]
-
-            for key_, value_ in campeonato_.items():
-                for key2_, value2_ in data_times_rodadas[pen_rod].items():
-                    if key_ == key2_:
-                        for k2, n2 in json.loads(nomes).items():
-                            if k2 == key_:
-                                campeonato[n2].append(data_times_rodadas[pen_rod][key_])
-
-        if api.mercado().status.nome == 'Mercado fechado':
-
-            with ThreadPoolExecutor(max_workers=40) as executor:
-                threads = executor.map(api.time_parcial, todos_ids)
-
-                for teams in threads:
-                    team_dict[teams.info.id] = teams.pontos
-
-                for (c1, v1), (chave, valor), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
-                                                                          campeonato_.items(),
-                                                                          dict_sem_capitao.items()):
-                    for c, e in json.loads(escudos).items():
-                        for k, n in json.loads(nomes).items():
-                            for key, value in team_dict.items():
-                                if chave == c:
-                                    if chave == k:
-                                        if chave == str(key):
-                                            campeonato[n] = [e, valor + value, value]
-                                if chave_sc == c:
-                                    if chave_sc == k:
-                                        sem_capitao[n] = [e, valor_sc]
-                                if c1 == c:
-                                    if c1 == k:
-                                        primeiro_turno[n] = [e, v1]
-
-        primeiro_turno.pop('Contra Tudo e Todos Avanti!')
-        campeonato.pop('Contra Tudo e Todos Avanti!')
-
-        lider_prim_turno = next(iter(primeiro_turno))
-
-        if rod >= 19:
-            dict_prem['primeiro_turno']['lider'] = lider_prim_turno
-
-        if not local:
-            with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
-                json.dump(dict_prem, f, ensure_ascii=False)
-        else:
-            with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-                json.dump(dict_prem, f, ensure_ascii=False)
-
-        return primeiro_turno, campeonato, sem_capitao
+    return primeiro_turno, segundo_turno, campeonato, sem_capitao
 
 
 def retornar_estats_liga():
@@ -1082,9 +1217,9 @@ def premiacao():
 
     campeoes = []
     campeoes.append(lider_prim_turno)
-    campeoes.append(lider_seg_turno)
     campeoes.append(campeao_prim_turno)
     campeoes.append(vice_prim_turno)
+    campeoes.append(lider_seg_turno)
     campeoes.append(campeao_seg_turno)
     campeoes.append(vice_seg_turno)
     campeoes.append(campeao_geral)
@@ -1113,8 +1248,8 @@ def premiacao():
         'prem_terc_geral': 210.00,
         'prem_quarto_geral': 105.00,
         'prem_camp_turno': 210.00,
-        'prem_camp_mm': 393.75,
-        'prem_vice_mm': 131.25
+        'prem_camp_mm': 412.50,
+        'prem_vice_mm': 137.50
     }
 
     dict_ganhadores = {}
