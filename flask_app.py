@@ -1248,8 +1248,8 @@ def premiacao():
         'prem_terc_geral': 210.00,
         'prem_quarto_geral': 105.00,
         'prem_camp_turno': 210.00,
-        'prem_camp_mm': 412.50,
-        'prem_vice_mm': 137.50
+        'prem_camp_mm': 393.75,
+        'prem_vice_mm': 131.25
     }
 
     dict_ganhadores = {}
