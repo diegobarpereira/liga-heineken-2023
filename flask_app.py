@@ -228,18 +228,29 @@ def matamata_page():
 
 @app.route("/liberta2")
 def liberta_segundo_turno():
-    rod_6, rod_7, rod_8, rod_9, rod_10, rod_11, g1, g2, g3, g4, g5, g6 = get_liberta_seg_turno()
-    g1_ = sorted(g1, key=lambda y: (y[4], y[5]), reverse=True)
-    g2_ = sorted(g2, key=lambda y: (y[4], y[5]), reverse=True)
-    g3_ = sorted(g3, key=lambda y: (y[4], y[5]), reverse=True)
-    g4_ = sorted(g4, key=lambda y: (y[4], y[5]), reverse=True)
-    g5_ = sorted(g5, key=lambda y: (y[4], y[5]), reverse=True)
-    g6_ = sorted(g6, key=lambda y: (y[4], y[5]), reverse=True)
+    rod_21, rod_22, rod_23, rod_24, rod_25, rod_26, rod_27, rod_28, rod_29, rod_30, g1, g2, g3, g4, g5 = get_liberta_seg_turno()
+    g1_ = sorted(g1, key=lambda y: (y[4], y[5], y[7]), reverse=True)
+    g2_ = sorted(g2, key=lambda y: (y[4], y[5], y[7]), reverse=True)
+    g3_ = sorted(g3, key=lambda y: (y[4], y[5], y[7]), reverse=True)
+    g4_ = sorted(g4, key=lambda y: (y[4], y[5], y[7]), reverse=True)
+    g5_ = sorted(g5, key=lambda y: (y[4], y[5], y[7]), reverse=True)
+
+    for item1, item2, item3 in zip(g1_, g2_, g3_):
+        item1[5] = f'{"{:.2f}".format(item1[5])}%'
+        item2[5] = f'{"{:.2f}".format(item2[5])}%'
+        item3[5] = f'{"{:.2f}".format(item3[5])}%'
+
+    for item4, item5 in zip(g4_, g5_):
+        # item4[5] = "%s%%" % item4[5]
+        item4[5] = f'{"{:.2f}".format(item4[5])}%'
+        item5[5] = f'{"{:.2f}".format(item5[5])}%'
+
     liga = api.liga('liga-heineken-2023')
     escudo = liga.escudo
-    return render_template('liberta2.html', get_escudo=escudo, get_list=rod_6, get_list2=rod_7,
-                           get_list3=rod_8, get_list4=rod_9, get_list5=rod_10, get_list6=rod_11,
-                           data1=g1_, data2=g2_, data3=g3_, data4=g4_, data5=g5_, data6=g6_
+    return render_template('liberta2.html', get_escudo=escudo, rod_21=rod_21, rod_22=rod_22,
+                           rod_23=rod_23, rod_24=rod_24, rod_25=rod_25, rod_26=rod_26, rod_27=rod_27,
+                           rod_28=rod_28, rod_29=rod_29, rod_30=rod_30,
+                           data1=g1_, data2=g2_, data3=g3_, data4=g4_, data5=g5_
                            )
 
 
@@ -2589,19 +2600,20 @@ def get_liberta_seg_turno():
     for item in grupo_liberta_seg_turno:
         ordered_dict_liberta[str(item)] = dict(dict_liberta_)[str(item)]
 
-    # for chave, valor in ordered_dict_liberta.items():
-    #     for c, v in json.loads(escudos).items():
-    #         for id, nome in json.loads(nomes).items():
-    #             if chave == c:
-    #                 if chave == id:
-    #                     dict_liberta_pts[nome] = [v, valor]
-
+    rodada_21 = []
+    rodada_22 = []
+    rodada_23 = []
+    rodada_24 = []
     rodada_25 = []
     rodada_26 = []
     rodada_27 = []
     rodada_28 = []
     rodada_29 = []
     rodada_30 = []
+    jogos_rodada_21 = []
+    jogos_rodada_22 = []
+    jogos_rodada_23 = []
+    jogos_rodada_24 = []
     jogos_rodada_25 = []
     jogos_rodada_26 = []
     jogos_rodada_27 = []
@@ -2614,12 +2626,8 @@ def get_liberta_seg_turno():
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(get_parciais, grupo_liberta_seg_turno)
 
-            # start_time = timeit.default_timer()
-
             for teams in threads:
                 ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
-
-            # print(timeit.default_timer() - start_time)
 
         for chave, valor in ordered_dict_liberta.items():
             for c, v in json.loads(escudos).items():
@@ -2629,12 +2637,16 @@ def get_liberta_seg_turno():
                             dict_liberta_pts[nome] = [v, valor]
 
         for key, value in dict_liberta_pts.items():
-            rodada_25.append([key, float(value[1][6]) if rod == 25 else float(value[1][0])])
-            rodada_26.append([key, float(value[1][6]) if rod == 26 else float(value[1][1])])
-            rodada_27.append([key, float(value[1][6]) if rod == 27 else float(value[1][2])])
-            rodada_28.append([key, float(value[1][6]) if rod == 28 else float(value[1][3])])
-            rodada_29.append([key, float(value[1][6]) if rod == 29 else float(value[1][4])])
-            rodada_30.append([key, float(value[1][6]) if rod == 30 else float(value[1][5])])
+            rodada_21.append([key, float(value[1][10]) if rod == 21 else float(value[1][0])])
+            rodada_22.append([key, float(value[1][10]) if rod == 22 else float(value[1][1])])
+            rodada_23.append([key, float(value[1][10]) if rod == 23 else float(value[1][2])])
+            rodada_24.append([key, float(value[1][10]) if rod == 24 else float(value[1][3])])
+            rodada_25.append([key, float(value[1][10]) if rod == 25 else float(value[1][4])])
+            rodada_26.append([key, float(value[1][10]) if rod == 26 else float(value[1][5])])
+            rodada_27.append([key, float(value[1][10]) if rod == 27 else float(value[1][6])])
+            rodada_28.append([key, float(value[1][10]) if rod == 28 else float(value[1][7])])
+            rodada_29.append([key, float(value[1][10]) if rod == 29 else float(value[1][8])])
+            rodada_30.append([key, float(value[1][10]) if rod == 30 else float(value[1][9])])
 
     if api.mercado().status.nome == 'Mercado aberto' or api.mercado().status.nome == 'Final de temporada':
 
@@ -2646,25 +2658,157 @@ def get_liberta_seg_turno():
                             dict_liberta_pts[nome] = [v, valor]
 
         for key, value in dict_liberta_pts.items():
-            rodada_25.append([key, float(value[1][0])])
-            rodada_26.append([key, float(value[1][1])])
-            rodada_27.append([key, float(value[1][2])])
-            rodada_28.append([key, float(value[1][3])])
-            rodada_29.append([key, float(value[1][4])])
-            rodada_30.append([key, float(value[1][5])])
+            rodada_21.append([key, float(value[1][0])])
+            rodada_22.append([key, float(value[1][1])])
+            rodada_23.append([key, float(value[1][2])])
+            rodada_24.append([key, float(value[1][3])])
+            rodada_25.append([key, float(value[1][4])])
+            rodada_26.append([key, float(value[1][5])])
+            rodada_27.append([key, float(value[1][6])])
+            rodada_28.append([key, float(value[1][7])])
+            rodada_29.append([key, float(value[1][8])])
+            rodada_30.append([key, float(value[1][9])])
 
-    jogos_rodada_25.append([rodada_25[0][0], rodada_25[0][1], 'x', rodada_25[1][1], rodada_25[1][0]])
-    jogos_rodada_25.append([rodada_25[2][0], rodada_25[2][1], 'x', rodada_25[3][1], rodada_25[3][0]])
-    jogos_rodada_25.append([rodada_25[4][0], rodada_25[4][1], 'x', rodada_25[5][1], rodada_25[5][0]])
-    jogos_rodada_25.append([rodada_25[6][0], rodada_25[6][1], 'x', rodada_25[7][1], rodada_25[7][0]])
-    jogos_rodada_25.append([rodada_25[8][0], rodada_25[8][1], 'x', rodada_25[9][1], rodada_25[9][0]])
-    jogos_rodada_25.append([rodada_25[10][0], rodada_25[10][1], 'x', rodada_25[11][1], rodada_25[11][0]])
-    jogos_rodada_25.append([rodada_25[12][0], rodada_25[12][1], 'x', rodada_25[13][1], rodada_25[13][0]])
-    jogos_rodada_25.append([rodada_25[14][0], rodada_25[14][1], 'x', rodada_25[15][1], rodada_25[15][0]])
-    jogos_rodada_25.append([rodada_25[16][0], rodada_25[16][1], 'x', rodada_25[17][1], rodada_25[17][0]])
-    jogos_rodada_25.append([rodada_25[18][0], rodada_25[18][1], 'x', rodada_25[19][1], rodada_25[19][0]])
-    jogos_rodada_25.append([rodada_25[20][0], rodada_25[20][1], 'x', rodada_25[21][1], rodada_25[21][0]])
-    jogos_rodada_25.append([rodada_25[22][0], rodada_25[22][1], 'x', rodada_25[23][1], rodada_25[23][0]])
+    jogos_rodada_21.append([rodada_21[0][0], rodada_21[0][1], 'x', rodada_21[1][1], rodada_21[1][0]])
+    jogos_rodada_21.append([rodada_21[2][0], rodada_21[2][1], 'x', rodada_21[3][1], rodada_21[3][0]])
+    jogos_rodada_21.append([rodada_21[4][0], rodada_21[4][1], 'x', rodada_21[5][1], rodada_21[5][0]])
+    jogos_rodada_21.append([rodada_21[6][0], rodada_21[6][1], 'x', rodada_21[7][1], rodada_21[7][0]])
+    jogos_rodada_21.append([rodada_21[8][0], rodada_21[8][1], 'x', rodada_21[9][1], rodada_21[9][0]])
+    jogos_rodada_21.append([rodada_21[10][0], rodada_21[10][1], 'x', rodada_21[11][1], rodada_21[11][0]])
+    jogos_rodada_21.append([rodada_21[12][0], rodada_21[12][1], 'x', rodada_21[13][1], rodada_21[13][0]])
+    jogos_rodada_21.append([rodada_21[14][0], rodada_21[14][1], 'x', rodada_21[15][1], rodada_21[15][0]])
+    jogos_rodada_21.append([rodada_21[16][0], '', 'x', '', ''])
+    jogos_rodada_21.append([rodada_21[17][0], rodada_21[17][1], 'x', rodada_21[18][1], rodada_21[18][0]])
+    jogos_rodada_21.append([rodada_21[19][0], rodada_21[19][1], 'x', rodada_21[20][1], rodada_21[20][0]])
+    jogos_rodada_21.append([rodada_21[21][0], '', 'x', '', ''])
+
+    empate = False
+    for x in jogos_rodada_21:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    jogos_rodada_22.append([rodada_22[0][0], rodada_22[0][1], 'x', rodada_22[2][1], rodada_22[2][0]])
+    jogos_rodada_22.append([rodada_22[1][0], rodada_22[1][1], 'x', rodada_22[3][1], rodada_22[3][0]])
+    jogos_rodada_22.append([rodada_22[4][0], rodada_22[4][1], 'x', rodada_22[6][1], rodada_22[6][0]])
+    jogos_rodada_22.append([rodada_22[5][0], rodada_22[5][1], 'x', rodada_22[7][1], rodada_22[7][0]])
+    jogos_rodada_22.append([rodada_22[8][0], rodada_22[8][1], 'x', rodada_22[10][1], rodada_22[10][0]])
+    jogos_rodada_22.append([rodada_22[9][0], rodada_22[9][1], 'x', rodada_22[11][1], rodada_22[11][0]])
+    jogos_rodada_22.append([rodada_22[12][0], rodada_22[12][1], 'x', rodada_22[16][1], rodada_22[16][0]])
+    jogos_rodada_22.append([rodada_22[13][0], rodada_22[13][1], 'x', rodada_22[14][1], rodada_22[14][0]])
+    jogos_rodada_22.append([rodada_22[15][0], '', 'x', '', ''])
+    jogos_rodada_22.append([rodada_22[17][0], rodada_22[17][1], 'x', rodada_22[21][1], rodada_22[21][0]])
+    jogos_rodada_22.append([rodada_22[18][0], rodada_22[18][1], 'x', rodada_22[19][1], rodada_22[19][0]])
+    jogos_rodada_22.append([rodada_22[20][0], '', 'x', '', ''])
+
+    empate = False
+    for x in jogos_rodada_22:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    jogos_rodada_23.append([rodada_23[12][0], rodada_23[12][1], 'x', rodada_23[15][1], rodada_23[15][0]])
+    jogos_rodada_23.append([rodada_23[13][0], rodada_23[13][1], 'x', rodada_23[16][1], rodada_23[16][0]])
+    jogos_rodada_23.append([rodada_23[14][0], '', 'x', '', ''])
+    jogos_rodada_23.append([rodada_23[17][0], rodada_23[17][1], 'x', rodada_23[20][1], rodada_23[20][0]])
+    jogos_rodada_23.append([rodada_23[18][0], rodada_23[18][1], 'x', rodada_23[21][1], rodada_23[21][0]])
+    jogos_rodada_23.append([rodada_23[19][0], '', 'x', '', ''])
+
+    empate = False
+    for x in jogos_rodada_23:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    jogos_rodada_24.append([rodada_24[0][0], rodada_24[0][1], 'x', rodada_24[3][1], rodada_24[3][0]])
+    jogos_rodada_24.append([rodada_24[1][0], rodada_24[1][1], 'x', rodada_24[2][1], rodada_24[2][0]])
+    jogos_rodada_24.append([rodada_24[4][0], rodada_24[4][1], 'x', rodada_24[7][1], rodada_24[7][0]])
+    jogos_rodada_24.append([rodada_24[5][0], rodada_24[5][1], 'x', rodada_24[6][1], rodada_24[6][0]])
+    jogos_rodada_24.append([rodada_24[8][0], rodada_24[8][1], 'x', rodada_24[11][1], rodada_24[11][0]])
+    jogos_rodada_24.append([rodada_24[9][0], rodada_24[9][1], 'x', rodada_24[10][1], rodada_24[10][0]])
+    jogos_rodada_24.append([rodada_24[12][0], rodada_24[12][1], 'x', rodada_24[14][1], rodada_24[14][0]])
+    jogos_rodada_24.append([rodada_24[16][0], rodada_24[16][1], 'x', rodada_24[15][1], rodada_24[15][0]])
+    jogos_rodada_24.append([rodada_24[13][0], '', 'x', '', ''])
+    jogos_rodada_24.append([rodada_24[17][0], rodada_24[17][1], 'x', rodada_24[19][1], rodada_24[19][0]])
+    jogos_rodada_24.append([rodada_24[21][0], rodada_24[21][1], 'x', rodada_24[20][1], rodada_24[20][0]])
+    jogos_rodada_24.append([rodada_24[18][0], '', 'x', '', ''])
+
+    empate = False
+    for x in jogos_rodada_24:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    jogos_rodada_25.append([rodada_25[13][0], rodada_25[13][1], 'x', rodada_25[15][1], rodada_25[15][0]])
+    jogos_rodada_25.append([rodada_25[14][0], rodada_25[14][1], 'x', rodada_25[16][1], rodada_25[16][0]])
+    jogos_rodada_25.append([rodada_25[12][0], '', 'x', '', ''])
+    jogos_rodada_25.append([rodada_25[18][0], rodada_25[18][1], 'x', rodada_25[20][1], rodada_25[20][0]])
+    jogos_rodada_25.append([rodada_25[19][0], rodada_25[19][1], 'x', rodada_25[21][1], rodada_25[21][0]])
+    jogos_rodada_25.append([rodada_25[17][0], '', 'x', '', ''])
 
     empate = False
     for x in jogos_rodada_25:
@@ -2688,23 +2832,22 @@ def get_liberta_seg_turno():
             x.insert(0, '')
             x.insert(6, '')
 
-    jogos_rodada_26.append([rodada_26[0][0], rodada_26[0][1], 'x', rodada_26[2][1], rodada_26[2][0]])
-    jogos_rodada_26.append([rodada_26[1][0], rodada_26[1][1], 'x', rodada_26[3][1], rodada_26[3][0]])
+    jogos_rodada_26.append([rodada_26[1][0], rodada_26[1][1], 'x', rodada_26[0][1], rodada_26[0][0]])
+    jogos_rodada_26.append([rodada_26[3][0], rodada_26[3][1], 'x', rodada_26[2][1], rodada_26[2][0]])
 
-    jogos_rodada_26.append([rodada_26[4][0], rodada_26[4][1], 'x', rodada_26[6][1], rodada_26[6][0]])
-    jogos_rodada_26.append([rodada_26[5][0], rodada_26[5][1], 'x', rodada_26[7][1], rodada_26[7][0]])
+    jogos_rodada_26.append([rodada_26[5][0], rodada_26[5][1], 'x', rodada_26[4][1], rodada_26[4][0]])
+    jogos_rodada_26.append([rodada_26[7][0], rodada_26[7][1], 'x', rodada_26[6][1], rodada_26[6][0]])
 
-    jogos_rodada_26.append([rodada_26[8][0], rodada_26[8][1], 'x', rodada_26[10][1], rodada_26[10][0]])
-    jogos_rodada_26.append([rodada_26[9][0], rodada_26[9][1], 'x', rodada_26[11][1], rodada_26[11][0]])
+    jogos_rodada_26.append([rodada_26[9][0], rodada_26[9][1], 'x', rodada_26[8][1], rodada_26[8][0]])
+    jogos_rodada_26.append([rodada_26[11][0], rodada_26[11][1], 'x', rodada_26[10][1], rodada_26[10][0]])
 
-    jogos_rodada_26.append([rodada_26[12][0], rodada_26[12][1], 'x', rodada_26[14][1], rodada_26[14][0]])
-    jogos_rodada_26.append([rodada_26[13][0], rodada_26[13][1], 'x', rodada_26[15][1], rodada_26[15][0]])
+    jogos_rodada_26.append([rodada_26[13][0], rodada_26[13][1], 'x', rodada_26[12][1], rodada_26[12][0]])
+    jogos_rodada_26.append([rodada_26[15][0], rodada_26[15][1], 'x', rodada_26[14][1], rodada_26[14][0]])
+    jogos_rodada_26.append(['', '', 'x', '', rodada_26[16][0]])
 
-    jogos_rodada_26.append([rodada_26[16][0], rodada_26[16][1], 'x', rodada_26[18][1], rodada_26[18][0]])
-    jogos_rodada_26.append([rodada_26[17][0], rodada_26[17][1], 'x', rodada_26[19][1], rodada_26[19][0]])
-
-    jogos_rodada_26.append([rodada_26[20][0], rodada_26[20][1], 'x', rodada_26[22][1], rodada_26[22][0]])
-    jogos_rodada_26.append([rodada_26[21][0], rodada_26[21][1], 'x', rodada_26[23][1], rodada_26[23][0]])
+    jogos_rodada_26.append([rodada_26[18][0], rodada_26[18][1], 'x', rodada_26[17][1], rodada_26[17][0]])
+    jogos_rodada_26.append([rodada_26[20][0], rodada_26[20][1], 'x', rodada_26[19][1], rodada_26[19][0]])
+    jogos_rodada_26.append(['', '', 'x', '', rodada_26[21][0]])
 
     empate = False
     for x in jogos_rodada_26:
@@ -2728,23 +2871,22 @@ def get_liberta_seg_turno():
             x.insert(0, '')
             x.insert(6, '')
 
-    jogos_rodada_27.append([rodada_27[0][0], rodada_27[0][1], 'x', rodada_27[3][1], rodada_27[3][0]])
-    jogos_rodada_27.append([rodada_27[1][0], rodada_27[1][1], 'x', rodada_27[2][1], rodada_27[2][0]])
+    jogos_rodada_27.append([rodada_27[2][0], rodada_27[2][1], 'x', rodada_27[0][1], rodada_27[0][0]])
+    jogos_rodada_27.append([rodada_27[3][0], rodada_27[3][1], 'x', rodada_27[1][1], rodada_27[1][0]])
 
-    jogos_rodada_27.append([rodada_27[4][0], rodada_27[4][1], 'x', rodada_27[7][1], rodada_27[7][0]])
-    jogos_rodada_27.append([rodada_27[5][0], rodada_27[5][1], 'x', rodada_27[6][1], rodada_27[6][0]])
+    jogos_rodada_27.append([rodada_27[6][0], rodada_27[6][1], 'x', rodada_27[4][1], rodada_27[4][0]])
+    jogos_rodada_27.append([rodada_27[7][0], rodada_27[7][1], 'x', rodada_27[5][1], rodada_27[5][0]])
 
-    jogos_rodada_27.append([rodada_27[8][0], rodada_27[8][1], 'x', rodada_27[11][1], rodada_27[11][0]])
-    jogos_rodada_27.append([rodada_27[9][0], rodada_27[9][1], 'x', rodada_27[10][1], rodada_27[10][0]])
+    jogos_rodada_27.append([rodada_27[10][0], rodada_27[10][1], 'x', rodada_27[8][1], rodada_27[8][0]])
+    jogos_rodada_27.append([rodada_27[11][0], rodada_27[11][1], 'x', rodada_27[9][1], rodada_27[9][0]])
 
-    jogos_rodada_27.append([rodada_27[12][0], rodada_27[12][1], 'x', rodada_27[15][1], rodada_27[15][0]])
-    jogos_rodada_27.append([rodada_27[13][0], rodada_27[13][1], 'x', rodada_27[14][1], rodada_27[14][0]])
+    jogos_rodada_27.append([rodada_27[16][0], rodada_27[16][1], 'x', rodada_27[12][1], rodada_27[12][0]])
+    jogos_rodada_27.append([rodada_27[14][0], rodada_27[14][1], 'x', rodada_27[13][1], rodada_27[13][0]])
+    jogos_rodada_27.append(['', '', 'x', '', rodada_27[15][0]])
 
-    jogos_rodada_27.append([rodada_27[16][0], rodada_27[16][1], 'x', rodada_27[19][1], rodada_27[19][0]])
-    jogos_rodada_27.append([rodada_27[17][0], rodada_27[17][1], 'x', rodada_27[18][1], rodada_27[18][0]])
-
-    jogos_rodada_27.append([rodada_27[20][0], rodada_27[20][1], 'x', rodada_27[23][1], rodada_27[23][0]])
-    jogos_rodada_27.append([rodada_27[21][0], rodada_27[21][1], 'x', rodada_27[22][1], rodada_27[22][0]])
+    jogos_rodada_27.append([rodada_27[21][0], rodada_27[21][1], 'x', rodada_27[17][1], rodada_27[17][0]])
+    jogos_rodada_27.append([rodada_27[19][0], rodada_27[19][1], 'x', rodada_27[18][1], rodada_27[18][0]])
+    jogos_rodada_27.append(['', '', 'x', '', rodada_27[20][0]])
 
     for x in jogos_rodada_27:
         maior_man = x[1] > x[3]
@@ -2767,23 +2909,13 @@ def get_liberta_seg_turno():
             x.insert(0, '')
             x.insert(6, '')
 
-    jogos_rodada_28.append([rodada_28[1][0], rodada_28[1][1], 'x', rodada_28[0][1], rodada_28[0][0]])
-    jogos_rodada_28.append([rodada_28[3][0], rodada_28[3][1], 'x', rodada_28[2][1], rodada_28[2][0]])
+    jogos_rodada_28.append([rodada_28[15][0], rodada_28[15][1], 'x', rodada_28[12][1], rodada_28[12][0]])
+    jogos_rodada_28.append([rodada_28[16][0], rodada_28[16][1], 'x', rodada_28[13][1], rodada_28[13][0]])
+    jogos_rodada_28.append(['', '', 'x', '', rodada_28[14][0]])
 
-    jogos_rodada_28.append([rodada_28[5][0], rodada_28[5][1], 'x', rodada_28[4][1], rodada_28[4][0]])
-    jogos_rodada_28.append([rodada_28[7][0], rodada_28[7][1], 'x', rodada_28[6][1], rodada_28[6][0]])
-
-    jogos_rodada_28.append([rodada_28[9][0], rodada_28[9][1], 'x', rodada_28[8][1], rodada_28[8][0]])
-    jogos_rodada_28.append([rodada_28[11][0], rodada_28[11][1], 'x', rodada_28[10][1], rodada_28[10][0]])
-
-    jogos_rodada_28.append([rodada_28[13][0], rodada_28[13][1], 'x', rodada_28[12][1], rodada_28[12][0]])
-    jogos_rodada_28.append([rodada_28[15][0], rodada_28[15][1], 'x', rodada_28[14][1], rodada_28[14][0]])
-
-    jogos_rodada_28.append([rodada_28[17][0], rodada_28[17][1], 'x', rodada_28[16][1], rodada_28[16][0]])
-    jogos_rodada_28.append([rodada_28[19][0], rodada_28[19][1], 'x', rodada_28[18][1], rodada_28[18][0]])
-
-    jogos_rodada_28.append([rodada_28[21][0], rodada_28[21][1], 'x', rodada_28[20][1], rodada_28[20][0]])
-    jogos_rodada_28.append([rodada_28[23][0], rodada_28[23][1], 'x', rodada_28[22][1], rodada_28[22][0]])
+    jogos_rodada_28.append([rodada_28[20][0], rodada_28[20][1], 'x', rodada_28[17][1], rodada_28[17][0]])
+    jogos_rodada_28.append([rodada_28[21][0], rodada_28[21][1], 'x', rodada_28[18][1], rodada_28[18][0]])
+    jogos_rodada_28.append(['', '', 'x', '', rodada_28[19][0]])
 
     for x in jogos_rodada_28:
         maior_man = x[1] > x[3]
@@ -2806,23 +2938,22 @@ def get_liberta_seg_turno():
             x.insert(0, '')
             x.insert(6, '')
 
-    jogos_rodada_29.append([rodada_29[2][0], rodada_29[2][1], 'x', rodada_29[0][1], rodada_29[0][0]])
-    jogos_rodada_29.append([rodada_29[3][0], rodada_29[3][1], 'x', rodada_29[1][1], rodada_29[1][0]])
+    jogos_rodada_29.append([rodada_29[3][0], rodada_29[3][1], 'x', rodada_29[0][1], rodada_29[0][0]])
+    jogos_rodada_29.append([rodada_29[2][0], rodada_29[2][1], 'x', rodada_29[1][1], rodada_29[1][0]])
 
-    jogos_rodada_29.append([rodada_29[6][0], rodada_29[6][1], 'x', rodada_29[4][1], rodada_29[4][0]])
-    jogos_rodada_29.append([rodada_29[7][0], rodada_29[7][1], 'x', rodada_29[5][1], rodada_29[5][0]])
+    jogos_rodada_29.append([rodada_29[7][0], rodada_29[7][1], 'x', rodada_29[4][1], rodada_29[4][0]])
+    jogos_rodada_29.append([rodada_29[6][0], rodada_29[6][1], 'x', rodada_29[5][1], rodada_29[5][0]])
 
-    jogos_rodada_29.append([rodada_29[10][0], rodada_29[10][1], 'x', rodada_29[8][1], rodada_29[8][0]])
-    jogos_rodada_29.append([rodada_29[11][0], rodada_29[11][1], 'x', rodada_29[9][1], rodada_29[9][0]])
+    jogos_rodada_29.append([rodada_29[11][0], rodada_29[11][1], 'x', rodada_29[8][1], rodada_29[8][0]])
+    jogos_rodada_29.append([rodada_29[10][0], rodada_29[10][1], 'x', rodada_29[9][1], rodada_29[9][0]])
 
     jogos_rodada_29.append([rodada_29[14][0], rodada_29[14][1], 'x', rodada_29[12][1], rodada_29[12][0]])
-    jogos_rodada_29.append([rodada_29[15][0], rodada_29[15][1], 'x', rodada_29[13][1], rodada_29[13][0]])
+    jogos_rodada_29.append([rodada_29[15][0], rodada_29[15][1], 'x', rodada_29[16][1], rodada_29[16][0]])
+    jogos_rodada_29.append(['', '', 'x', '', rodada_29[13][0]])
 
-    jogos_rodada_29.append([rodada_29[18][0], rodada_29[18][1], 'x', rodada_29[16][1], rodada_29[16][0]])
     jogos_rodada_29.append([rodada_29[19][0], rodada_29[19][1], 'x', rodada_29[17][1], rodada_29[17][0]])
-
-    jogos_rodada_29.append([rodada_29[22][0], rodada_29[22][1], 'x', rodada_29[20][1], rodada_29[20][0]])
-    jogos_rodada_29.append([rodada_29[23][0], rodada_29[23][1], 'x', rodada_29[21][1], rodada_29[21][0]])
+    jogos_rodada_29.append([rodada_29[20][0], rodada_29[20][1], 'x', rodada_29[21][1], rodada_29[21][0]])
+    jogos_rodada_29.append(['', '', 'x', '', rodada_29[18][0]])
 
     for x in jogos_rodada_29:
         maior_man = x[1] > x[3]
@@ -2845,23 +2976,13 @@ def get_liberta_seg_turno():
             x.insert(0, '')
             x.insert(6, '')
 
-    jogos_rodada_30.append([rodada_30[3][0], rodada_30[3][1], 'x', rodada_30[0][1], rodada_30[0][0]])
-    jogos_rodada_30.append([rodada_30[2][0], rodada_30[2][1], 'x', rodada_30[1][1], rodada_30[1][0]])
+    jogos_rodada_30.append([rodada_30[15][0], rodada_30[15][1], 'x', rodada_30[13][1], rodada_30[13][0]])
+    jogos_rodada_30.append([rodada_30[16][0], rodada_30[16][1], 'x', rodada_30[14][1], rodada_30[14][0]])
+    jogos_rodada_30.append(['', '', 'x', '', rodada_30[12][0]])
 
-    jogos_rodada_30.append([rodada_30[7][0], rodada_30[7][1], 'x', rodada_30[4][1], rodada_30[4][0]])
-    jogos_rodada_30.append([rodada_30[6][0], rodada_30[6][1], 'x', rodada_30[5][1], rodada_30[5][0]])
-
-    jogos_rodada_30.append([rodada_30[11][0], rodada_30[11][1], 'x', rodada_30[8][1], rodada_30[8][0]])
-    jogos_rodada_30.append([rodada_30[10][0], rodada_30[10][1], 'x', rodada_30[9][1], rodada_30[9][0]])
-
-    jogos_rodada_30.append([rodada_30[15][0], rodada_30[15][1], 'x', rodada_30[12][1], rodada_30[12][0]])
-    jogos_rodada_30.append([rodada_30[14][0], rodada_30[14][1], 'x', rodada_30[13][1], rodada_30[13][0]])
-
-    jogos_rodada_30.append([rodada_30[19][0], rodada_30[19][1], 'x', rodada_30[16][1], rodada_30[16][0]])
-    jogos_rodada_30.append([rodada_30[18][0], rodada_30[18][1], 'x', rodada_30[17][1], rodada_30[17][0]])
-
-    jogos_rodada_30.append([rodada_30[23][0], rodada_30[23][1], 'x', rodada_30[20][1], rodada_30[20][0]])
-    jogos_rodada_30.append([rodada_30[22][0], rodada_30[22][1], 'x', rodada_30[21][1], rodada_30[21][0]])
+    jogos_rodada_30.append([rodada_30[20][0], rodada_30[20][1], 'x', rodada_30[18][1], rodada_30[18][0]])
+    jogos_rodada_30.append([rodada_30[21][0], rodada_30[21][1], 'x', rodada_30[19][1], rodada_30[19][0]])
+    jogos_rodada_30.append(['', '', 'x', '', rodada_30[17][0]])
 
     for x in jogos_rodada_30:
         maior_man = x[1] > x[3]
@@ -2885,7 +3006,8 @@ def get_liberta_seg_turno():
             x.insert(6, '')
 
     classi = {}
-    for item in jogos_rodada_25 + jogos_rodada_26 + jogos_rodada_27 + jogos_rodada_28 + jogos_rodada_29 + jogos_rodada_30:
+    for item in jogos_rodada_21 + jogos_rodada_22 + jogos_rodada_23 + jogos_rodada_24 + jogos_rodada_25 + jogos_rodada_26 + \
+                jogos_rodada_27 + jogos_rodada_28 + jogos_rodada_29 + jogos_rodada_30:
         for nome in dict_liberta_pts:
             check = nome in item
             if check:
@@ -2910,6 +3032,8 @@ def get_liberta_seg_turno():
         emp = 0
         soma = 0
         soma_pontos = 0.00
+        aproveitamento = 0.0
+        media_pontos = 0.00
 
         for lista in value:
             vit += sum(lista.count(v) for v in lista if v == 'V')
@@ -2917,8 +3041,17 @@ def get_liberta_seg_turno():
             emp += sum(lista.count(v) for v in lista if v == 'E')
             soma = (3 * vit) + emp
             soma_pontos += sum(v for v in lista if isinstance(v, float))
+        try:
+            aproveitamento = (soma / ((vit + emp + der) * 3)) * 100
+            media_pontos = soma_pontos / (vit + der + emp)
+        except ZeroDivisionError:
+            aproveitamento = 0
+            media_pontos = 0.0
+        # apr = f'{"{:.2f}".format(aproveitamento)}%'
 
-        classificacao.append([item, vit, emp, der, soma, soma_pontos])
+        # media_pontos_format = f'{"{:.2f}".format(media_pontos)}'
+
+        classificacao.append([item, vit, emp, der, soma, aproveitamento, soma_pontos, media_pontos])
 
     g1 = []
     g2 = []
@@ -2933,14 +3066,14 @@ def get_liberta_seg_turno():
         g2.append(classificacao[ind])
     for ind in range(8, 12):
         g3.append(classificacao[ind])
-    for ind in range(12, 16):
+    for ind in range(12, 17):
         g4.append(classificacao[ind])
-    for ind in range(16, 20):
+    for ind in range(17, 22):
         g5.append(classificacao[ind])
-    for ind in range(20, 24):
-        g6.append(classificacao[ind])
+    # for ind in range(20, 24):
+    #     g6.append(classificacao[ind])
 
-    return jogos_rodada_25, jogos_rodada_26, jogos_rodada_27, jogos_rodada_28, jogos_rodada_29, jogos_rodada_30, g1, g2, g3, g4, g5, g6
+    return jogos_rodada_21, jogos_rodada_22, jogos_rodada_23, jogos_rodada_24, jogos_rodada_25, jogos_rodada_26, jogos_rodada_27, jogos_rodada_28, jogos_rodada_29, jogos_rodada_30, g1, g2, g3, g4, g5
 
 
 def get_class_liberta_seg_turno():
