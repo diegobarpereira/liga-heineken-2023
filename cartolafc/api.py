@@ -259,6 +259,47 @@ class Api(object):
         else:
             raise CartolaFCError('As pontuações parciais só ficam disponíveis com o mercado fechado.')
 
+    def parciais_2(self, rodada: Optional[int] = 0) -> Dict[int, Atleta]:
+
+        """ Obtém um mapa com todos os atletas que já pontuaram na rodada atual (aberta).
+        Returns:
+            Uma mapa, onde a key é um inteiro representando o id do atleta e o valor é uma instância de cartolafc.Atleta
+        Raises:
+            CartolaFCError: Se o mercado atual estiver com o status fechado.
+        """
+
+        data = {}
+
+        if self.mercado().status.nome == 'Mercado fechado':
+
+            with open('static/dict_parciais.json', encoding='utf-8', mode='r') as currentFile:
+                data_ = currentFile.read().replace('\n', '')
+
+                for k, v in json.loads(data_).items():
+                    data[k] = v
+
+            clubes = {clube['id']: Clube.from_dict(clube) for clube in data['clubes'].values()}
+            return {
+                int(atleta_id): Atleta.from_dict(atleta, clubes=clubes, atleta_id=int(atleta_id))
+                for atleta_id, atleta in data['atletas'].items()
+                if atleta['clube_id'] > 0}
+
+        # elif self.mercado().status.id == MERCADO_ABERTO and rodada != self.mercado().rodada_atual:
+        #     url = '{api_url}/atletas/pontuados/'.format(api_url=self._api_url)
+        #     if rodada:
+        #         url += f'/{rodada}'
+        #
+        #     data = self._request(url)
+        #
+        #     clubes = {clube['id']: Clube.from_dict(clube) for clube in data['clubes'].values()}
+        #     return {
+        #         int(atleta_id): Atleta.from_dict(atleta, clubes=clubes, atleta_id=int(atleta_id))
+        #         for atleta_id, atleta in data['atletas'].items()
+        #         if atleta['clube_id'] > 0}
+
+        else:
+            raise CartolaFCError('As pontuações parciais só ficam disponíveis com o mercado fechado.')
+
     def partidas(self, rodada) -> List[Partida]:
         url = '{api_url}/partidas/{rodada}'.format(api_url=self._api_url, rodada=rodada)
         data = self._request(url)
@@ -344,9 +385,41 @@ class Api(object):
             for future in concurrent.futures.as_completed(futures):
                 # print(future.result())
                 return self._calculate_parcial(future.result(), parciais)
+
         ######################
 
         # return self._calculate_parcial(time, parciais)
+
+    def time_parcial_2(self, time_id: Optional[int] = None, nome: Optional[str] = None, slug: Optional[str] = None,
+                       parciais_2: Optional[Dict[int, Atleta]] = None) -> Time:
+        # if parciais is None and self.mercado().status.id == MERCADO_FECHADO:
+        if parciais_2 is None and self.mercado().status.id != MERCADO_FECHADO:
+            raise CartolaFCError('As pontuações parciais só ficam disponíveis com o mercado fechado.')
+
+        # parciais = parciais if isinstance(parciais, dict) else self.parciais()
+        # time = self.time(time_id, nome, slug)
+
+        #####################
+
+        # with ThreadPoolExecutor(max_workers=40) as executor:
+        #     threads = executor.map(self.parciais_2(), time_id)
+        #
+        # return self._calculate_parcial_2(threads, parciais_2)
+
+        #     for teams in threads:
+        #         ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
+        #
+
+        # with ThreadPoolExecutor() as executor:
+        #     futures = [executor.submit(self.time, time_id, nome, slug)]
+        #     parciais_2 = parciais_2 if isinstance(parciais_2, dict) else self.parciais_2()
+        #
+        #     for future in concurrent.futures.as_completed(futures):
+        #         return self._calculate_parcial_2(future.result(), parciais_2)
+
+        parciais_2 = parciais_2 if isinstance(parciais_2, dict) else self.parciais_2()
+        time = self.time(time_id)
+        return self._calculate_parcial_2(time, parciais_2)
 
     def times(self, query: str) -> List[TimeInfo]:
         """ Retorna o resultado da busca ao Cartola por um determinado termo de pesquisa.
@@ -362,6 +435,10 @@ class Api(object):
     def _teste(parciais: Dict[int, Atleta], id_):
         atleta_parcial = parciais.get(id_)
         return atleta_parcial
+
+    def _teste_2(parciais_2: Dict[int, Atleta], id_):
+        atleta_parcial_2 = parciais_2.get(id_)
+        return atleta_parcial_2
 
     @staticmethod
     def _calculate_parcial(time: Time, parciais: Dict[int, Atleta], teste=_teste) -> Time:
@@ -404,7 +481,8 @@ class Api(object):
                                 atleta.clube.nome == partida.clube_casa.nome or atleta.clube.nome == partida.clube_visitante.nome):
 
                             # if partida.status_transmissao_tr == 'ENCERRADA' or not partida.valida:
-                            if (partida.fim_de_jogo == 'veja como foi' or partida.status_transmissao_tr == 'ENCERRADA') or not partida.valida:
+                            if (
+                                    partida.fim_de_jogo == 'veja como foi' or partida.status_transmissao_tr == 'ENCERRADA') or not partida.valida:
                                 jogo_finalizou = True
                             else:
                                 jogo_finalizou = False
@@ -443,6 +521,82 @@ class Api(object):
                         atleta.pontos *= 1.5
 
                     time.pontos += atleta.pontos
+
+        return time
+
+    @staticmethod
+    def _calculate_parcial_2(time: Time, parciais_2: Dict[int, Atleta]) -> Time:
+        if any(not isinstance(key, int) or not isinstance(parciais_2[key], Atleta) for key in parciais_2.keys()) \
+                or not isinstance(time, Time):
+            raise CartolaFCError('Time ou parciais não são válidos.')
+        rodada_atual = Api().mercado().rodada_atual
+        partidas = Api().partidas(rodada_atual)
+        time.pontos = 0
+        time.jogados = 0
+        reserva_pontos = 0
+        foundRes = False
+        reserva_usado = []
+
+        for atleta in time.atletas:
+
+            atleta_parcial_2 = parciais_2.get(atleta.id)
+            tem_parcial = isinstance(atleta_parcial_2, Atleta)
+
+            atleta.nome = atleta_parcial_2.apelido if tem_parcial else ''
+            atleta.pontos = atleta_parcial_2.pontos if tem_parcial else 0
+            atleta.scout = atleta_parcial_2.scout if tem_parcial else {}
+            # atleta.clube = atleta_parcial.clube.nome #if tem_parcial else ''
+            # atleta.pos = atleta_parcial.posicao.abreviacao if tem_parcial else atleta.posicao
+            atleta.entrou_em_campo = atleta_parcial_2.entrou_em_campo if tem_parcial else False
+            time.jogados += 1 if tem_parcial else 0
+
+            jogo_finalizou = False
+
+            for partida in partidas:
+                if atleta.clube != '' and (
+                        atleta.clube.nome == partida.clube_casa.nome or atleta.clube.nome == partida.clube_visitante.nome):
+
+                    # if partida.status_transmissao_tr == 'ENCERRADA' or not partida.valida:
+                    if (
+                            partida.fim_de_jogo == 'veja como foi' or partida.status_transmissao_tr == 'ENCERRADA') or not partida.valida:
+                        jogo_finalizou = True
+                    else:
+                        jogo_finalizou = False
+
+            if time.reservas:
+                for reserva in time.reservas:
+
+                    reserva_parcial = parciais_2.get(reserva.id)
+                    res_tem_parcial = isinstance(reserva_parcial, Atleta)
+                    reserva.pontos = reserva_parcial.pontos if res_tem_parcial else 0
+                    reserva.scout = reserva_parcial.scout if res_tem_parcial else {}
+                    # reserva.club = reserva_parcial.clube.nome if res_tem_parcial else ''
+                    # reserva.pos = reserva_parcial.posicao if res_tem_parcial else ''
+                    reserva_cap = 0
+
+                    if not atleta.entrou_em_campo:
+
+                        foundRes = False
+                        if atleta.posicao.nome in reserva_usado:
+                            break
+
+                        if atleta.is_capitao and atleta.posicao.nome == reserva.posicao.nome and jogo_finalizou:
+                            time.pontos += reserva.pontos
+
+                        if atleta.posicao.nome == reserva.posicao.nome and not foundRes and jogo_finalizou \
+                                and reserva.pontos >= 0.1:
+                            time.pontos += reserva.pontos
+                            foundRes = True
+                            reserva_usado.append(reserva.posicao.nome)
+                            break
+
+                    else:
+                        break
+
+            if atleta.is_capitao:
+                atleta.pontos *= 1.5
+
+        time.pontos += atleta.pontos
 
         return time
 

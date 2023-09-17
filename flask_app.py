@@ -2,9 +2,12 @@ import collections
 import json
 import os
 import datetime
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import numpy as np
+import requests
+import schedule
 from flask import Flask, render_template, request
 from matplotlib import pyplot as plt
 
@@ -229,6 +232,34 @@ def matamata_page():
 @app.route("/liberta2")
 def liberta_segundo_turno():
     rod_21, rod_22, rod_23, rod_24, rod_25, rod_26, rod_27, rod_28, rod_29, rod_30, g1, g2, g3, g4, g5 = get_liberta_seg_turno()
+    g1_ = sorted(g1, key=lambda y: (y[4], y[5], y[7]), reverse=True)
+    g2_ = sorted(g2, key=lambda y: (y[4], y[5], y[7]), reverse=True)
+    g3_ = sorted(g3, key=lambda y: (y[4], y[5], y[7]), reverse=True)
+    g4_ = sorted(g4, key=lambda y: (y[4], y[5], y[7]), reverse=True)
+    g5_ = sorted(g5, key=lambda y: (y[4], y[5], y[7]), reverse=True)
+
+    for item1, item2, item3 in zip(g1_, g2_, g3_):
+        item1[5] = f'{"{:.2f}".format(item1[5])}%'
+        item2[5] = f'{"{:.2f}".format(item2[5])}%'
+        item3[5] = f'{"{:.2f}".format(item3[5])}%'
+
+    for item4, item5 in zip(g4_, g5_):
+        # item4[5] = "%s%%" % item4[5]
+        item4[5] = f'{"{:.2f}".format(item4[5])}%'
+        item5[5] = f'{"{:.2f}".format(item5[5])}%'
+
+    liga = api.liga('liga-heineken-2023')
+    escudo = liga.escudo
+    return render_template('liberta2.html', get_escudo=escudo, rod_21=rod_21, rod_22=rod_22,
+                           rod_23=rod_23, rod_24=rod_24, rod_25=rod_25, rod_26=rod_26, rod_27=rod_27,
+                           rod_28=rod_28, rod_29=rod_29, rod_30=rod_30,
+                           data1=g1_, data2=g2_, data3=g3_, data4=g4_, data5=g5_
+                           )
+
+
+@app.route("/liberta2_teste")
+def liberta_segundo_turno_teste():
+    rod_21, rod_22, rod_23, rod_24, rod_25, rod_26, rod_27, rod_28, rod_29, rod_30, g1, g2, g3, g4, g5 = get_liberta_seg_turno_teste()
     g1_ = sorted(g1, key=lambda y: (y[4], y[5], y[7]), reverse=True)
     g2_ = sorted(g2, key=lambda y: (y[4], y[5], y[7]), reverse=True)
     g3_ = sorted(g3, key=lambda y: (y[4], y[5], y[7]), reverse=True)
@@ -1985,8 +2016,8 @@ def oitavas_de_final_prim_turno():
                         dict_oitavas_pts[nome] = [v, valor]
 
     if 12 <= rod < 14 and api.mercado().status.nome == 'Mercado fechado':
-    # if api.mercado().status.nome == 'Mercado fechado':
-    # if mercado_status == 'Mercado fechado':
+        # if api.mercado().status.nome == 'Mercado fechado':
+        # if mercado_status == 'Mercado fechado':
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(api.time_parcial, list_oitavas_prim_turno)
 
@@ -2001,7 +2032,7 @@ def oitavas_de_final_prim_turno():
 
     elif rod > 14 or api.mercado().status.nome == 'Mercado aberto':
 
-    # if api.mercado().status.nome == 'Mercado aberto':
+        # if api.mercado().status.nome == 'Mercado aberto':
 
         for key, value in dict_oitavas_pts.items():
             oitavas.append([key,
@@ -2188,7 +2219,7 @@ def quartas_de_final_prim_turno():
     elif rod >= 16 or api.mercado().status.nome == 'Mercado aberto':
 
         # if api.mercado().status.nome == 'Mercado aberto':
-    # else:
+        # else:
         for key, value in dict_quartas_pts.items():
             quartas.append([key, value[0], value[1][0], value[1][1]])
 
@@ -2267,7 +2298,6 @@ def get_class_quartas():
 
 
 def semi_finais_prim_turno():
-
     global local
     global prod
 
@@ -2345,9 +2375,9 @@ def semi_finais_prim_turno():
 
         for key, value in dict_semis_pts.items():
             semis.append([key,
-                            value[0],
-                            value[1][2] if rod == 16 else value[1][0],
-                            value[1][2] if rod == 17 else value[1][1]])
+                          value[0],
+                          value[1][2] if rod == 16 else value[1][0],
+                          value[1][2] if rod == 17 else value[1][1]])
 
     elif rod >= 18 or api.mercado().status.nome == 'Mercado aberto':
 
@@ -2422,7 +2452,6 @@ def get_class_semis():
 
 
 def finais_prim_turno():
-
     global local
     global prod
 
@@ -2500,14 +2529,14 @@ def finais_prim_turno():
 
         for key, value in dict_finais_pts.items():
             finais.append([key,
-                          value[0],
-                          value[1][2] if rod == 18 else value[1][0],
-                          value[1][2] if rod == 19 else value[1][1]])
+                           value[0],
+                           value[1][2] if rod == 18 else value[1][0],
+                           value[1][2] if rod == 19 else value[1][1]])
 
     if api.mercado().status.nome == 'Mercado aberto':
         for key, value in dict_finais_pts.items():
             finais.append([key,
-                          value[0], value[1][0], value[1][1]])
+                           value[0], value[1][0], value[1][1]])
 
     jogos_final_a = []
     jogos_final_a.append(
@@ -2567,6 +2596,10 @@ def mata_mata_prim_turno():
 def get_parciais(time_id):
     # return_parciais = [api.time_parcial(time_id)]
     return api.time_parcial(time_id)
+
+def get_parciais_2(time_id):
+    # return_parciais = [api.time_parcial(time_id)]
+    return api.time_parcial_2(time_id)
 
 
 def get_liberta_seg_turno():
@@ -2630,6 +2663,559 @@ def get_liberta_seg_turno():
                 ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
 
         for chave, valor in ordered_dict_liberta.items():
+            for c, v in json.loads(escudos).items():
+                for id, nome in json.loads(nomes).items():
+                    if chave == c:
+                        if chave == id:
+                            dict_liberta_pts[nome] = [v, valor]
+
+        for key, value in dict_liberta_pts.items():
+            rodada_21.append([key, float(value[1][10]) if rod == 21 else float(value[1][0])])
+            rodada_22.append([key, float(value[1][10]) if rod == 22 else float(value[1][1])])
+            rodada_23.append([key, float(value[1][10]) if rod == 23 else float(value[1][2])])
+            rodada_24.append([key, float(value[1][10]) if rod == 24 else float(value[1][3])])
+            rodada_25.append([key, float(value[1][10]) if rod == 25 else float(value[1][4])])
+            rodada_26.append([key, float(value[1][10]) if rod == 26 else float(value[1][5])])
+            rodada_27.append([key, float(value[1][10]) if rod == 27 else float(value[1][6])])
+            rodada_28.append([key, float(value[1][10]) if rod == 28 else float(value[1][7])])
+            rodada_29.append([key, float(value[1][10]) if rod == 29 else float(value[1][8])])
+            rodada_30.append([key, float(value[1][10]) if rod == 30 else float(value[1][9])])
+
+    if api.mercado().status.nome == 'Mercado aberto' or api.mercado().status.nome == 'Final de temporada':
+
+        for chave, valor in ordered_dict_liberta.items():
+            for c, v in json.loads(escudos).items():
+                for id, nome in json.loads(nomes).items():
+                    if chave == c:
+                        if chave == id:
+                            dict_liberta_pts[nome] = [v, valor]
+
+        for key, value in dict_liberta_pts.items():
+            rodada_21.append([key, float(value[1][0])])
+            rodada_22.append([key, float(value[1][1])])
+            rodada_23.append([key, float(value[1][2])])
+            rodada_24.append([key, float(value[1][3])])
+            rodada_25.append([key, float(value[1][4])])
+            rodada_26.append([key, float(value[1][5])])
+            rodada_27.append([key, float(value[1][6])])
+            rodada_28.append([key, float(value[1][7])])
+            rodada_29.append([key, float(value[1][8])])
+            rodada_30.append([key, float(value[1][9])])
+
+    jogos_rodada_21.append([rodada_21[0][0], rodada_21[0][1], 'x', rodada_21[1][1], rodada_21[1][0]])
+    jogos_rodada_21.append([rodada_21[2][0], rodada_21[2][1], 'x', rodada_21[3][1], rodada_21[3][0]])
+    jogos_rodada_21.append([rodada_21[4][0], rodada_21[4][1], 'x', rodada_21[5][1], rodada_21[5][0]])
+    jogos_rodada_21.append([rodada_21[6][0], rodada_21[6][1], 'x', rodada_21[7][1], rodada_21[7][0]])
+    jogos_rodada_21.append([rodada_21[8][0], rodada_21[8][1], 'x', rodada_21[9][1], rodada_21[9][0]])
+    jogos_rodada_21.append([rodada_21[10][0], rodada_21[10][1], 'x', rodada_21[11][1], rodada_21[11][0]])
+    jogos_rodada_21.append([rodada_21[12][0], rodada_21[12][1], 'x', rodada_21[13][1], rodada_21[13][0]])
+    jogos_rodada_21.append([rodada_21[14][0], rodada_21[14][1], 'x', rodada_21[15][1], rodada_21[15][0]])
+    jogos_rodada_21.append([rodada_21[16][0], '', 'x', '', ''])
+    jogos_rodada_21.append([rodada_21[17][0], rodada_21[17][1], 'x', rodada_21[18][1], rodada_21[18][0]])
+    jogos_rodada_21.append([rodada_21[19][0], rodada_21[19][1], 'x', rodada_21[20][1], rodada_21[20][0]])
+    jogos_rodada_21.append([rodada_21[21][0], '', 'x', '', ''])
+
+    empate = False
+    for x in jogos_rodada_21:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    jogos_rodada_22.append([rodada_22[0][0], rodada_22[0][1], 'x', rodada_22[2][1], rodada_22[2][0]])
+    jogos_rodada_22.append([rodada_22[1][0], rodada_22[1][1], 'x', rodada_22[3][1], rodada_22[3][0]])
+    jogos_rodada_22.append([rodada_22[4][0], rodada_22[4][1], 'x', rodada_22[6][1], rodada_22[6][0]])
+    jogos_rodada_22.append([rodada_22[5][0], rodada_22[5][1], 'x', rodada_22[7][1], rodada_22[7][0]])
+    jogos_rodada_22.append([rodada_22[8][0], rodada_22[8][1], 'x', rodada_22[10][1], rodada_22[10][0]])
+    jogos_rodada_22.append([rodada_22[9][0], rodada_22[9][1], 'x', rodada_22[11][1], rodada_22[11][0]])
+    jogos_rodada_22.append([rodada_22[12][0], rodada_22[12][1], 'x', rodada_22[16][1], rodada_22[16][0]])
+    jogos_rodada_22.append([rodada_22[13][0], rodada_22[13][1], 'x', rodada_22[14][1], rodada_22[14][0]])
+    jogos_rodada_22.append([rodada_22[15][0], '', 'x', '', ''])
+    jogos_rodada_22.append([rodada_22[17][0], rodada_22[17][1], 'x', rodada_22[21][1], rodada_22[21][0]])
+    jogos_rodada_22.append([rodada_22[18][0], rodada_22[18][1], 'x', rodada_22[19][1], rodada_22[19][0]])
+    jogos_rodada_22.append([rodada_22[20][0], '', 'x', '', ''])
+
+    empate = False
+    for x in jogos_rodada_22:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    jogos_rodada_23.append([rodada_23[12][0], rodada_23[12][1], 'x', rodada_23[15][1], rodada_23[15][0]])
+    jogos_rodada_23.append([rodada_23[13][0], rodada_23[13][1], 'x', rodada_23[16][1], rodada_23[16][0]])
+    jogos_rodada_23.append([rodada_23[14][0], '', 'x', '', ''])
+    jogos_rodada_23.append([rodada_23[17][0], rodada_23[17][1], 'x', rodada_23[20][1], rodada_23[20][0]])
+    jogos_rodada_23.append([rodada_23[18][0], rodada_23[18][1], 'x', rodada_23[21][1], rodada_23[21][0]])
+    jogos_rodada_23.append([rodada_23[19][0], '', 'x', '', ''])
+
+    empate = False
+    for x in jogos_rodada_23:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    jogos_rodada_24.append([rodada_24[0][0], rodada_24[0][1], 'x', rodada_24[3][1], rodada_24[3][0]])
+    jogos_rodada_24.append([rodada_24[1][0], rodada_24[1][1], 'x', rodada_24[2][1], rodada_24[2][0]])
+    jogos_rodada_24.append([rodada_24[4][0], rodada_24[4][1], 'x', rodada_24[7][1], rodada_24[7][0]])
+    jogos_rodada_24.append([rodada_24[5][0], rodada_24[5][1], 'x', rodada_24[6][1], rodada_24[6][0]])
+    jogos_rodada_24.append([rodada_24[8][0], rodada_24[8][1], 'x', rodada_24[11][1], rodada_24[11][0]])
+    jogos_rodada_24.append([rodada_24[9][0], rodada_24[9][1], 'x', rodada_24[10][1], rodada_24[10][0]])
+    jogos_rodada_24.append([rodada_24[12][0], rodada_24[12][1], 'x', rodada_24[14][1], rodada_24[14][0]])
+    jogos_rodada_24.append([rodada_24[16][0], rodada_24[16][1], 'x', rodada_24[15][1], rodada_24[15][0]])
+    jogos_rodada_24.append([rodada_24[13][0], '', 'x', '', ''])
+    jogos_rodada_24.append([rodada_24[17][0], rodada_24[17][1], 'x', rodada_24[19][1], rodada_24[19][0]])
+    jogos_rodada_24.append([rodada_24[21][0], rodada_24[21][1], 'x', rodada_24[20][1], rodada_24[20][0]])
+    jogos_rodada_24.append([rodada_24[18][0], '', 'x', '', ''])
+
+    empate = False
+    for x in jogos_rodada_24:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    jogos_rodada_25.append([rodada_25[13][0], rodada_25[13][1], 'x', rodada_25[15][1], rodada_25[15][0]])
+    jogos_rodada_25.append([rodada_25[14][0], rodada_25[14][1], 'x', rodada_25[16][1], rodada_25[16][0]])
+    jogos_rodada_25.append([rodada_25[12][0], '', 'x', '', ''])
+    jogos_rodada_25.append([rodada_25[18][0], rodada_25[18][1], 'x', rodada_25[20][1], rodada_25[20][0]])
+    jogos_rodada_25.append([rodada_25[19][0], rodada_25[19][1], 'x', rodada_25[21][1], rodada_25[21][0]])
+    jogos_rodada_25.append([rodada_25[17][0], '', 'x', '', ''])
+
+    empate = False
+    for x in jogos_rodada_25:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    jogos_rodada_26.append([rodada_26[1][0], rodada_26[1][1], 'x', rodada_26[0][1], rodada_26[0][0]])
+    jogos_rodada_26.append([rodada_26[3][0], rodada_26[3][1], 'x', rodada_26[2][1], rodada_26[2][0]])
+
+    jogos_rodada_26.append([rodada_26[5][0], rodada_26[5][1], 'x', rodada_26[4][1], rodada_26[4][0]])
+    jogos_rodada_26.append([rodada_26[7][0], rodada_26[7][1], 'x', rodada_26[6][1], rodada_26[6][0]])
+
+    jogos_rodada_26.append([rodada_26[9][0], rodada_26[9][1], 'x', rodada_26[8][1], rodada_26[8][0]])
+    jogos_rodada_26.append([rodada_26[11][0], rodada_26[11][1], 'x', rodada_26[10][1], rodada_26[10][0]])
+
+    jogos_rodada_26.append([rodada_26[13][0], rodada_26[13][1], 'x', rodada_26[12][1], rodada_26[12][0]])
+    jogos_rodada_26.append([rodada_26[15][0], rodada_26[15][1], 'x', rodada_26[14][1], rodada_26[14][0]])
+    jogos_rodada_26.append(['', '', 'x', '', rodada_26[16][0]])
+
+    jogos_rodada_26.append([rodada_26[18][0], rodada_26[18][1], 'x', rodada_26[17][1], rodada_26[17][0]])
+    jogos_rodada_26.append([rodada_26[20][0], rodada_26[20][1], 'x', rodada_26[19][1], rodada_26[19][0]])
+    jogos_rodada_26.append(['', '', 'x', '', rodada_26[21][0]])
+
+    empate = False
+    for x in jogos_rodada_26:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    jogos_rodada_27.append([rodada_27[2][0], rodada_27[2][1], 'x', rodada_27[0][1], rodada_27[0][0]])
+    jogos_rodada_27.append([rodada_27[3][0], rodada_27[3][1], 'x', rodada_27[1][1], rodada_27[1][0]])
+
+    jogos_rodada_27.append([rodada_27[6][0], rodada_27[6][1], 'x', rodada_27[4][1], rodada_27[4][0]])
+    jogos_rodada_27.append([rodada_27[7][0], rodada_27[7][1], 'x', rodada_27[5][1], rodada_27[5][0]])
+
+    jogos_rodada_27.append([rodada_27[10][0], rodada_27[10][1], 'x', rodada_27[8][1], rodada_27[8][0]])
+    jogos_rodada_27.append([rodada_27[11][0], rodada_27[11][1], 'x', rodada_27[9][1], rodada_27[9][0]])
+
+    jogos_rodada_27.append([rodada_27[16][0], rodada_27[16][1], 'x', rodada_27[12][1], rodada_27[12][0]])
+    jogos_rodada_27.append([rodada_27[14][0], rodada_27[14][1], 'x', rodada_27[13][1], rodada_27[13][0]])
+    jogos_rodada_27.append(['', '', 'x', '', rodada_27[15][0]])
+
+    jogos_rodada_27.append([rodada_27[21][0], rodada_27[21][1], 'x', rodada_27[17][1], rodada_27[17][0]])
+    jogos_rodada_27.append([rodada_27[19][0], rodada_27[19][1], 'x', rodada_27[18][1], rodada_27[18][0]])
+    jogos_rodada_27.append(['', '', 'x', '', rodada_27[20][0]])
+
+    for x in jogos_rodada_27:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    jogos_rodada_28.append([rodada_28[15][0], rodada_28[15][1], 'x', rodada_28[12][1], rodada_28[12][0]])
+    jogos_rodada_28.append([rodada_28[16][0], rodada_28[16][1], 'x', rodada_28[13][1], rodada_28[13][0]])
+    jogos_rodada_28.append(['', '', 'x', '', rodada_28[14][0]])
+
+    jogos_rodada_28.append([rodada_28[20][0], rodada_28[20][1], 'x', rodada_28[17][1], rodada_28[17][0]])
+    jogos_rodada_28.append([rodada_28[21][0], rodada_28[21][1], 'x', rodada_28[18][1], rodada_28[18][0]])
+    jogos_rodada_28.append(['', '', 'x', '', rodada_28[19][0]])
+
+    for x in jogos_rodada_28:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    jogos_rodada_29.append([rodada_29[3][0], rodada_29[3][1], 'x', rodada_29[0][1], rodada_29[0][0]])
+    jogos_rodada_29.append([rodada_29[2][0], rodada_29[2][1], 'x', rodada_29[1][1], rodada_29[1][0]])
+
+    jogos_rodada_29.append([rodada_29[7][0], rodada_29[7][1], 'x', rodada_29[4][1], rodada_29[4][0]])
+    jogos_rodada_29.append([rodada_29[6][0], rodada_29[6][1], 'x', rodada_29[5][1], rodada_29[5][0]])
+
+    jogos_rodada_29.append([rodada_29[11][0], rodada_29[11][1], 'x', rodada_29[8][1], rodada_29[8][0]])
+    jogos_rodada_29.append([rodada_29[10][0], rodada_29[10][1], 'x', rodada_29[9][1], rodada_29[9][0]])
+
+    jogos_rodada_29.append([rodada_29[14][0], rodada_29[14][1], 'x', rodada_29[12][1], rodada_29[12][0]])
+    jogos_rodada_29.append([rodada_29[15][0], rodada_29[15][1], 'x', rodada_29[16][1], rodada_29[16][0]])
+    jogos_rodada_29.append(['', '', 'x', '', rodada_29[13][0]])
+
+    jogos_rodada_29.append([rodada_29[19][0], rodada_29[19][1], 'x', rodada_29[17][1], rodada_29[17][0]])
+    jogos_rodada_29.append([rodada_29[20][0], rodada_29[20][1], 'x', rodada_29[21][1], rodada_29[21][0]])
+    jogos_rodada_29.append(['', '', 'x', '', rodada_29[18][0]])
+
+    for x in jogos_rodada_29:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    jogos_rodada_30.append([rodada_30[15][0], rodada_30[15][1], 'x', rodada_30[13][1], rodada_30[13][0]])
+    jogos_rodada_30.append([rodada_30[16][0], rodada_30[16][1], 'x', rodada_30[14][1], rodada_30[14][0]])
+    jogos_rodada_30.append(['', '', 'x', '', rodada_30[12][0]])
+
+    jogos_rodada_30.append([rodada_30[20][0], rodada_30[20][1], 'x', rodada_30[18][1], rodada_30[18][0]])
+    jogos_rodada_30.append([rodada_30[21][0], rodada_30[21][1], 'x', rodada_30[19][1], rodada_30[19][0]])
+    jogos_rodada_30.append(['', '', 'x', '', rodada_30[17][0]])
+
+    for x in jogos_rodada_30:
+        maior_man = x[1] > x[3]
+        maior_vis = x[1] < x[3]
+        menor_man = x[1] < x[3]
+        menor_vis = x[1] > x[3]
+        empate = x[1] == x[3]
+        if maior_man:
+            x.insert(0, 'V')
+        if maior_vis:
+            x.insert(6, 'V')
+        if menor_man:
+            x.insert(0, 'D')
+        if menor_vis:
+            x.insert(6, 'D')
+        if empate and (isinstance(x[1], float) and isinstance(x[3], float)) and (x[1] or x[3]) != 0:
+            x.insert(0, 'E')
+            x.insert(6, 'E')
+        if x[1] == '' or x[3] == '' or x[1] == 0 or x[3] == 0:
+            x.insert(0, '')
+            x.insert(6, '')
+
+    classi = {}
+    for item in jogos_rodada_21 + jogos_rodada_22 + jogos_rodada_23 + jogos_rodada_24 + jogos_rodada_25 + jogos_rodada_26 + \
+                jogos_rodada_27 + jogos_rodada_28 + jogos_rodada_29 + jogos_rodada_30:
+        for nome in dict_liberta_pts:
+            check = nome in item
+            if check:
+                indice = item.index(nome)
+
+                if nome in classi:
+                    if indice == 5:
+                        classi[nome].append([item[indice + 1], item[indice - 1]])
+                    if indice == 1:
+                        classi[nome].append([item[indice - 1], item[indice + 1]])
+                else:
+                    if indice == 5:
+                        classi[nome] = [[item[indice + 1], item[indice - 1]]]
+                    if indice == 1:
+                        classi[nome] = [[item[indice - 1], item[indice + 1]]]
+
+    classificacao = []
+
+    for item, value in classi.items():
+        vit = 0
+        der = 0
+        emp = 0
+        soma = 0
+        soma_pontos = 0.00
+        aproveitamento = 0.0
+        media_pontos = 0.00
+
+        for lista in value:
+            vit += sum(lista.count(v) for v in lista if v == 'V')
+            der += sum(lista.count(v) for v in lista if v == 'D')
+            emp += sum(lista.count(v) for v in lista if v == 'E')
+            soma = (3 * vit) + emp
+            soma_pontos += sum(v for v in lista if isinstance(v, float))
+        try:
+            aproveitamento = (soma / ((vit + emp + der) * 3)) * 100
+            media_pontos = soma_pontos / (vit + der + emp)
+        except ZeroDivisionError:
+            aproveitamento = 0
+            media_pontos = 0.0
+        # apr = f'{"{:.2f}".format(aproveitamento)}%'
+
+        # media_pontos_format = f'{"{:.2f}".format(media_pontos)}'
+
+        classificacao.append([item, vit, emp, der, soma, aproveitamento, soma_pontos, media_pontos])
+
+    g1 = []
+    g2 = []
+    g3 = []
+    g4 = []
+    g5 = []
+    g6 = []
+
+    for ind in range(0, 4):
+        g1.append(classificacao[ind])
+    for ind in range(4, 8):
+        g2.append(classificacao[ind])
+    for ind in range(8, 12):
+        g3.append(classificacao[ind])
+    for ind in range(12, 17):
+        g4.append(classificacao[ind])
+    for ind in range(17, 22):
+        g5.append(classificacao[ind])
+    # for ind in range(20, 24):
+    #     g6.append(classificacao[ind])
+
+    return jogos_rodada_21, jogos_rodada_22, jogos_rodada_23, jogos_rodada_24, jogos_rodada_25, jogos_rodada_26, jogos_rodada_27, jogos_rodada_28, jogos_rodada_29, jogos_rodada_30, g1, g2, g3, g4, g5
+
+
+def sched_parciais():
+    r = requests.get('https://api.cartola.globo.com/atletas/pontuados')
+
+    with open(f'static/dict_parciais.json', 'w', encoding='utf-8') as f:
+        f.write(r.text)
+
+
+def get_liberta_seg_turno_teste():
+    dict_liberta_ = collections.defaultdict(list)
+    dict_liberta_pts = {}
+    dict_liberta = {}
+    ordered_dict_liberta = {}
+    dict_parciais = {}
+
+    sched_parciais()
+    time.sleep(1)
+    schedule.every(5).minutes.do(sched_parciais)
+
+    with open('static/escudos.json', encoding='utf-8', mode='r') as currentFile:
+        escudos = currentFile.read().replace('\n', '')
+
+    with open('static/nomes.json', encoding='utf-8', mode='r') as currentFile:
+        nomes = currentFile.read().replace('\n', '')
+
+    for item in rodadas_liberta_seg_turno:
+
+        if str(item) in get_times_rodada():
+            for key, v in get_times_rodada()['1'].items():
+                adict = get_times_rodada()[str(item)]
+                dict_liberta_[key].append(adict[key])
+
+        else:
+            for key, v in get_times_rodada()['1'].items():
+                dict_liberta_[key].append(0.00)
+
+    for time_id in list(dict(dict_liberta_)):
+        if int(time_id) not in grupo_liberta_seg_turno:
+            dict(dict_liberta_).pop(str(time_id))
+
+    for item in grupo_liberta_seg_turno:
+        ordered_dict_liberta[str(item)] = dict(dict_liberta_)[str(item)]
+
+    rodada_21 = []
+    rodada_22 = []
+    rodada_23 = []
+    rodada_24 = []
+    rodada_25 = []
+    rodada_26 = []
+    rodada_27 = []
+    rodada_28 = []
+    rodada_29 = []
+    rodada_30 = []
+    jogos_rodada_21 = []
+    jogos_rodada_22 = []
+    jogos_rodada_23 = []
+    jogos_rodada_24 = []
+    jogos_rodada_25 = []
+    jogos_rodada_26 = []
+    jogos_rodada_27 = []
+    jogos_rodada_28 = []
+    jogos_rodada_29 = []
+    jogos_rodada_30 = []
+
+    # threads = []
+
+    if api.mercado().status.nome == 'Mercado fechado':
+
+        # schedule.run_pending()
+        # time.sleep(1)
+
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+
+        with ThreadPoolExecutor(max_workers=40) as executor:
+            threads = executor.map(get_parciais_2, grupo_liberta_seg_turno)
+
+            for teams in threads:
+                ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
+
+        for chave, valor in ordered_dict_liberta.items():
+            for c, v in json.loads(escudos).items():
+                for id, nome in json.loads(nomes).items():
+                    if chave == c:
+                        if chave == id:
+                            dict_liberta_pts[nome] = [v, valor]
+
+        # while True:
+        #     schedule.run_pending()
+        #     time.sleep(1)
+
+            # with ThreadPoolExecutor(max_workers=40) as executor:
+            #     threads = executor.map(get_parciais_2, grupo_liberta_seg_turno)
+            #
+            #     for teams in threads:
+            #         ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
+
+            # for id_ in grupo_liberta_seg_turno:
+            #     threads.append(get_parciais_2(id_))
+            #
+            #     for teams in threads:
+            #         ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
+
+            # for teams in get_parciais_2(grupo_liberta_seg_turno):
+            #     ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
+
+        for chave, valor in dict_parciais.items():
             for c, v in json.loads(escudos).items():
                 for id, nome in json.loads(nomes).items():
                     if chave == c:

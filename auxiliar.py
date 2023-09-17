@@ -6,7 +6,11 @@ import timeit
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import datetime
 
-from cartolafc.constants import rodadas_oitavas_seg_turno, dict_matamata
+import schedule
+import time
+
+from cartolafc.constants import rodadas_oitavas_seg_turno, dict_matamata, grupo_liberta_seg_turno
+from cartolafc.models import Clube
 from flask_app import get_class_liberta_seg_turno
 
 api = cartolafc.Api(
@@ -253,6 +257,8 @@ def get_partidas():
 
 
 start_time = timeit.default_timer()
+
+
 # get_escudo()
 # get_nomes()
 # salvar_participantes()
@@ -267,12 +273,13 @@ def rodar_tudo():
     retornar_estats_liga()
     get_partidas()
 
+
 ########################### rodar_tudo
 
 
-# retornar_estats_liga()
-
 rodar_tudo()
+
+
 # print(api.partidas(16))
 
 #
@@ -347,6 +354,80 @@ rodar_tudo()
 # for x in range(37, 39):
 #     print(x)
 
+# def func():
+#     r = requests.get('https://api.cartola.globo.com/atletas/pontuados')
+#
+#     with open(f'static/dict_parciais.json', 'w', encoding='utf-8') as f:
+#         f.write(r.text)
+#     # print(r.text)
+#
+#     # return r.text
+#
+#
+# def teste():
+#     schedule.every(1).minutes.do(func)
+#
+#     while True:
+#         schedule.run_pending()
+#         time.sleep(1)
+#         dict_parciais = {}
+#         with open('static/dict_parciais.json', encoding='utf-8', mode='r') as currentFile:
+#             data = currentFile.read().replace('\n', '')
+#
+#             for k, v in json.loads(data).items():
+#                 dict_parciais[k] = v
+#
+#     return dict_parciais
+#
+#
+# print(teste())
+# def get_parciais(time_id):
+#     # return_parciais = [api.time_parcial(time_id)]
+#     return api.time_parcial(time_id)
+#
+#
+# def get_parciais_2(time_id):
+#     return api.time_parcial_2(time_id)
+#
+# start_time = timeit.default_timer()
+#
+#
+# # for time_id in grupo_liberta_seg_turno:
+# #     print(get_parciais(time_id))
+#
+# print(timeit.default_timer() - start_time)
+#
+# print('*********************************************************************')
+#
+# start_time2 = timeit.default_timer()
+#
+# # for time_id in grupo_liberta_seg_turno:
+# #     print(get_parciais_2(time_id))
+#
+# data = {}
+# with open('static/dict_parciais.json', encoding='utf-8', mode='r') as currentFile:
+#     data_ = currentFile.read().replace('\n', '')
+#
+#     for k, v in json.loads(data_).items():
+#         data[k] = v
+#
+# clubes = {clube['id']: Clube.from_dict(clube) for clube in data['clubes'].values()}
+# print(clubes)
+
+# print(api.time_parcial_2(1245808))
+
+# print(timeit.default_timer() - start_time)
+
+# print(api.time_parcial(1245808))
+
+# print(timeit.default_timer())
+# func()
+
+# schedule.every(5).minutes.do(func)
+#
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
 
 print(timeit.default_timer() - start_time)
 
@@ -359,5 +440,3 @@ print(timeit.default_timer() - start_time)
 #         if c == dict_keys[i]:
 #             dict_teste[dict_keys[i]][1].append(v)
 # print(dict_teste)
-
-
