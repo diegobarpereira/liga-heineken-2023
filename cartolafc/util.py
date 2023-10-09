@@ -8,8 +8,6 @@ import unicodedata
 from typing import Any
 from bisect import bisect_left
 
-from pytz import unicode
-
 from .errors import CartolaFCError, CartolaFCOverloadError, CartolaFCGameOverError
 
 
