@@ -268,34 +268,29 @@ class Api(object):
             CartolaFCError: Se o mercado atual estiver com o status fechado.
         """
 
-        data = {}
-
         if self.mercado().status.nome == 'Mercado fechado':
+            url = '{api_url}/atletas/pontuados/'.format(api_url=self._api_url)
+            if rodada:
+                url += f'/{rodada}'
+
+            data = self._request(url)
+
+            # with open(f'static/dict_parciais.json', 'w') as f:
+            #     json.dump(data, f)
+            #
+            data_ = {}
 
             with open('static/dict_parciais.json', encoding='utf-8', mode='r') as currentFile:
-                data_ = currentFile.read().replace('\n', '')
+                data_parciais = currentFile.read().replace('\n', '')
+                for k, v in json.loads(data_parciais).items():
+                    data_[k] = v
 
-                for k, v in json.loads(data_).items():
-                    data[k] = v
+            clubes = {clube['id']: Clube.from_dict(clube) for clube in data_['clubes'].values()}
 
-            clubes = {clube['id']: Clube.from_dict(clube) for clube in data['clubes'].values()}
             return {
                 int(atleta_id): Atleta.from_dict(atleta, clubes=clubes, atleta_id=int(atleta_id))
-                for atleta_id, atleta in data['atletas'].items()
+                for atleta_id, atleta in data_['atletas'].items()
                 if atleta['clube_id'] > 0}
-
-        # elif self.mercado().status.id == MERCADO_ABERTO and rodada != self.mercado().rodada_atual:
-        #     url = '{api_url}/atletas/pontuados/'.format(api_url=self._api_url)
-        #     if rodada:
-        #         url += f'/{rodada}'
-        #
-        #     data = self._request(url)
-        #
-        #     clubes = {clube['id']: Clube.from_dict(clube) for clube in data['clubes'].values()}
-        #     return {
-        #         int(atleta_id): Atleta.from_dict(atleta, clubes=clubes, atleta_id=int(atleta_id))
-        #         for atleta_id, atleta in data['atletas'].items()
-        #         if atleta['clube_id'] > 0}
 
         else:
             raise CartolaFCError('As pontuações parciais só ficam disponíveis com o mercado fechado.')
@@ -392,32 +387,17 @@ class Api(object):
 
     def time_parcial_2(self, time_id: Optional[int] = None, nome: Optional[str] = None, slug: Optional[str] = None,
                        parciais_2: Optional[Dict[int, Atleta]] = None) -> Time:
-        # if parciais is None and self.mercado().status.id == MERCADO_FECHADO:
         if parciais_2 is None and self.mercado().status.id != MERCADO_FECHADO:
             raise CartolaFCError('As pontuações parciais só ficam disponíveis com o mercado fechado.')
 
-        # parciais = parciais if isinstance(parciais, dict) else self.parciais()
-        # time = self.time(time_id, nome, slug)
+        with ThreadPoolExecutor() as executor:
+            futures = [executor.submit(self.time, time_id, nome, slug)]
+            parciais_2 = parciais_2 if isinstance(parciais_2, dict) else self.parciais_2()
 
-        #####################
+            for future in concurrent.futures.as_completed(futures):
+                return self._calculate_parcial_2(future.result(), parciais_2)
 
-        # with ThreadPoolExecutor(max_workers=40) as executor:
-        #     threads = executor.map(self.parciais_2(), time_id)
-        #
-        # return self._calculate_parcial_2(threads, parciais_2)
-
-        #     for teams in threads:
-        #         ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
-        #
-
-        # with ThreadPoolExecutor() as executor:
-        #     futures = [executor.submit(self.time, time_id, nome, slug)]
-        #     parciais_2 = parciais_2 if isinstance(parciais_2, dict) else self.parciais_2()
-        #
-        #     for future in concurrent.futures.as_completed(futures):
-        #         return self._calculate_parcial_2(future.result(), parciais_2)
-
-        parciais_2 = parciais_2 if isinstance(parciais_2, dict) else self.parciais_2()
+        # parciais_2 = parciais_2 if isinstance(parciais_2, dict) else self.parciais_2()
         time = self.time(time_id)
         return self._calculate_parcial_2(time, parciais_2)
 
@@ -525,7 +505,15 @@ class Api(object):
         return time
 
     @staticmethod
-    def _calculate_parcial_2(time: Time, parciais_2: Dict[int, Atleta]) -> Time:
+    def _calculate_parcial_2(time: Time, parciais_2: Dict[int, Atleta], teste=_teste_2) -> Time:
+        # parciais_2_ = {}
+        # with open('static/times_stats.json', encoding='utf-8', mode='r') as currentFile:
+        #     data = currentFile.read().replace('\n', '')
+        #
+        #     for k, v in json.loads(data).items():
+        #         if k == 'atletas':
+        #             parciais_2_[k] = v
+
         if any(not isinstance(key, int) or not isinstance(parciais_2[key], Atleta) for key in parciais_2.keys()) \
                 or not isinstance(time, Time):
             raise CartolaFCError('Time ou parciais não são válidos.')
@@ -539,7 +527,13 @@ class Api(object):
 
         for atleta in time.atletas:
 
-            atleta_parcial_2 = parciais_2.get(atleta.id)
+            with ThreadPoolExecutor() as executor:
+                futures = [executor.submit(teste, parciais_2, atleta.id)]
+
+                for future in concurrent.futures.as_completed(futures):
+                    atleta_parcial_2 = future.result()
+
+            # atleta_parcial_2 = parciais_2.get(atleta.id)
             tem_parcial = isinstance(atleta_parcial_2, Atleta)
 
             atleta.nome = atleta_parcial_2.apelido if tem_parcial else ''

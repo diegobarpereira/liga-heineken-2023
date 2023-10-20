@@ -601,10 +601,17 @@ def liga_class():
     global local
     global prod
 
-    if 'C:\\' in os.getcwd():
+    if "C:\\" in os.getcwd():
         local = True
     else:
         prod = True
+
+    # if not local:
+    #     with open(f'/tmp/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
+    #         data_prem = currentFile.read().replace('\n', '')
+    # else:
+    with open(f'static/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
+        data_prem = currentFile.read().replace('\n', '')
 
     with open('static/times_rodada.json', encoding='utf-8', mode='r') as currentFile:
         data = currentFile.read().replace('\n', '')
@@ -946,7 +953,8 @@ def liga_class():
     lider_seg_turno = next(iter(segundo_turno))
 
     if rod >= 19:
-        dict_prem['primeiro_turno']['lider'] = lider_prim_turno
+        if not dict_prem['primeiro_turno']['lider']:
+            dict_prem['primeiro_turno']['lider'] = lider_prim_turno
 
     if rod >= 38:
         dict_prem['segundo_turno']['lider'] = lider_seg_turno
@@ -1202,7 +1210,7 @@ def premiacao():
     global local
     global prod
 
-    if 'C:\\' in os.getcwd():
+    if "C:\\" in os.getcwd():
         local = True
     else:
         prod = True
@@ -1950,7 +1958,7 @@ def oitavas_de_final_prim_turno():
     global local
     global prod
 
-    if 'C:\\' in os.getcwd():
+    if "C:\\" in os.getcwd():
         local = True
     else:
         prod = True
@@ -2135,7 +2143,7 @@ def quartas_de_final_prim_turno():
     global local
     global prod
 
-    if 'C:\\' in os.getcwd():
+    if "C:\\" in os.getcwd():
         local = True
     else:
         prod = True
@@ -2301,7 +2309,7 @@ def semi_finais_prim_turno():
     global local
     global prod
 
-    if 'C:\\' in os.getcwd():
+    if "C:\\" in os.getcwd():
         local = True
     else:
         prod = True
@@ -2455,7 +2463,7 @@ def finais_prim_turno():
     global local
     global prod
 
-    if 'C:\\' in os.getcwd():
+    if "C:\\" in os.getcwd():
         local = True
     else:
         prod = True
@@ -2557,7 +2565,7 @@ def mata_mata_prim_turno():
     global local
     global prod
 
-    if 'C:\\' in os.getcwd():
+    if "C:\\" in os.getcwd():
         local = True
     else:
         prod = True
@@ -2578,8 +2586,10 @@ def mata_mata_prim_turno():
             vice_prim_turno = f_a[2]
 
     if rod >= 19:
-        dict_prem['liberta_prim_turno']['campeao'] = campeao_prim_turno
-        dict_prem['liberta_prim_turno']['vice'] = vice_prim_turno
+        if not dict_prem['liberta_prim_turno']['campeao']:
+            dict_prem['liberta_prim_turno']['campeao'] = campeao_prim_turno
+        if not dict_prem['liberta_prim_turno']['vice']:
+            dict_prem['liberta_prim_turno']['vice'] = vice_prim_turno
 
     if not local:
         with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
@@ -2596,6 +2606,7 @@ def mata_mata_prim_turno():
 def get_parciais(time_id):
     # return_parciais = [api.time_parcial(time_id)]
     return api.time_parcial(time_id)
+
 
 def get_parciais_2(time_id):
     # return_parciais = [api.time_parcial(time_id)]
@@ -3200,20 +3211,20 @@ def get_liberta_seg_turno_teste():
         #     schedule.run_pending()
         #     time.sleep(1)
 
-            # with ThreadPoolExecutor(max_workers=40) as executor:
-            #     threads = executor.map(get_parciais_2, grupo_liberta_seg_turno)
-            #
-            #     for teams in threads:
-            #         ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
+        # with ThreadPoolExecutor(max_workers=40) as executor:
+        #     threads = executor.map(get_parciais_2, grupo_liberta_seg_turno)
+        #
+        #     for teams in threads:
+        #         ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
 
-            # for id_ in grupo_liberta_seg_turno:
-            #     threads.append(get_parciais_2(id_))
-            #
-            #     for teams in threads:
-            #         ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
+        # for id_ in grupo_liberta_seg_turno:
+        #     threads.append(get_parciais_2(id_))
+        #
+        #     for teams in threads:
+        #         ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
 
-            # for teams in get_parciais_2(grupo_liberta_seg_turno):
-            #     ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
+        # for teams in get_parciais_2(grupo_liberta_seg_turno):
+        #     ordered_dict_liberta[str(teams.info.id)].append(teams.pontos)
 
         for chave, valor in dict_parciais.items():
             for c, v in json.loads(escudos).items():
@@ -4282,7 +4293,7 @@ def mata_mata_seg_turno():
     global local
     global prod
 
-    if 'C:\\' in os.getcwd():
+    if "C:\\" in os.getcwd():
         local = True
     else:
         prod = True
@@ -4319,3 +4330,6 @@ def mata_mata_seg_turno():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)
+
+
+
