@@ -280,13 +280,13 @@ def rodar_tudo():
 rodar_tudo()
 
 
-# print(api.parciais_2())
-# print(api.time_parcial_2(1245808))
+
 # print(api.time_parcial(1245808))
 # print(timeit.default_timer() - start_time)
 # start_time2 = timeit.default_timer()
 # print('-----------------------')
 # print(api.time_parcial_2(1245808))
+
 # print(timeit.default_timer() - start_time2)
 
 # print(api.partidas(16))

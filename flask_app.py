@@ -3134,9 +3134,9 @@ def get_liberta_seg_turno_teste():
     ordered_dict_liberta = {}
     dict_parciais = {}
 
-    sched_parciais()
-    time.sleep(1)
-    schedule.every(5).minutes.do(sched_parciais)
+    # sched_parciais()
+    # time.sleep(1)
+    # schedule.every(5).minutes.do(sched_parciais)
 
     with open('static/escudos.json', encoding='utf-8', mode='r') as currentFile:
         escudos = currentFile.read().replace('\n', '')
@@ -3190,9 +3190,9 @@ def get_liberta_seg_turno_teste():
         # schedule.run_pending()
         # time.sleep(1)
 
-        while True:
-            schedule.run_pending()
-            time.sleep(1)
+        # while True:
+        #     schedule.run_pending()
+        #     time.sleep(1)
 
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(get_parciais_2, grupo_liberta_seg_turno)

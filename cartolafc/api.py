@@ -2,6 +2,7 @@
 import concurrent.futures
 import json
 import logging
+from fileinput import filename
 from typing import Any, Dict, List, Optional, Union
 
 import redis
@@ -275,15 +276,20 @@ class Api(object):
 
             data = self._request(url)
 
-            # with open(f'static/dict_parciais.json', 'w') as f:
-            #     json.dump(data, f)
-            #
+            with open(f'static/dict_parciais.json', 'w') as f:
+                json.dump(data, f)
+
             data_ = {}
 
-            with open('static/dict_parciais.json', encoding='utf-8', mode='r') as currentFile:
-                data_parciais = currentFile.read().replace('\n', '')
-                for k, v in json.loads(data_parciais).items():
-                    data_[k] = v
+            # with open('static/dict_parciais.json', encoding='utf-8', mode='r') as currentFile:
+            #     # data_parciais = currentFile.read().replace('\n', '')
+            #     data_parciais = currentFile.read()
+            #     for k, v in json.loads(data_parciais).items():
+            #         data_[k] = v
+
+
+            with open('static/dict_parciais.json') as user_file:
+                data_ = json.loads(user_file.read())
 
             clubes = {clube['id']: Clube.from_dict(clube) for clube in data_['clubes'].values()}
 
@@ -378,7 +384,6 @@ class Api(object):
             parciais = parciais if isinstance(parciais, dict) else self.parciais()
 
             for future in concurrent.futures.as_completed(futures):
-                # print(future.result())
                 return self._calculate_parcial(future.result(), parciais)
 
         ######################
@@ -390,14 +395,14 @@ class Api(object):
         if parciais_2 is None and self.mercado().status.id != MERCADO_FECHADO:
             raise CartolaFCError('As pontuações parciais só ficam disponíveis com o mercado fechado.')
 
-        with ThreadPoolExecutor() as executor:
-            futures = [executor.submit(self.time, time_id, nome, slug)]
-            parciais_2 = parciais_2 if isinstance(parciais_2, dict) else self.parciais_2()
+        # with ThreadPoolExecutor() as executor:
+        #     futures = [executor.submit(self.time, time_id, nome, slug)]
+        #     parciais_2 = parciais_2 if isinstance(parciais_2, dict) else self.parciais_2()
+        #
+        #     for future in concurrent.futures.as_completed(futures):
+        #         return self._calculate_parcial_2(future.result(), parciais_2)
 
-            for future in concurrent.futures.as_completed(futures):
-                return self._calculate_parcial_2(future.result(), parciais_2)
-
-        # parciais_2 = parciais_2 if isinstance(parciais_2, dict) else self.parciais_2()
+        parciais_2 = parciais_2 if isinstance(parciais_2, dict) else self.parciais_2()
         time = self.time(time_id)
         return self._calculate_parcial_2(time, parciais_2)
 
@@ -506,13 +511,6 @@ class Api(object):
 
     @staticmethod
     def _calculate_parcial_2(time: Time, parciais_2: Dict[int, Atleta], teste=_teste_2) -> Time:
-        # parciais_2_ = {}
-        # with open('static/times_stats.json', encoding='utf-8', mode='r') as currentFile:
-        #     data = currentFile.read().replace('\n', '')
-        #
-        #     for k, v in json.loads(data).items():
-        #         if k == 'atletas':
-        #             parciais_2_[k] = v
 
         if any(not isinstance(key, int) or not isinstance(parciais_2[key], Atleta) for key in parciais_2.keys()) \
                 or not isinstance(time, Time):
@@ -527,70 +525,72 @@ class Api(object):
 
         for atleta in time.atletas:
 
+            # atleta_parcial_2 = parciais_2.get(atleta.id)
+
             with ThreadPoolExecutor() as executor:
                 futures = [executor.submit(teste, parciais_2, atleta.id)]
 
                 for future in concurrent.futures.as_completed(futures):
                     atleta_parcial_2 = future.result()
 
-            # atleta_parcial_2 = parciais_2.get(atleta.id)
-            tem_parcial = isinstance(atleta_parcial_2, Atleta)
+                    # atleta_parcial_2 = parciais_2.get(atleta.id)
+                    tem_parcial = isinstance(atleta_parcial_2, Atleta)
 
-            atleta.nome = atleta_parcial_2.apelido if tem_parcial else ''
-            atleta.pontos = atleta_parcial_2.pontos if tem_parcial else 0
-            atleta.scout = atleta_parcial_2.scout if tem_parcial else {}
-            # atleta.clube = atleta_parcial.clube.nome #if tem_parcial else ''
-            # atleta.pos = atleta_parcial.posicao.abreviacao if tem_parcial else atleta.posicao
-            atleta.entrou_em_campo = atleta_parcial_2.entrou_em_campo if tem_parcial else False
-            time.jogados += 1 if tem_parcial else 0
+                    atleta.nome = atleta_parcial_2.apelido if tem_parcial else ''
+                    atleta.pontos = atleta_parcial_2.pontos if tem_parcial else 0
+                    atleta.scout = atleta_parcial_2.scout if tem_parcial else {}
+                    # atleta.clube = atleta_parcial.clube.nome #if tem_parcial else ''
+                    # atleta.pos = atleta_parcial.posicao.abreviacao if tem_parcial else atleta.posicao
+                    atleta.entrou_em_campo = atleta_parcial_2.entrou_em_campo if tem_parcial else False
+                    time.jogados += 1 if tem_parcial else 0
 
-            jogo_finalizou = False
+                    jogo_finalizou = False
 
-            for partida in partidas:
-                if atleta.clube != '' and (
-                        atleta.clube.nome == partida.clube_casa.nome or atleta.clube.nome == partida.clube_visitante.nome):
+                    for partida in partidas:
+                        if atleta.clube != '' and (
+                                atleta.clube.nome == partida.clube_casa.nome or atleta.clube.nome == partida.clube_visitante.nome):
 
-                    # if partida.status_transmissao_tr == 'ENCERRADA' or not partida.valida:
-                    if (
-                            partida.fim_de_jogo == 'veja como foi' or partida.status_transmissao_tr == 'ENCERRADA') or not partida.valida:
-                        jogo_finalizou = True
-                    else:
-                        jogo_finalizou = False
+                            # if partida.status_transmissao_tr == 'ENCERRADA' or not partida.valida:
+                            if (
+                                    partida.fim_de_jogo == 'veja como foi' or partida.status_transmissao_tr == 'ENCERRADA') or not partida.valida:
+                                jogo_finalizou = True
+                            else:
+                                jogo_finalizou = False
 
-            if time.reservas:
-                for reserva in time.reservas:
+                    if time.reservas:
+                        for reserva in time.reservas:
 
-                    reserva_parcial = parciais_2.get(reserva.id)
-                    res_tem_parcial = isinstance(reserva_parcial, Atleta)
-                    reserva.pontos = reserva_parcial.pontos if res_tem_parcial else 0
-                    reserva.scout = reserva_parcial.scout if res_tem_parcial else {}
-                    # reserva.club = reserva_parcial.clube.nome if res_tem_parcial else ''
-                    # reserva.pos = reserva_parcial.posicao if res_tem_parcial else ''
-                    reserva_cap = 0
+                            reserva_parcial = parciais_2.get(reserva.id)
+                            res_tem_parcial = isinstance(reserva_parcial, Atleta)
+                            reserva.pontos = reserva_parcial.pontos if res_tem_parcial else 0
+                            reserva.scout = reserva_parcial.scout if res_tem_parcial else {}
+                            # reserva.club = reserva_parcial.clube.nome if res_tem_parcial else ''
+                            # reserva.pos = reserva_parcial.posicao if res_tem_parcial else ''
+                            reserva_cap = 0
 
-                    if not atleta.entrou_em_campo:
+                            if not atleta.entrou_em_campo:
 
-                        foundRes = False
-                        if atleta.posicao.nome in reserva_usado:
-                            break
+                                foundRes = False
+                                if atleta.posicao.nome in reserva_usado:
+                                    break
 
-                        if atleta.is_capitao and atleta.posicao.nome == reserva.posicao.nome and jogo_finalizou:
-                            time.pontos += reserva.pontos
+                                if atleta.is_capitao and atleta.posicao.nome == reserva.posicao.nome and jogo_finalizou:
+                                    time.pontos += reserva.pontos
 
-                        if atleta.posicao.nome == reserva.posicao.nome and not foundRes and jogo_finalizou \
-                                and reserva.pontos >= 0.1:
-                            time.pontos += reserva.pontos
-                            foundRes = True
-                            reserva_usado.append(reserva.posicao.nome)
-                            break
+                                if atleta.posicao.nome == reserva.posicao.nome and not foundRes and jogo_finalizou \
+                                        and reserva.pontos >= 0.1:
+                                    time.pontos += reserva.pontos
+                                    foundRes = True
+                                    reserva_usado.append(reserva.posicao.nome)
+                                    break
 
-                    else:
-                        break
+                            else:
+                                break
 
-            if atleta.is_capitao:
-                atleta.pontos *= 1.5
+                    if atleta.is_capitao:
+                        atleta.pontos *= 1.5
 
-        time.pontos += atleta.pontos
+                    time.pontos += atleta.pontos
 
         return time
 
