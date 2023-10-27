@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2dc32927-f4c2-49a1-b08c-78aaa0078b08" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/liga-heineken-2023.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/liga-heineken-2023.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auxiliar.py" beforeDir="false" afterPath="$PROJECT_DIR$/auxiliar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cartolafc/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/cartolafc/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flask_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/flask_app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/dict_parciais.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/dict_parciais.json" afterDir="false" />
+    <list default="true" id="2dc32927-f4c2-49a1-b08c-78aaa0078b08" name="Changes" comment="28 rodada">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +94,20 @@
       <option name="presentableId" value="Default" />
       <updated>1697929848762</updated>
     </task>
+    <task id="LOCAL-00001" summary="28 rodada">
+      <option name="closed" value="true" />
+      <created>1698081066206</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698081066206</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="28 rodada" />
+    <option name="LAST_COMMIT_MESSAGE" value="28 rodada" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
