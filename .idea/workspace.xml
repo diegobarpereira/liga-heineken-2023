@@ -5,8 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2dc32927-f4c2-49a1-b08c-78aaa0078b08" name="Changes" comment="29 rodada">
+      <change afterPath="$PROJECT_DIR$/static/dict_matamata_seg_turno.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auxiliar.py" beforeDir="false" afterPath="$PROJECT_DIR$/auxiliar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cartolafc/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/cartolafc/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cartolafc/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/cartolafc/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/file1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/file1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/flask_app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/dict_parciais.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/dict_parciais.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/partidas.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/partidas.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/sem_capitao.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/sem_capitao.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/times_rodada.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/times_rodada.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/times_stats.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/times_stats.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,10 +43,16 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Projetos/liga-heineken-2023/static&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.auxiliar">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Projetos\liga-heineken-2023\static" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.flask_app">
     <configuration name="auxiliar" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="liga-heineken-2023" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -81,8 +98,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.auxiliar" />
         <item itemvalue="Python.flask_app" />
+        <item itemvalue="Python.auxiliar" />
       </list>
     </recent_temporary>
   </component>
@@ -111,7 +128,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698409288290</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="29 rodada">
+      <option name="closed" value="true" />
+      <created>1698410257792</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1698410257792</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -123,14 +148,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/cartolafc/api.py</url>
-          <line>540</line>
-          <option name="timeStamp" value="10" />
+          <url>file://$PROJECT_DIR$/flask_app.py</url>
+          <line>3853</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/cartolafc/api.py</url>
-          <line>293</line>
-          <option name="timeStamp" value="11" />
+          <url>file://$PROJECT_DIR$/flask_app.py</url>
+          <line>3755</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

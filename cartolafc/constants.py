@@ -100,4 +100,15 @@ with open('static/dict_matamata.json', mode='r') as currentFile:
     for k, v in json.loads(data).items():
         dict_prem[k] = v
 
+dict_matamata_seg_turno = {
+    "oitavas": [],
+    "quartas": [],
+    "semis": [],
+    "finais": []
+}
+with open('static/dict_matamata_seg_turno.json', mode='r') as currentFile:
+    data = currentFile.read().replace('\n', '')
+    for k, v in json.loads(data).items():
+        dict_prem[k] = v
+
 list_oitavas_seg_turno = []

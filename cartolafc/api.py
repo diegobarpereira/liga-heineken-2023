@@ -279,23 +279,11 @@ class Api(object):
             with open(f'static/dict_parciais.json', 'w') as f:
                 json.dump(data, f)
 
-            data_ = {}
-
-            # with open('static/dict_parciais.json', encoding='utf-8', mode='r') as currentFile:
-            #     # data_parciais = currentFile.read().replace('\n', '')
-            #     data_parciais = currentFile.read()
-            #     for k, v in json.loads(data_parciais).items():
-            #         data_[k] = v
-
-
-            with open('static/dict_parciais.json') as user_file:
-                data_ = json.loads(user_file.read())
-
-            clubes = {clube['id']: Clube.from_dict(clube) for clube in data_['clubes'].values()}
+            clubes = {clube['id']: Clube.from_dict(clube) for clube in data['clubes'].values()}
 
             return {
                 int(atleta_id): Atleta.from_dict(atleta, clubes=clubes, atleta_id=int(atleta_id))
-                for atleta_id, atleta in data_['atletas'].items()
+                for atleta_id, atleta in data['atletas'].items()
                 if atleta['clube_id'] > 0}
 
         else:
@@ -335,8 +323,9 @@ class Api(object):
         return sorted([Reservas.from_dict(reservas) for reservas in data['reservas']], key=lambda p: p.escalacoes,
                       reverse=True)
 
-    def time(self, time_id: Optional[int] = None, nome: Optional[str] = None, slug: Optional[str] = None,
-             as_json: bool = False, rodada: Optional[int] = 0) -> Union[Time, dict]:
+    # def time(self, time_id: Optional[int] = None, nome: Optional[str] = None, slug: Optional[str] = None,
+    #          as_json: bool = False, rodada: Optional[int] = 0) -> Union[Time, dict]:
+    def time(self, time_id: int, rodada: Optional[int] = 0) -> Union[Time, dict]:
         """ Obtém um time específico, baseando-se no nome ou no slug utilizado.
         Ao menos um dos dois devem ser informado.
         Args:
@@ -350,19 +339,21 @@ class Api(object):
         Raises:
             cartolafc.CartolaFCError: Se algum erro aconteceu, como por exemplo: Nenhum time foi encontrado.
         """
-        if not any((time_id, nome, slug)):
-            raise CartolaFCError('Você precisa informar o nome ou o slug do time que deseja obter')
+        # if not any((time_id, nome, slug)):
+        # if not any((time_id)):
+        #     raise CartolaFCError('Você precisa informar o nome ou o slug do time que deseja obter')
 
-        param = 'id' if time_id else 'slug'
-        value = time_id if time_id else (slug if slug else convert_team_name_to_slug(nome))
-        url = '{api_url}/time/{param}/{value}/'.format(api_url=self._api_url, param=param, value=value)
+        # param = 'id' if time_id else 'slug'
+        # value = time_id if time_id else (slug if slug else convert_team_name_to_slug(nome))
+        # url = '{api_url}/time/{param}/{value}/'.format(api_url=self._api_url, param=param, value=value)
+        url = '{api_url}/time/id/{time_id}/'.format(api_url=self._api_url, time_id=time_id)
         if rodada:
             url += f'{rodada}'
 
         data = self._request(url)
 
-        if bool(as_json):
-            return data
+        # if bool(as_json):
+        #     return data
         #############################################################################################################
         clubes = {clube['id']: Clube.from_dict(clube) for clube in data['clubes'].values()} if 'clubes' in data else \
             Api().clubes()
@@ -375,25 +366,39 @@ class Api(object):
         if parciais is None and self.mercado().status.id != MERCADO_FECHADO:
             raise CartolaFCError('As pontuações parciais só ficam disponíveis com o mercado fechado.')
 
-        # parciais = parciais if isinstance(parciais, dict) else self.parciais()
-        # time = self.time(time_id, nome, slug)
+        parciais = parciais if isinstance(parciais, dict) else self.parciais()
+        time = self.time(time_id)
 
         #####################
-        with ThreadPoolExecutor() as executor:
-            futures = [executor.submit(self.time, time_id, nome, slug)]
-            parciais = parciais if isinstance(parciais, dict) else self.parciais()
-
-            for future in concurrent.futures.as_completed(futures):
-                return self._calculate_parcial(future.result(), parciais)
+        # with ThreadPoolExecutor() as executor:
+        #     # futures = [executor.submit(self.time, time_id, nome, slug)]
+        #     futures = [executor.submit(time_id)]
+        #     parciais = parciais if isinstance(parciais, dict) else self.parciais()
+        #
+        #     for future in concurrent.futures.as_completed(futures):
+        #         return self._calculate_parcial(future.result(), parciais)
 
         ######################
 
-        # return self._calculate_parcial(time, parciais)
+        return self._calculate_parcial(time, parciais)
 
-    def time_parcial_2(self, time_id: Optional[int] = None, nome: Optional[str] = None, slug: Optional[str] = None,
+    def time_parcial_2(self, time_id: Optional[int] = None,
                        parciais_2: Optional[Dict[int, Atleta]] = None) -> Time:
         if parciais_2 is None and self.mercado().status.id != MERCADO_FECHADO:
             raise CartolaFCError('As pontuações parciais só ficam disponíveis com o mercado fechado.')
+
+        dict_time = {}
+        parciais_2 = {}
+
+        with open('static/dict_parciais.json', encoding='utf-8', mode='r') as currentFile:
+            data = currentFile.read().replace('\n', '')
+
+            for k, v in json.loads(data).items():
+                dict_time[k] = v
+
+        for key, valor in dict_time['atletas'].items():
+            # for id, scouts in valor.items():
+            parciais_2[key] = valor
 
         # with ThreadPoolExecutor() as executor:
         #     futures = [executor.submit(self.time, time_id, nome, slug)]

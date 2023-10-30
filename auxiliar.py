@@ -5,6 +5,8 @@ import cartolafc
 import timeit
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import datetime
+import os.path
+from request_boost import boosted_requests
 
 import schedule
 import time
@@ -54,6 +56,7 @@ def get_times(id_):
     return data
 
 
+"""
 def salvar_times_rodadas():
     outer_dict = {}
     teams = []
@@ -97,6 +100,74 @@ def salvar_times_rodadas():
 
     with open(f'static/times_rodada.json', 'w') as f:
         json.dump(outer_dict, f)
+"""
+
+
+def salvar_times_rodadas():
+    teams = []
+    dict_time = {}
+
+    for id_ in todos_ids:
+        for r in range(1, rod):
+            teams.append(f'https://api.cartolafc.globo.com/time/id/{id_}/{r}')
+
+    simple_results = boosted_requests(urls=teams, no_workers=16, max_tries=5, timeout=5, headers=None, verbose=False,
+                                      parse_json=True)
+
+    path = f'./static/times_rodada.json'
+    checkfile = os.path.isfile(path)
+
+    if checkfile:
+        with open(f'static/times_rodada.json', encoding='utf-8', mode='r') as currentFile:
+            data_ = currentFile.read().replace('\n', '')
+            if data_:
+                for k, v in json.loads(data_).items():
+                    dict_time[k] = v
+    else:
+        with open(f'static/times_rodada.json', 'w') as f:
+            json.dump({}, f)
+
+    ult_rodada = 1
+    if dict_time:
+        last_key = int(next(reversed(dict_time.keys())))
+        ult_rodada = last_key + 1
+
+    if mercado_status == 'Mercado fechado' and rod == 1:
+
+        for rodada in range(1, 2):
+            inner_dict = {}
+            for d in simple_results:
+                if d['rodada_atual'] == rodada:
+                    inner_dict[d['time']['time_id']] = 0
+
+            dict_time[rodada] = inner_dict
+
+    if mercado_status == 'Mercado aberto':
+
+        if (str(ult_rodada)) not in dict_time:
+
+            for rodada in range(ult_rodada, rod):
+                inner_dict = {}
+                for d in simple_results:
+                    if d['rodada_atual'] == rodada:
+                        inner_dict[d['time']['time_id']] = d['pontos']
+
+                dict_time[rodada] = inner_dict
+
+            with open(f'static/times_rodada.json', 'w') as f:
+                json.dump(dict_time, f)
+
+    if mercado_status == 'Final de temporada':
+        for rodada in range(ult_rodada - 1, rod + 1):
+            inner_dict = {}
+            for d in simple_results:
+                if d['rodada_atual'] == rodada:
+                    inner_dict[d['time']['time_id']] = d['pontos']
+
+            dict_time[rodada] = inner_dict
+
+        with open(f'static/times_rodada.json', 'w') as f:
+            json.dump(dict_time, f)
 
 
 def get_escudo():
@@ -157,6 +228,7 @@ def salvar_participantes():
         json.dump(participantes, f)
 
 
+"""
 def get_sem_capitao():
     dict_capitao = {}
     time_ids = []
@@ -176,11 +248,6 @@ def get_sem_capitao():
                 for at in data['atletas']:
                     pts += at['pontos_num']
 
-                # if time_nome in dict_capitao:
-                #     dict_capitao[time_nome].append(pts)
-                # else:
-                #     dict_capitao[time_nome] = [pts]
-
                 if time_id in dict_capitao:
                     dict_capitao[time_id].append(pts)
                 else:
@@ -192,8 +259,42 @@ def get_sem_capitao():
 
     with open(f'static/sem_capitao.json', 'w') as f:
         json.dump(sem_capitao, f)
+"""
 
 
+def get_sem_capitao():
+    dict_capitao = {}
+    sem_capitao = {}
+    times = []
+
+    for id_ in todos_ids:
+        for r in range(1, rod):
+            times.append(f'https://api.cartolafc.globo.com/time/id/{id_}/{r}')
+
+    simple_results = boosted_requests(urls=times, no_workers=16, max_tries=5, timeout=5, headers=None, verbose=False,
+                                      parse_json=True)
+
+    for d in simple_results:
+        pts = 0
+        time_nome = d['time']['nome']
+        time_id = d['time']['time_id']
+        for at in d['atletas']:
+            pts += at['pontos_num']
+
+        if time_id in dict_capitao:
+            dict_capitao[time_id].append(pts)
+        else:
+            dict_capitao[time_id] = [pts]
+
+    ordenar_dict = sorted(dict_capitao.items(), key=lambda t: sum(t[1]), reverse=True)
+    for k in ordenar_dict:
+        sem_capitao[k[0]] = sum(k[1])
+
+    with open(f'static/sem_capitao.json', 'w') as f:
+        json.dump(sem_capitao, f)
+
+
+"""
 def retornar_estats_liga():
     dict_time_stats = {}
     dict_time_stats_ = {}
@@ -203,12 +304,6 @@ def retornar_estats_liga():
 
         for d in times:
             for data in d:
-
-                # scout = {'PI': 0, 'I': 0, 'PP': 0, 'PC': 0, 'FC': 0, 'CA': 0, 'CV': 0, 'GC': 0, 'GS': 0, 'G': 0, 'A': 0,
-                #          'FT': 0, 'FD': 0, 'FF': 0, 'FS': 0, 'PS': 0, 'DS': 0, 'SG': 0, 'DE': 0, 'DP': 0}
-                # scout_points = {'PI': -0.1, 'I': -0.1, 'PP': -4, 'PC': -1, 'FC': -0.3, 'CA': -1, 'CV': -3, 'GC': -3,
-                #                 'GS': -1, 'G': 8, 'A': 5, 'FT': 3, 'FD': 1.2, 'FF': 0.8, 'FS': 0.5, 'PS': 1, 'DS': 1.2,
-                #                 'SG': 5, 'DE': 1, 'DP': 7}
 
                 scout = {'I': 0, 'PP': 0, 'PC': 0, 'FC': 0, 'CA': 0, 'CV': 0, 'GC': 0, 'GS': 0, 'G': 0, 'A': 0,
                          'FT': 0, 'FD': 0, 'FF': 0, 'FS': 0, 'PS': 0, 'DS': 0, 'SG': 0, 'DE': 0, 'DP': 0, 'V': 0}
@@ -237,6 +332,51 @@ def retornar_estats_liga():
 
     with open(f'static/times_stats.json', 'w') as f:
         json.dump(dict_time_stats_, f)
+"""
+
+
+def retornar_estats_liga():
+    dict_time_stats = {}
+    dict_time_stats_ = {}
+    times = []
+
+    for id_ in todos_ids:
+        for r in range(1, rod):
+            times.append(f'https://api.cartolafc.globo.com/time/id/{id_}/{r}')
+
+    simple_results = boosted_requests(urls=times, no_workers=16, max_tries=5, timeout=5, headers=None, verbose=False,
+                                      parse_json=True)
+
+    for d in simple_results:
+        # for data in d:
+
+        scout = {'I': 0, 'PP': 0, 'PC': 0, 'FC': 0, 'CA': 0, 'CV': 0, 'GC': 0, 'GS': 0, 'G': 0, 'A': 0,
+                 'FT': 0, 'FD': 0, 'FF': 0, 'FS': 0, 'PS': 0, 'DS': 0, 'SG': 0, 'DE': 0, 'DP': 0, 'V': 0}
+        scout_points = {'I': -0.1, 'PP': -4, 'PC': -1, 'FC': -0.3, 'CA': -1, 'CV': -3, 'GC': -3,
+                        'GS': -1, 'G': 8, 'A': 5, 'FT': 3, 'FD': 1.2, 'FF': 0.8, 'FS': 0.5, 'PS': 1, 'DS': 1.2,
+                        'SG': 5, 'DE': 1, 'DP': 7, 'V': 1}
+
+        for at in d['atletas']:
+            if d['time']['nome'] in dict_time_stats:
+                dict_time_stats[d['time']['nome']].append(at['scout'])
+            else:
+                dict_time_stats[d['time']['nome']] = [at['scout']]
+
+        for dts in dict_time_stats[d['time']['nome']]:
+            if (type(dts)) is dict:
+                for k, v in dts.items():
+                    if k in scout.keys():
+                        scout[k] = scout.get(k, 0) + dts[k]
+                    else:
+                        scout[k] = 0
+
+            dict_time_stats_[d['time']['nome']] = [scout, ' ',
+                                                   {key: "{:.2f}".format(
+                                                       scout_points[key] * scout.get(key, 0))
+                                                       for key in scout_points.keys()}]
+
+    with open(f'static/times_stats.json', 'w') as f:
+        json.dump(dict_time_stats_, f)
 
 
 def json_default(value):
@@ -256,15 +396,13 @@ def get_partidas():
             json.dump(list_partidas, f, default=json_default, ensure_ascii=False)
 
 
-start_time = timeit.default_timer()
-
-
 # get_escudo()
 # get_nomes()
 # salvar_participantes()
 # get_partidas()
 
 ########################### rodar_tudo
+start_time = timeit.default_timer()
 
 
 def rodar_tudo():
@@ -279,6 +417,14 @@ def rodar_tudo():
 
 rodar_tudo()
 
+# api.parciais_2()
+# print(api.time_parcial_2(1245808))
+# start_time = timeit.default_timer()
+# get_sem_capitao_teste()
+print(timeit.default_timer() - start_time)
+# retornar_estats_liga_teste()
+# salvar_times_rodadas_teste()
+# print(api.time(1245808, 5))
 
 
 # print(api.time_parcial(1245808))
@@ -437,7 +583,6 @@ rodar_tudo()
 # while True:
 #     schedule.run_pending()
 #     time.sleep(1)
-
 
 
 # dict_nome_escudo_pontos = {"Christimao": 11, "Peix\u00e3o Irado": 10, "Diego Pereira FC": 12, "Markitos Bar": 13, "0VINTE1 FC": 14, "oSantista": 15, "Denoris F.C.": 16, "Ra\u00e7a Tim\u00e3o!!!": 17, "Gabitreta F C": 18, "Camisa21FC": 19, "Eae Malandro FC": 20, "JevyGoal": 21, "JUNA FUTEBOL CLUBE": 22, "Real Beach Soccer": 23, "Golden Lions FC": 24, "ThiagoRolo FC": 25, "CFDS06": 26, "Rod Santos FC": 27, "FAFA SHOW FC": 28, "ArrascaMaisDez": 29, "AvantiHulkFc": 30, "Gonella Verde ": 31, "Xanpion": 32, "S\u00f3h Taapa FC": 33, "RIVA 77 ": 34}
