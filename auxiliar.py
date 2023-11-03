@@ -11,7 +11,8 @@ from request_boost import boosted_requests
 import schedule
 import time
 
-from cartolafc.constants import rodadas_oitavas_seg_turno, dict_matamata, grupo_liberta_seg_turno
+from cartolafc.constants import rodadas_oitavas_seg_turno, dict_matamata, grupo_liberta_seg_turno, \
+    list_oitavas_seg_turno
 from cartolafc.models import Clube
 from flask_app import get_class_liberta_seg_turno
 
@@ -416,6 +417,37 @@ def rodar_tudo():
 
 
 rodar_tudo()
+
+
+# def _teste():
+#     dict_oitavas_pts = {}
+#     oitavas = []
+#
+#     if 31 <= rod < 33 and api.mercado().status.nome == 'Mercado fechado':
+#         # if api.mercado().status.nome == 'Mercado fechado':
+#         # if mercado_status == 'Mercado fechado':
+#
+#         for id_ in list_oitavas_seg_turno:
+#             urls = [api.time_parcial(id_)]
+#
+#         simple_results = boosted_requests(urls=api.time_parcial, no_workers=16, max_tries=5, timeout=5, headers=None,
+#                                           verbose=False,
+#                                           parse_json=True)
+#
+#         with ThreadPoolExecutor(max_workers=40) as executor:
+#             threads = executor.map(api.time_parcial, list_oitavas_seg_turno)
+#
+#         for teams in threads:
+#             dict_oitavas_pts[teams.info.nome][1].append(teams.pontos)
+#
+#         for key, value in dict_oitavas_pts.items():
+#             oitavas.append([key,
+#                             value[0],
+#                             value[1][2] if rod == 31 else value[1][0],
+#                             value[1][2] if rod == 33 else value[1][1]])
+#
+# _teste()
+
 
 # api.parciais_2()
 # print(api.time_parcial_2(1245808))

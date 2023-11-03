@@ -111,4 +111,4 @@ with open('static/dict_matamata_seg_turno.json', mode='r') as currentFile:
     for k, v in json.loads(data).items():
         dict_prem[k] = v
 
-list_oitavas_seg_turno = []
+list_oitavas_seg_turno = ["25582672", "48733", "28919430", "44558779", "13957925", "3646412", "18796615", "19190102", "1241021", "71375", "1893918", "47620752", "8912058", "219929", "1235701", "1889674"]
