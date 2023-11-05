@@ -3840,7 +3840,7 @@ def oitavas_de_final_seg_turno():
             oitavas.append([key,
                             value[0],
                             value[1][2] if rod == 31 else value[1][0],
-                            value[1][2] if rod == 33 else value[1][1]])
+                            value[1][2] if rod == 32 else value[1][1]])
 
     elif rod > 33 or api.mercado().status.nome == 'Mercado aberto':
 

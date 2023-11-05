@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2dc32927-f4c2-49a1-b08c-78aaa0078b08" name="Changes" comment="30 rodada">
+    <list default="true" id="2dc32927-f4c2-49a1-b08c-78aaa0078b08" name="Changes" comment="31 rodada">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auxiliar.py" beforeDir="false" afterPath="$PROJECT_DIR$/auxiliar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cartolafc/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/cartolafc/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/flask_app.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +41,7 @@
       <recent name="C:\Projetos\liga-heineken-2023\static" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.auxiliar">
+  <component name="RunManager" selected="Python.flask_app">
     <configuration name="auxiliar" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="liga-heineken-2023" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -88,8 +87,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.auxiliar" />
         <item itemvalue="Python.flask_app" />
+        <item itemvalue="Python.auxiliar" />
       </list>
     </recent_temporary>
   </component>
@@ -134,14 +133,23 @@
       <option name="project" value="LOCAL" />
       <updated>1698673616160</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="31 rodada">
+      <option name="closed" value="true" />
+      <created>1699017962903</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1699017962903</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="28 rodada" />
     <MESSAGE value="29 rodada" />
     <MESSAGE value="30 rodada" />
-    <option name="LAST_COMMIT_MESSAGE" value="30 rodada" />
+    <MESSAGE value="31 rodada" />
+    <option name="LAST_COMMIT_MESSAGE" value="31 rodada" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
