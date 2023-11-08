@@ -288,7 +288,7 @@ def liberta_segundo_turno_teste():
 @app.route('/matamatasegturno')
 def matamata_seg_page():
     # oit_a, oit_b, qua_a, qua_b, semi_a, semi_b, final_a, final_b, esq_maior = mata_mata_prim_turno()
-    oit_a, oit_b = mata_mata_seg_turno()
+    oit_a, oit_b, qua_a, qua_b = mata_mata_seg_turno()
     final = True
 
     # campeao = []
@@ -305,7 +305,8 @@ def matamata_seg_page():
     # , get_list3 = qua_a,
     # get_list4 = qua_b, get_list5 = semi_a, get_list6 = semi_b, get_list7 = final_a,
     # get_list8 = final_b, esq_maior = esq_maior, campeao = campeao, vice = vice, final = final
-    return render_template('matamata_seg_turno.html', get_list1=oit_a, get_list2=oit_b)
+    return render_template('matamata_seg_turno.html', get_list1=oit_a, get_list2=oit_b,
+                           get_list3 = qua_a, get_list4 = qua_b)
     #, get_list1=oit_a, get_list2=oit_b, get_list3=qua_a, get_list4=qua_b, get_list5=semi_a, get_list6=semi_b, get_list7=final_a, get_list8=final_b, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
 
 
@@ -4351,7 +4352,7 @@ def mata_mata_seg_turno():
         prod = True
 
     jogos_oitavas_a, jogos_oitavas_b = oitavas_de_final_seg_turno()
-    # jogos_quartas_a, jogos_quartas_b = quartas_de_final_seg_turno()
+    jogos_quartas_a, jogos_quartas_b = quartas_de_final_seg_turno()
     # jogos_semis_a, jogos_semis_b = semi_finais_seg_turno()
     # jogos_final_a, jogos_final_b, esq_maior = finais_seg_turno()
     # campeao_prim_turno = ''
@@ -4377,7 +4378,7 @@ def mata_mata_seg_turno():
 
     # print(jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior)
     # return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b
-    return jogos_oitavas_a, jogos_oitavas_b
+    return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b
 
 
 if __name__ == '__main__':
