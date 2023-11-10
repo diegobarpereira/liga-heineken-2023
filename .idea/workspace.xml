@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2dc32927-f4c2-49a1-b08c-78aaa0078b08" name="Changes" comment="32 rodada" />
+    <list default="true" id="2dc32927-f4c2-49a1-b08c-78aaa0078b08" name="Changes" comment="32 rodada">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/flask_app.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,7 +41,7 @@
       <recent name="C:\Projetos\liga-heineken-2023\static" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.auxiliar">
+  <component name="RunManager" selected="Python.flask_app">
     <configuration name="auxiliar" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="liga-heineken-2023" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -84,8 +87,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.auxiliar" />
         <item itemvalue="Python.flask_app" />
+        <item itemvalue="Python.auxiliar" />
       </list>
     </recent_temporary>
   </component>
@@ -186,7 +189,23 @@
       <option name="project" value="LOCAL" />
       <updated>1699349608828</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="32 rodada">
+      <option name="closed" value="true" />
+      <created>1699406597052</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1699406597052</updated>
+    </task>
+    <task id="LOCAL-00013" summary="32 rodada">
+      <option name="closed" value="true" />
+      <created>1699493655563</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1699493655563</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -200,11 +219,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/flask_app.py</url>
-          <line>3852</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/auxiliar.py</url>
           <line>432</line>

@@ -306,8 +306,8 @@ def matamata_seg_page():
     # get_list4 = qua_b, get_list5 = semi_a, get_list6 = semi_b, get_list7 = final_a,
     # get_list8 = final_b, esq_maior = esq_maior, campeao = campeao, vice = vice, final = final
     return render_template('matamata_seg_turno.html', get_list1=oit_a, get_list2=oit_b,
-                           get_list3 = qua_a, get_list4 = qua_b)
-    #, get_list1=oit_a, get_list2=oit_b, get_list3=qua_a, get_list4=qua_b, get_list5=semi_a, get_list6=semi_b, get_list7=final_a, get_list8=final_b, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
+                           get_list3=qua_a, get_list4=qua_b)
+    # , get_list1=oit_a, get_list2=oit_b, get_list3=qua_a, get_list4=qua_b, get_list5=semi_a, get_list6=semi_b, get_list7=final_a, get_list8=final_b, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
 
 
 def get_times_campeonato():
@@ -4030,8 +4030,6 @@ def quartas_de_final_seg_turno():
                     if chave == id:
                         dict_quartas_pts[nome] = [v, valor]
 
-
-
     if 33 <= rod < 35 and api.mercado().status.nome == 'Mercado fechado':
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(api.time_parcial, list_quartas_seg_turno)
@@ -4361,8 +4359,48 @@ def mata_mata_seg_turno():
     jogos_oitavas_b = []
 
     if rod > 32:
-        jogos_oitavas_a = [[82.97021484375, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/7b/38/31/0079af2740-7050-485f-b648-a4bc15b13c7b20230330223831', 'JevyGoal FC', 69.35009765625, 71.7900390625, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/c1/05/07/00a6842184-e625-4da0-ac9b-d9f8fc475fc120230329090507', '0VINTE1 FC', 85.43017578125], [64.33984375, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_213/escudo/25/29/18/000ba604a1-93a0-4a47-b744-32a75059002520230410172918', 'Capítulo4 Versículo3', 78.93017578125, 74.08984375, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_219/escudo/8d/19/20/0075b78f19-2721-4b95-b29d-82654ac0618d20230506181920', 'Denoris F.C.', 80.919921875], [69.41015625, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/1f/00/28/003d74c959-552d-4913-9722-99905131fe1f20230404140028', 'Gonella Verde ', 80.2001953125, 62.239990234375, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/2f/19/08/0060f57adb-95c1-476d-b10f-9bd87240802f20230329221908', 'Camisa21FC', 89.5498046875], [69.58984375, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_211/escudo/65/15/51/008f8748c4-3687-4382-b394-2da82ce7c06520230316171551', 'oSantista', 69.75, 71.18994140625, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/82/31/43/00acad7129-c019-4c77-9209-7ad53263848220230329103143', 'RR Football Club', 77.5498046875]]
-        jogos_oitavas_b = [[83.93994140625, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_185/escudo/e0/26/06/00e346c37f-2729-4c11-a4f3-e816469b79e020210502142606', 'Raça Timão!!!', 73.2900390625, 67.83984375, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_213/escudo/10/24/51/00f612a4ab-2fff-45fb-b94e-e94a40ec251020230410152451', 'Eae Malandro FC', 81.2099609375], [65.5498046875, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_166/escudo/69/05/42/00d7c123ab-b3d9-4fa3-b90d-9cbbf403f06920200725110542', 'ThiagoRolo FC', 87.490234375, 66.14013671875, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_211/escudo/be/41/40/00015cb0cc-580f-4a3b-993b-d7dc872d3bbe20230317104140', 'Peixão Irado', 61.260009765625], [70.0498046875, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/5d/47/14/00ede8fe0a-584f-4bad-9e46-7be85b23a75d20230329184714', 'Sóh Taapa FC', 55.489990234375, 52.56005859375, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/6e/14/02/00fe5cef85-2032-4348-b47f-6a4bb2c35c6e20230329061402', 'Markitos Bar', 72.7998046875], [64.64990234375, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_213/escudo/ba/09/36/00f9742c5c-169f-4773-bba0-061b80f7bbba20230408110936', 'Gabitreta F C', 77.81005859375, 61.929931640625, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/56/27/28/0046e18a00-c022-4a79-a1a3-23e02915135620230330142728', 'Christimao', 71.83984375]]
+        jogos_oitavas_a = [[82.97021484375,
+                            'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/7b/38/31/0079af2740-7050-485f-b648-a4bc15b13c7b20230330223831',
+                            'JevyGoal FC', 69.35009765625, 71.7900390625,
+                            'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/c1/05/07/00a6842184-e625-4da0-ac9b-d9f8fc475fc120230329090507',
+                            '0VINTE1 FC', 85.43017578125], [64.33984375,
+                                                            'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_213/escudo/25/29/18/000ba604a1-93a0-4a47-b744-32a75059002520230410172918',
+                                                            'Capítulo4 Versículo3', 78.93017578125, 74.08984375,
+                                                            'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_219/escudo/8d/19/20/0075b78f19-2721-4b95-b29d-82654ac0618d20230506181920',
+                                                            'Denoris F.C.', 80.919921875], [69.41015625,
+                                                                                            'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/1f/00/28/003d74c959-552d-4913-9722-99905131fe1f20230404140028',
+                                                                                            'Gonella Verde ',
+                                                                                            80.2001953125,
+                                                                                            62.239990234375,
+                                                                                            'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/2f/19/08/0060f57adb-95c1-476d-b10f-9bd87240802f20230329221908',
+                                                                                            'Camisa21FC',
+                                                                                            89.5498046875],
+                           [69.58984375,
+                            'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_211/escudo/65/15/51/008f8748c4-3687-4382-b394-2da82ce7c06520230316171551',
+                            'oSantista', 69.75, 71.18994140625,
+                            'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/82/31/43/00acad7129-c019-4c77-9209-7ad53263848220230329103143',
+                            'RR Football Club', 77.5498046875]]
+        jogos_oitavas_b = [[83.93994140625,
+                            'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_185/escudo/e0/26/06/00e346c37f-2729-4c11-a4f3-e816469b79e020210502142606',
+                            'Raça Timão!!!', 73.2900390625, 67.83984375,
+                            'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_213/escudo/10/24/51/00f612a4ab-2fff-45fb-b94e-e94a40ec251020230410152451',
+                            'Eae Malandro FC', 81.2099609375], [65.5498046875,
+                                                                'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_166/escudo/69/05/42/00d7c123ab-b3d9-4fa3-b90d-9cbbf403f06920200725110542',
+                                                                'ThiagoRolo FC', 87.490234375, 66.14013671875,
+                                                                'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_211/escudo/be/41/40/00015cb0cc-580f-4a3b-993b-d7dc872d3bbe20230317104140',
+                                                                'Peixão Irado', 61.260009765625], [70.0498046875,
+                                                                                                   'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/5d/47/14/00ede8fe0a-584f-4bad-9e46-7be85b23a75d20230329184714',
+                                                                                                   'Sóh Taapa FC',
+                                                                                                   55.489990234375,
+                                                                                                   52.56005859375,
+                                                                                                   'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/6e/14/02/00fe5cef85-2032-4348-b47f-6a4bb2c35c6e20230329061402',
+                                                                                                   'Markitos Bar',
+                                                                                                   72.7998046875],
+                           [64.64990234375,
+                            'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_213/escudo/ba/09/36/00f9742c5c-169f-4773-bba0-061b80f7bbba20230408110936',
+                            'Gabitreta F C', 77.81005859375, 61.929931640625,
+                            'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/56/27/28/0046e18a00-c022-4a79-a1a3-23e02915135620230330142728',
+                            'Christimao', 71.83984375]]
 
     else:
         jogos_oitavas_a, jogos_oitavas_b = oitavas_de_final_seg_turno()
@@ -4398,6 +4436,3 @@ def mata_mata_seg_turno():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)
-
-
-
