@@ -9,9 +9,9 @@ import numpy as np
 import requests
 import schedule
 from flask import Flask, render_template, request
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 
-os.environ['MPLCONFIGDIR'] = '/tmp/'
+# os.environ['MPLCONFIGDIR'] = '/tmp/'
 
 import cartolafc.models
 from cartolafc.constants import rodadas_campeonato, rodadas_primeiro_turno, rodadas_segundo_turno, \
@@ -123,32 +123,32 @@ def stats_page():
     return render_template('stats.html', get_list=retornar_estats_liga())
 
 
-@app.route("/media", methods=['GET', 'POST'])
-def get_media_form():
-    dropdown_times = []
-
-    for lig in ligas.times:
-        dropdown_times.append(lig.nome)
-
-    dropdown_times.sort()
-
-    return render_template('media_form.html', dropdown_times=dropdown_times)
-
-
-@app.route("/media_result", methods=['GET', 'POST'])
-def return_media_form():
-    team = request.form.get("time")
-    gd = {}
-
-    get_data = retornar_medias_time(team)
-    for k, v in get_data.items():
-        gd[k] = v
-
-    root_dir = os.path.dirname(os.path.abspath(__file__))
-    img_path = os.path.join('static/media.jpg')
-    get_img = img_path
-
-    return render_template('media_result.html', get_data=gd, get_time=team, get_img=get_img)
+# @app.route("/media", methods=['GET', 'POST'])
+# def get_media_form():
+#     dropdown_times = []
+#
+#     for lig in ligas.times:
+#         dropdown_times.append(lig.nome)
+#
+#     dropdown_times.sort()
+#
+#     return render_template('media_form.html', dropdown_times=dropdown_times)
+#
+#
+# @app.route("/media_result", methods=['GET', 'POST'])
+# def return_media_form():
+#     team = request.form.get("time")
+#     gd = {}
+#
+#     get_data = retornar_medias_time(team)
+#     for k, v in get_data.items():
+#         gd[k] = v
+#
+#     root_dir = os.path.dirname(os.path.abspath(__file__))
+#     img_path = os.path.join('static/media.jpg')
+#     get_img = img_path
+#
+#     return render_template('media_result.html', get_data=gd, get_time=team, get_img=get_img)
 
 
 @app.route('/destaques')
@@ -624,216 +624,6 @@ def liga_class():
     with open('static/nomes.json', encoding='utf-8', mode='r') as currentFile:
         nomes = currentFile.read().replace('\n', '')
 
-    # for prim_turno in rodadas_primeiro_turno:
-    #     for key, value in json.loads(data).items():
-    #         if key == str(prim_turno):
-    #             for v in value.items():
-    #                 if v[0] in dict_prim_turno:
-    #                     dict_prim_turno[v[0]].append(v[1])
-    #                 else:
-    #                     dict_prim_turno[v[0]] = [v[1]]
-    #
-    # ordenar_dict = sorted(dict_prim_turno.items(), key=lambda t: sum(t[1]), reverse=True)
-    # for k in ordenar_dict:
-    #     primeiro_turno_[k[0]] = sum(k[1])
-    #
-    # if rod > 19:
-    #
-    #     for seg_turno in rodadas_segundo_turno:
-    #         for key, value in json.loads(data).items():
-    #             if key == str(seg_turno):
-    #                 for v in value.items():
-    #                     if v[0] in dict_seg_turno:
-    #                         dict_seg_turno[v[0]].append(v[1])
-    #                     else:
-    #                         dict_seg_turno[v[0]] = [v[1]]
-    #
-    #     ordenar_dict = sorted(dict_seg_turno.items(), key=lambda t: sum(t[1]), reverse=True)
-    #     for k_ in ordenar_dict:
-    #         segundo_turno_[k_[0]] = sum(k_[1])
-    #
-    # for camp in rodadas_campeonato:
-    #     for key, value in json.loads(data).items():
-    #         if key == str(camp):
-    #             for v in value.items():
-    #                 if v[0] in dict_campeonato:
-    #                     dict_campeonato[v[0]].append(v[1])
-    #                 else:
-    #                     dict_campeonato[v[0]] = [v[1]]
-    #
-    # ordenar_dict = sorted(dict_campeonato.items(), key=lambda t: sum(t[1]), reverse=True)
-    # for k__ in ordenar_dict:
-    #     campeonato_[k__[0]] = sum(k__[1])
-    #
-    # with open('static/sem_capitao.json', encoding='utf-8', mode='r') as currentFile:
-    #     data_sem_capitao = currentFile.read().replace('\n', '')
-    #
-    #     for x, y in json.loads(data_sem_capitao).items():
-    #         dict_sem_capitao[x] = y
-    #
-    # if rod > 19:
-    #
-    #     if api.mercado().status.nome == 'Mercado aberto' or api.mercado().status.nome == 'Final de temporada':
-    #
-    #         for (c1, v1), (chave, valor), (chave_, valor_), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
-    #                                                                                     campeonato_.items(),
-    #                                                                                     segundo_turno_.items(),
-    #                                                                                     dict_sem_capitao.items()):
-    #             for c, e in json.loads(escudos).items():
-    #                 for k, n in json.loads(nomes).items():
-    #                     if chave_ == c:
-    #                         if chave_ == k:
-    #                             segundo_turno[n] = [e, valor_]
-    #                     if chave == c:
-    #                         if chave == k:
-    #                             campeonato[n] = [e, valor]
-    #                     if chave_sc == c:
-    #                         if chave_sc == k:
-    #                             sem_capitao[n] = [e, valor_sc]
-    #                     if c1 == c:
-    #                         if c1 == k:
-    #                             primeiro_turno[n] = [e, v1]
-    #
-    #         data_times_rodadas = dict(json.loads(data).items())
-    #         pen_rod = list(data_times_rodadas.keys())[-1]
-    #
-    #         for key_, value_ in segundo_turno_.items():
-    #             for key2_, value2_ in data_times_rodadas[pen_rod].items():
-    #                 if key_ == key2_:
-    #                     for k2, n2 in json.loads(nomes).items():
-    #                         if k2 == key_:
-    #                             segundo_turno[n2].append(data_times_rodadas[pen_rod][key_])
-    #
-    #         for key_, value_ in campeonato_.items():
-    #             for key2_, value2_ in data_times_rodadas[pen_rod].items():
-    #                 if key_ == key2_:
-    #                     for k2, n2 in json.loads(nomes).items():
-    #                         if k2 == key_:
-    #                             campeonato[n2].append(data_times_rodadas[pen_rod][key_])
-    #
-    # if api.mercado().status.nome == 'Mercado fechado':
-    #
-    #     with ThreadPoolExecutor(max_workers=40) as executor:
-    #         threads = executor.map(api.time_parcial, todos_ids)
-    #
-    #         for teams in threads:
-    #             team_dict[teams.info.id] = teams.pontos
-    #
-    #         for (c1, v1), (chave, valor), (chave_, valor_), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
-    #                                                                                     campeonato_.items(),
-    #                                                                                     segundo_turno_.items(),
-    #                                                                                     dict_sem_capitao.items()):
-    #             for c, e in json.loads(escudos).items():
-    #                 for k, n in json.loads(nomes).items():
-    #                     for key, value in team_dict.items():
-    #                         if chave_ == c:
-    #                             if chave_ == k:
-    #                                 if chave_ == str(key):
-    #                                     segundo_turno[n] = [e, valor_ + value, value]
-    #                         if chave == c:
-    #                             if chave == k:
-    #                                 if chave == str(key):
-    #                                     campeonato[n] = [e, valor + value, value]
-    #                         if chave_sc == c:
-    #                             if chave_sc == k:
-    #                                 sem_capitao[n] = [e, valor_sc]
-    #                         if c1 == c:
-    #                             if c1 == k:
-    #                                 primeiro_turno[n] = [e, v1]
-    #
-    #     primeiro_turno.pop('Contra Tudo e Todos Avanti!')
-    #     segundo_turno.pop('Contra Tudo e Todos Avanti!')
-    #     campeonato.pop('Contra Tudo e Todos Avanti!')
-    #
-    #     lider_prim_turno = next(iter(primeiro_turno))
-    #     lider_seg_turno = next(iter(segundo_turno))
-    #
-    #     if rod >= 19:
-    #         dict_prem['primeiro_turno']['lider'] = lider_prim_turno
-    #
-    #     if rod >= 38:
-    #         dict_prem['segundo_turno']['lider'] = lider_seg_turno
-    #
-    #     if not local:
-    #         with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
-    #             json.dump(dict_prem, f, ensure_ascii=False)
-    #     else:
-    #         with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-    #             json.dump(dict_prem, f, ensure_ascii=False)
-    #
-    #     return primeiro_turno, segundo_turno, campeonato, sem_capitao
-    #
-    # else:
-    #
-    #     if api.mercado().status.nome == 'Mercado aberto' or api.mercado().status.nome == 'Final de temporada':
-    #
-    #         for (c1, v1), (chave, valor), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
-    #                                                                   campeonato_.items(),
-    #                                                                   dict_sem_capitao.items()):
-    #             for c, e in json.loads(escudos).items():
-    #                 for k, n in json.loads(nomes).items():
-    #                     if chave == c:
-    #                         if chave == k:
-    #                             campeonato[n] = [e, valor]
-    #                     if chave_sc == c:
-    #                         if chave_sc == k:
-    #                             sem_capitao[n] = [e, valor_sc]
-    #                     if c1 == c:
-    #                         if c1 == k:
-    #                             primeiro_turno[n] = [e, v1]
-    #
-    #         data_times_rodadas = dict(json.loads(data).items())
-    #         pen_rod = list(data_times_rodadas.keys())[-1]
-    #
-    #         for key_, value_ in campeonato_.items():
-    #             for key2_, value2_ in data_times_rodadas[pen_rod].items():
-    #                 if key_ == key2_:
-    #                     for k2, n2 in json.loads(nomes).items():
-    #                         if k2 == key_:
-    #                             campeonato[n2].append(data_times_rodadas[pen_rod][key_])
-    #
-    #     if api.mercado().status.nome == 'Mercado fechado':
-    #
-    #         with ThreadPoolExecutor(max_workers=40) as executor:
-    #             threads = executor.map(api.time_parcial, todos_ids)
-    #
-    #             for teams in threads:
-    #                 team_dict[teams.info.id] = teams.pontos
-    #
-    #             for (c1, v1), (chave, valor), (chave_sc, valor_sc) in zip(primeiro_turno_.items(),
-    #                                                                       campeonato_.items(),
-    #                                                                       dict_sem_capitao.items()):
-    #                 for c, e in json.loads(escudos).items():
-    #                     for k, n in json.loads(nomes).items():
-    #                         for key, value in team_dict.items():
-    #                             if chave == c:
-    #                                 if chave == k:
-    #                                     if chave == str(key):
-    #                                         campeonato[n] = [e, valor + value, value]
-    #                             if chave_sc == c:
-    #                                 if chave_sc == k:
-    #                                     sem_capitao[n] = [e, valor_sc]
-    #                             if c1 == c:
-    #                                 if c1 == k:
-    #                                     primeiro_turno[n] = [e, v1]
-    #
-    #     primeiro_turno.pop('Contra Tudo e Todos Avanti!')
-    #     campeonato.pop('Contra Tudo e Todos Avanti!')
-    #
-    #     lider_prim_turno = next(iter(primeiro_turno))
-    #
-    #     if rod >= 19:
-    #         dict_prem['primeiro_turno']['lider'] = lider_prim_turno
-    #
-    #     if not local:
-    #         with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
-    #             json.dump(dict_prem, f, ensure_ascii=False)
-    #     else:
-    #         with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-    #             json.dump(dict_prem, f, ensure_ascii=False)
-    #
-    #     return primeiro_turno, campeonato, sem_capitao
-
     for prim_turno in rodadas_primeiro_turno:
         for key, value in json.loads(data).items():
             if key == str(prim_turno):
@@ -996,104 +786,104 @@ def times_rodadas(id_, rodada):
     return time_
 
 
-def retornar_media_time_rodada(id_):
-    threads = []
-    teams = []
-
-    with ThreadPoolExecutor(max_workers=20) as executor:
-        if mercado_status == 'Mercado aberto':
-            for x in range(1, rod):
-                threads.append(executor.submit(times_rodadas, id_, rodada=x))
-
-        if mercado_status == 'Final de temporada':
-            for x in range(1, rod + 1):
-                threads.append(executor.submit(times_rodadas, id_, rodada=x))
-
-        for task in as_completed(threads):
-            teams.append(task.result())
-
-    return teams
-
-
-def retornar_medias_time(cartola_time: str):
-    dict_medias = {}
-    gol = 0
-    somagol = 0
-    lat = 0
-    somalat = 0
-    zag = 0
-    somazag = 0
-    meia = 0
-    somameia = 0
-    ata = 0
-    somaata = 0
-    tec = 0
-    somatec = 0
-    time_id = 0
-
-    for part in ligas.times:
-        if cartola_time in part.nome:
-            time_id = part.id
-            break
-
-    media_total = api.time(time_id)
-    if mercado_status == 'Mercado aberto':
-        mt = "{:.2f}".format(media_total.pontos / (rod - 1))
-    if mercado_status == 'Final de temporada':
-        mt = "{:.2f}".format(media_total.pontos / (rod))
-
-    for t in retornar_media_time_rodada(time_id):
-        for value in t.atletas:
-
-            if value.posicao.nome == 'Goleiro':
-                gol = gol + 1
-                somagol = somagol + value.pontos
-            elif value.posicao.nome == 'Lateral':
-                lat = lat + 1
-                somalat = somalat + value.pontos
-            elif value.posicao.nome == 'Zagueiro':
-                zag = zag + 1
-                somazag = somazag + value.pontos
-            elif value.posicao.nome == 'Meia':
-                meia = meia + 1
-                somameia = somameia + value.pontos
-            elif value.posicao.nome == 'Atacante':
-                ata = ata + 1
-                somaata = somaata + value.pontos
-            elif value.posicao.nome == 'Técnico':
-                tec = tec + 1
-                somatec = somatec + value.pontos
-            else:
-                pass
-
-        dict_medias[t.info.nome, mt] = [somagol / gol, (somalat / lat) if somalat or lat else 0, somazag / zag,
-                                        somameia / meia, somaata / ata, somatec / tec]
-
-    for x_axis in dict_medias.values():
-        left = [1, 2, 3, 4, 5, 6]
-        x = ['GOL', 'LAT', 'ZAG', 'MEI', 'ATA', 'TEC']
-        y = [x_axis[0], x_axis[1], x_axis[2], x_axis[3], x_axis[4], x_axis[5]]
-        # plt.bar(left, y, tick_label=x,
-        #         width=0.8, color=['red', 'green'])
-
-        z = np.arange(len(x))  # the label locations
-        width = 0.8  # the width of the bars
-
-        fig, ax = plt.subplots()
-        rects1 = ax.bar(z, y, width, label='Média')
-
-        # Add some text for labels, title and custom x-axis tick labels, etc.
-        ax.set_xticks(z)
-        ax.set_xticklabels(x)
-        ax.legend()
-
-        ax.bar_label(rects1, padding=3)
-
-        fig.tight_layout()
-        plt.savefig('static/media.jpg', dpi=400)
-        # plt.show()
-
-    return dict_medias
+# def retornar_media_time_rodada(id_):
+#     threads = []
+#     teams = []
+#
+#     with ThreadPoolExecutor(max_workers=20) as executor:
+#         if mercado_status == 'Mercado aberto':
+#             for x in range(1, rod):
+#                 threads.append(executor.submit(times_rodadas, id_, rodada=x))
+#
+#         if mercado_status == 'Final de temporada':
+#             for x in range(1, rod + 1):
+#                 threads.append(executor.submit(times_rodadas, id_, rodada=x))
+#
+#         for task in as_completed(threads):
+#             teams.append(task.result())
+#
+#     return teams
+#
+#
+# def retornar_medias_time(cartola_time: str):
+#     dict_medias = {}
+#     gol = 0
+#     somagol = 0
+#     lat = 0
+#     somalat = 0
+#     zag = 0
+#     somazag = 0
+#     meia = 0
+#     somameia = 0
+#     ata = 0
+#     somaata = 0
+#     tec = 0
+#     somatec = 0
+#     time_id = 0
+#
+#     for part in ligas.times:
+#         if cartola_time in part.nome:
+#             time_id = part.id
+#             break
+#
+#     media_total = api.time(time_id)
+#     if mercado_status == 'Mercado aberto':
+#         mt = "{:.2f}".format(media_total.pontos / (rod - 1))
+#     if mercado_status == 'Final de temporada':
+#         mt = "{:.2f}".format(media_total.pontos / (rod))
+#
+#     for t in retornar_media_time_rodada(time_id):
+#         for value in t.atletas:
+#
+#             if value.posicao.nome == 'Goleiro':
+#                 gol = gol + 1
+#                 somagol = somagol + value.pontos
+#             elif value.posicao.nome == 'Lateral':
+#                 lat = lat + 1
+#                 somalat = somalat + value.pontos
+#             elif value.posicao.nome == 'Zagueiro':
+#                 zag = zag + 1
+#                 somazag = somazag + value.pontos
+#             elif value.posicao.nome == 'Meia':
+#                 meia = meia + 1
+#                 somameia = somameia + value.pontos
+#             elif value.posicao.nome == 'Atacante':
+#                 ata = ata + 1
+#                 somaata = somaata + value.pontos
+#             elif value.posicao.nome == 'Técnico':
+#                 tec = tec + 1
+#                 somatec = somatec + value.pontos
+#             else:
+#                 pass
+#
+#         dict_medias[t.info.nome, mt] = [somagol / gol, (somalat / lat) if somalat or lat else 0, somazag / zag,
+#                                         somameia / meia, somaata / ata, somatec / tec]
+#
+#     for x_axis in dict_medias.values():
+#         left = [1, 2, 3, 4, 5, 6]
+#         x = ['GOL', 'LAT', 'ZAG', 'MEI', 'ATA', 'TEC']
+#         y = [x_axis[0], x_axis[1], x_axis[2], x_axis[3], x_axis[4], x_axis[5]]
+#         # plt.bar(left, y, tick_label=x,
+#         #         width=0.8, color=['red', 'green'])
+#
+#         z = np.arange(len(x))  # the label locations
+#         width = 0.8  # the width of the bars
+#
+#         fig, ax = plt.subplots()
+#         rects1 = ax.bar(z, y, width, label='Média')
+#
+#         # Add some text for labels, title and custom x-axis tick labels, etc.
+#         ax.set_xticks(z)
+#         ax.set_xticklabels(x)
+#         ax.legend()
+#
+#         ax.bar_label(rects1, padding=3)
+#
+#         fig.tight_layout()
+#         plt.savefig('static/media.jpg', dpi=400)
+#         # plt.show()
+#
+#     return dict_medias
 
 
 def retornar_destaques():
