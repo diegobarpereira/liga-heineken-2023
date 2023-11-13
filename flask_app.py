@@ -11,7 +11,7 @@ import schedule
 from flask import Flask, render_template, request
 from matplotlib import pyplot as plt
 
-os.environ[ 'MPLCONFIGDIR' ] = '/tmp/'
+os.environ['MPLCONFIGDIR'] = '/tmp/'
 
 import cartolafc.models
 from cartolafc.constants import rodadas_campeonato, rodadas_primeiro_turno, rodadas_segundo_turno, \

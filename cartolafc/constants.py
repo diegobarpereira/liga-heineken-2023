@@ -4,6 +4,9 @@ import os
 global local
 global prod
 
+local = False
+prod = False
+
 if "C:\\" in os.getcwd():
     local = True
 else:
