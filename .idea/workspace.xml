@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2dc32927-f4c2-49a1-b08c-78aaa0078b08" name="Changes" comment="33 rodada">
+    <list default="true" id="2dc32927-f4c2-49a1-b08c-78aaa0078b08" name="Changes" comment="34 rodada">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cartolafc/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/cartolafc/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/flask_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/flask_app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/dict_prem.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/dict_prem.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/dict_matamata_seg_turno.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/dict_matamata_seg_turno.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,7 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699619725647</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="34 rodada">
+      <option name="closed" value="true" />
+      <created>1699881246557</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1699881246557</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -225,26 +232,12 @@
     <MESSAGE value="31 rodada" />
     <MESSAGE value="32 rodada" />
     <MESSAGE value="33 rodada" />
-    <option name="LAST_COMMIT_MESSAGE" value="33 rodada" />
+    <MESSAGE value="34 rodada" />
+    <option name="LAST_COMMIT_MESSAGE" value="34 rodada" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/auxiliar.py</url>
-          <line>432</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/auxiliar.py</url>
-          <line>430</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/auxiliar.py</url>
-          <line>429</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/flask_app.py</url>
           <line>1294</line>
@@ -254,11 +247,6 @@
           <url>file://$PROJECT_DIR$/flask_app.py</url>
           <line>1304</line>
           <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/flask_app.py</url>
-          <line>1236</line>
-          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -288,7 +288,7 @@ def liberta_segundo_turno_teste():
 @app.route('/matamatasegturno')
 def matamata_seg_page():
     # oit_a, oit_b, qua_a, qua_b, semi_a, semi_b, final_a, final_b, esq_maior = mata_mata_prim_turno()
-    oit_a, oit_b, qua_a, qua_b = mata_mata_seg_turno()
+    oit_a, oit_b, qua_a, qua_b, semi_a, semi_b = mata_mata_seg_turno()
     final = True
 
     # campeao = []
@@ -306,7 +306,7 @@ def matamata_seg_page():
     # get_list4 = qua_b, get_list5 = semi_a, get_list6 = semi_b, get_list7 = final_a,
     # get_list8 = final_b, esq_maior = esq_maior, campeao = campeao, vice = vice, final = final
     return render_template('matamata_seg_turno.html', get_list1=oit_a, get_list2=oit_b,
-                           get_list3=qua_a, get_list4=qua_b)
+                           get_list3=qua_a, get_list4=qua_b, get_list5 = semi_a, get_list6 = semi_b)
     # , get_list1=oit_a, get_list2=oit_b, get_list3=qua_a, get_list4=qua_b, get_list5=semi_a, get_list6=semi_b, get_list7=final_a, get_list8=final_b, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
 
 
@@ -4130,20 +4130,24 @@ def semi_finais_seg_turno():
                     if chave == id:
                         dict_semis_pts[nome] = [v, valor]
 
-    if api.mercado().status.nome == 'Mercado fechado':
+    if 35 <= rod < 37 and api.mercado().status.nome == 'Mercado fechado':
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(api.time_parcial, list_semis_seg_turno)
-            # threads = executor.map(get_parciais, list_oitavas_seg_turno)
 
         for teams in threads:
             dict_semis_pts[teams.info.nome][1].append(teams.pontos)
 
-    for key, value in dict_semis_pts.items():
-        semis.append([key,
-                      value[0],
-                      value[1][2] if api.mercado().status.nome == 'Mercado fechado' and rod == 35 else value[1][0],
-                      value[1][2] if api.mercado().status.nome == 'Mercado fechado' and rod == 36 else value[1][1]]
-                     )
+        for key, value in dict_semis_pts.items():
+            semis.append([key,
+                            value[0],
+                            value[1][2] if rod == 35 else value[1][0],
+                            value[1][2] if rod == 36 else value[1][1]])
+
+    elif rod >= 37 or api.mercado().status.nome == 'Mercado aberto':
+
+        for key, value in dict_semis_pts.items():
+            semis.append([key,
+                            value[0], value[1][0], value[1][1]])
 
     jogos_semis_a = []
     jogos_semis_a.append(
@@ -4306,9 +4310,6 @@ def mata_mata_seg_turno():
     else:
         prod = True
 
-    jogos_oitavas_a = []
-    jogos_oitavas_b = []
-
     if rod > 32:
         jogos_oitavas_a = [[82.97021484375,
                             'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/7b/38/31/0079af2740-7050-485f-b648-a4bc15b13c7b20230330223831',
@@ -4356,8 +4357,13 @@ def mata_mata_seg_turno():
     else:
         jogos_oitavas_a, jogos_oitavas_b = oitavas_de_final_seg_turno()
 
-    jogos_quartas_a, jogos_quartas_b = quartas_de_final_seg_turno()
-    # jogos_semis_a, jogos_semis_b = semi_finais_seg_turno()
+    if rod > 34:
+        jogos_quartas_a = [[64.52978515625, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/c1/05/07/00a6842184-e625-4da0-ac9b-d9f8fc475fc120230329090507', '0VINTE1 FC', 70.7099609375, 63.52001953125, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_219/escudo/8d/19/20/0075b78f19-2721-4b95-b29d-82654ac0618d20230506181920', 'Denoris F.C.', 61.929931640625], [71.5, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/2f/19/08/0060f57adb-95c1-476d-b10f-9bd87240802f20230329221908', 'Camisa21FC', 54.169921875, 66.6201171875, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/82/31/43/00acad7129-c019-4c77-9209-7ad53263848220230329103143', 'RR Football Club', 65.18017578125]]
+        jogos_quartas_b = [[81.009765625, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_185/escudo/e0/26/06/00e346c37f-2729-4c11-a4f3-e816469b79e020210502142606', 'Raça Timão!!!', 76.1298828125, 95.66015625, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_166/escudo/69/05/42/00d7c123ab-b3d9-4fa3-b90d-9cbbf403f06920200725110542', 'ThiagoRolo FC', 102.18017578125], [81.56005859375, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/5d/47/14/00ede8fe0a-584f-4bad-9e46-7be85b23a75d20230329184714', 'Sóh Taapa FC', 64.60986328125, 78.31005859375, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_213/escudo/ba/09/36/00f9742c5c-169f-4773-bba0-061b80f7bbba20230408110936', 'Gabitreta F C', 69.830078125]]
+    else:
+        jogos_quartas_a, jogos_quartas_b = quartas_de_final_seg_turno()
+
+    jogos_semis_a, jogos_semis_b = semi_finais_seg_turno()
     # jogos_final_a, jogos_final_b, esq_maior = finais_seg_turno()
     # campeao_prim_turno = ''
     # vice_prim_turno = ''
@@ -4382,7 +4388,7 @@ def mata_mata_seg_turno():
 
     # print(jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior)
     # return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b
-    return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b
+    return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b
 
 
 if __name__ == '__main__':
