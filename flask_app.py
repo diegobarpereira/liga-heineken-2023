@@ -17,7 +17,7 @@ from cartolafc.constants import rodadas_campeonato, rodadas_primeiro_turno, roda
     rodadas_quartas_prim_turno, rodadas_semis_prim_turno, \
     rodadas_finais_prim_turno, \
     dict_prem, rodadas_liberta_seg_turno, grupo_liberta_seg_turno, rodadas_oitavas_seg_turno, \
-    dict_matamata, rodadas_quartas_seg_turno, rodadas_semis_seg_turno, rodadas_finais_seg_turno, premios
+    rodadas_quartas_seg_turno, rodadas_semis_seg_turno, rodadas_finais_seg_turno, premios, dict_matamata
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -2574,8 +2574,8 @@ def mata_mata_prim_turno():
     jogos_quartas_a, jogos_quartas_b = quartas_de_final_prim_turno()
     jogos_semis_a, jogos_semis_b = semi_finais_prim_turno()
     jogos_final_a, jogos_final_b, esq_maior = finais_prim_turno()
-    campeao_prim_turno = ''
-    vice_prim_turno = ''
+    # campeao_prim_turno = ''
+    # vice_prim_turno = ''
 
     for f_a, f_b in zip(jogos_final_a, jogos_final_b):
         if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
@@ -3813,24 +3813,8 @@ def oitavas_de_final_seg_turno():
                     if chave == id:
                         dict_oitavas_pts[nome] = [v, valor]
 
-    # if api.mercado().status.nome == 'Mercado fechado':
-    #     with ThreadPoolExecutor(max_workers=40) as executor:
-    #         threads = executor.map(api.time_parcial, list_oitavas_seg_turno)
-    #         # threads = executor.map(get_parciais, list_oitavas_seg_turno)
-    #
-    #     for teams in threads:
-    #         dict_oitavas_pts[teams.info.nome][1].append(teams.pontos)
-    #
-    # for key, value in dict_oitavas_pts.items():
-    #     oitavas.append([key,
-    #                     value[0],
-    #                     value[1][2] if api.mercado().status.nome == 'Mercado fechado' and rod == 31 else value[1][0],
-    #                     value[1][2] if api.mercado().status.nome == 'Mercado fechado' and rod == 32 else value[1][1]]
-    #                    )
-
     if 31 <= rod < 33 and api.mercado().status.nome == 'Mercado fechado':
-        # if api.mercado().status.nome == 'Mercado fechado':
-        # if mercado_status == 'Mercado fechado':
+
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(api.time_parcial, list_oitavas_seg_turno)
 
@@ -3844,8 +3828,6 @@ def oitavas_de_final_seg_turno():
                             value[1][2] if rod == 32 else value[1][1]])
 
     elif rod >= 33 or api.mercado().status.nome == 'Mercado aberto':
-
-        # if api.mercado().status.nome == 'Mercado aberto':
 
         for key, value in dict_oitavas_pts.items():
             oitavas.append([key,
@@ -3879,37 +3861,6 @@ def oitavas_de_final_seg_turno():
         [oitavas[5][3], oitavas[5][1], oitavas[5][0], oitavas[5][2], oitavas[10][3], oitavas[10][1], oitavas[10][0],
          oitavas[10][2]])
 
-    """
-        jogos_oitavas_a = []
-    jogos_oitavas_a.append(
-        [oitavas[0][2], oitavas[0][1], oitavas[0][0], oitavas[0][3], oitavas[15][2], oitavas[15][1], oitavas[15][0],
-         oitavas[15][3]])
-    jogos_oitavas_a.append(
-        [oitavas[6][2], oitavas[6][1], oitavas[6][0], oitavas[6][3], oitavas[9][2], oitavas[9][1], oitavas[9][0],
-         oitavas[9][3]])
-    jogos_oitavas_a.append(
-        [oitavas[2][2], oitavas[2][1], oitavas[2][0], oitavas[2][3], oitavas[13][2], oitavas[13][1], oitavas[13][0],
-         oitavas[13][3]])
-    jogos_oitavas_a.append(
-        [oitavas[4][2], oitavas[4][1], oitavas[4][0], oitavas[4][3], oitavas[11][2], oitavas[11][1], oitavas[11][0],
-         oitavas[11][3]])
-
-    jogos_oitavas_b = []
-    jogos_oitavas_b.append(
-        [oitavas[1][3], oitavas[1][1], oitavas[1][0], oitavas[1][2], oitavas[14][3], oitavas[14][1], oitavas[14][0],
-         oitavas[14][2]])
-    jogos_oitavas_b.append(
-        [oitavas[7][3], oitavas[7][1], oitavas[7][0], oitavas[7][2], oitavas[8][3], oitavas[8][1], oitavas[8][0],
-         oitavas[8][2]])
-    jogos_oitavas_b.append(
-        [oitavas[3][3], oitavas[3][1], oitavas[3][0], oitavas[3][2], oitavas[12][3], oitavas[12][1], oitavas[12][0],
-         oitavas[12][2]])
-    jogos_oitavas_b.append(
-        [oitavas[5][3], oitavas[5][1], oitavas[5][0], oitavas[5][2], oitavas[10][3], oitavas[10][1], oitavas[10][0],
-         oitavas[10][2]])
-    """
-
-    # print(jogos_oitavas_a, jogos_oitavas_b)
     return jogos_oitavas_a, jogos_oitavas_b
 
 

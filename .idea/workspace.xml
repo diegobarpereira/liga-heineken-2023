@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2dc32927-f4c2-49a1-b08c-78aaa0078b08" name="Changes" comment="32 rodada">
+    <list default="true" id="2dc32927-f4c2-49a1-b08c-78aaa0078b08" name="Changes" comment="33 rodada">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cartolafc/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/cartolafc/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/flask_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/flask_app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/dict_prem.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/dict_prem.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +207,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699493655563</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="33 rodada">
+      <option name="closed" value="true" />
+      <created>1699619725647</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1699619725647</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -214,7 +224,8 @@
     <MESSAGE value="30 rodada" />
     <MESSAGE value="31 rodada" />
     <MESSAGE value="32 rodada" />
-    <option name="LAST_COMMIT_MESSAGE" value="32 rodada" />
+    <MESSAGE value="33 rodada" />
+    <option name="LAST_COMMIT_MESSAGE" value="33 rodada" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -233,6 +244,21 @@
           <url>file://$PROJECT_DIR$/auxiliar.py</url>
           <line>429</line>
           <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/flask_app.py</url>
+          <line>1294</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/flask_app.py</url>
+          <line>1304</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/flask_app.py</url>
+          <line>1236</line>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

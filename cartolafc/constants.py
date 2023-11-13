@@ -1,4 +1,13 @@
 import json
+import os
+
+global local
+global prod
+
+if "C:\\" in os.getcwd():
+    local = True
+else:
+    prod = True
 
 MERCADO_ABERTO = 1
 MERCADO_FECHADO = 2
@@ -15,16 +24,29 @@ PATRIMONIO = 'patrimonio'
 #              "liberta_seg_turno": {"campeao": '', "vice": ''},
 #              "geral": {"campeao": '', "seg_lugar": '', "terc_lugar": '', "quarto_lugar": ''}
 #              }
+
 dict_prem = {}
+
+if not local:
+    with open('./tmp/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
+        data = currentFile.read().replace('\n', '')
+        for k, v in json.loads(data).items():
+            dict_prem[k] = v
+else:
+    with open('static/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
+        data = currentFile.read().replace('\n', '')
+        for k, v in json.loads(data).items():
+            dict_prem[k] = v
+
 with open('static/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
     data = currentFile.read().replace('\n', '')
     for k, v in json.loads(data).items():
         dict_prem[k] = v
-
-with open('./tmp/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
-    data = currentFile.read().replace('\n', '')
-    for k, v in json.loads(data).items():
-        dict_prem[k] = v
+#
+# with open('./tmp/dict_prem.json', encoding='utf-8', mode='r') as currentFile:
+#     data = currentFile.read().replace('\n', '')
+#     for k, v in json.loads(data).items():
+#         dict_prem[k] = v
 
 rodadas_campeonato = range(1, 39)
 rodadas_primeiro_turno = range(1, 20)
@@ -89,26 +111,29 @@ list_semis_seg_turno = []
 
 list_finais_seg_turno = []
 
-dict_matamata = {
-    "oitavas": [],
-    "quartas": [],
-    "semis": [],
-    "finais": []
-}
-with open('static/dict_matamata.json', mode='r') as currentFile:
-    data = currentFile.read().replace('\n', '')
-    for k, v in json.loads(data).items():
-        dict_prem[k] = v
+dict_matamata = {}
 
-dict_matamata_seg_turno = {
-    "oitavas": [],
-    "quartas": [],
-    "semis": [],
-    "finais": []
-}
-with open('static/dict_matamata_seg_turno.json', mode='r') as currentFile:
-    data = currentFile.read().replace('\n', '')
-    for k, v in json.loads(data).items():
-        dict_prem[k] = v
+# dict_matamata = {
+#     "oitavas": [],
+#     "quartas": [],
+#     "semis": [],
+#     "finais": []
+# }
+#
+# with open('static/dict_matamata.json', mode='r') as currentFile:
+#     data = currentFile.read().replace('\n', '')
+#     for k, v in json.loads(data).items():
+#         dict_prem[k] = v
+#
+# dict_matamata_seg_turno = {
+#     "oitavas": [],
+#     "quartas": [],
+#     "semis": [],
+#     "finais": []
+# }
+# with open('static/dict_matamata_seg_turno.json', mode='r') as currentFile:
+#     data = currentFile.read().replace('\n', '')
+#     for k, v in json.loads(data).items():
+#         dict_prem[k] = v
 
 list_oitavas_seg_turno = ["25582672", "48733", "28919430", "44558779", "13957925", "3646412", "18796615", "19190102", "1241021", "71375", "1893918", "47620752", "8912058", "219929", "1235701", "1889674"]
