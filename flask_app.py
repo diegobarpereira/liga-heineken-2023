@@ -290,7 +290,7 @@ def liberta_segundo_turno_teste():
 @app.route('/matamatasegturno')
 def matamata_seg_page():
     # oit_a, oit_b, qua_a, qua_b, semi_a, semi_b, final_a, final_b, esq_maior = mata_mata_prim_turno()
-    oit_a, oit_b, qua_a, qua_b, semi_a, semi_b = mata_mata_seg_turno()
+    oit_a, oit_b, qua_a, qua_b, semi_a, semi_b, final_a, final_b, esq_maior = mata_mata_seg_turno()
     final = True
 
     # campeao = []
@@ -308,7 +308,7 @@ def matamata_seg_page():
     # get_list4 = qua_b, get_list5 = semi_a, get_list6 = semi_b, get_list7 = final_a,
     # get_list8 = final_b, esq_maior = esq_maior, campeao = campeao, vice = vice, final = final
     return render_template('matamata_seg_turno.html', get_list1=oit_a, get_list2=oit_b,
-                           get_list3=qua_a, get_list4=qua_b, get_list5 = semi_a, get_list6 = semi_b)
+                           get_list3=qua_a, get_list4=qua_b, get_list5 = semi_a, get_list6 = semi_b, get_list7=final_a, get_list8=final_b, esq_maior=esq_maior)
     # , get_list1=oit_a, get_list2=oit_b, get_list3=qua_a, get_list4=qua_b, get_list5=semi_a, get_list6=semi_b, get_list7=final_a, get_list8=final_b, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
 
 
@@ -4155,8 +4155,13 @@ def mata_mata_seg_turno():
     else:
         jogos_quartas_a, jogos_quartas_b = quartas_de_final_seg_turno()
 
-    jogos_semis_a, jogos_semis_b = semi_finais_seg_turno()
-    # jogos_final_a, jogos_final_b, esq_maior = finais_seg_turno()
+    if rod > 36:
+        jogos_semis_a = [[101.16015625, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/c1/05/07/00a6842184-e625-4da0-ac9b-d9f8fc475fc120230329090507', '0VINTE1 FC', 96.009765625, 92.009765625, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_212/escudo/82/31/43/00acad7129-c019-4c77-9209-7ad53263848220230329103143', 'RR Football Club', 88.60986328125]]
+        jogos_semis_b = [[82.2099609375, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_166/escudo/69/05/42/00d7c123ab-b3d9-4fa3-b90d-9cbbf403f06920200725110542', 'ThiagoRolo FC', 100.2900390625, 94.85986328125, 'https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/cartola_svg_213/escudo/ba/09/36/00f9742c5c-169f-4773-bba0-061b80f7bbba20230408110936', 'Gabitreta F C', 104.7099609375]]
+    else:
+        jogos_semis_a, jogos_semis_b = semi_finais_seg_turno()
+
+    jogos_final_a, jogos_final_b, esq_maior = finais_seg_turno()
     # campeao_prim_turno = ''
     # vice_prim_turno = ''
     #
@@ -4180,7 +4185,7 @@ def mata_mata_seg_turno():
 
     # print(jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior)
     # return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b
-    return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b
+    return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior
 
 
 if __name__ == '__main__':
