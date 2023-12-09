@@ -109,7 +109,7 @@ def salvar_times_rodadas():
     dict_time = {}
 
     for id_ in todos_ids:
-        for r in range(1, rod):
+        for r in range(1, rod+1):
             teams.append(f'https://api.cartolafc.globo.com/time/id/{id_}/{r}')
 
     simple_results = boosted_requests(urls=teams, no_workers=16, max_tries=5, timeout=5, headers=None, verbose=False,
@@ -269,7 +269,7 @@ def get_sem_capitao():
     times = []
 
     for id_ in todos_ids:
-        for r in range(1, rod):
+        for r in range(1, rod+1):
             times.append(f'https://api.cartolafc.globo.com/time/id/{id_}/{r}')
 
     simple_results = boosted_requests(urls=times, no_workers=16, max_tries=5, timeout=5, headers=None, verbose=False,
@@ -342,7 +342,7 @@ def retornar_estats_liga():
     times = []
 
     for id_ in todos_ids:
-        for r in range(1, rod):
+        for r in range(1, rod+1):
             times.append(f'https://api.cartolafc.globo.com/time/id/{id_}/{r}')
 
     simple_results = boosted_requests(urls=times, no_workers=16, max_tries=5, timeout=5, headers=None, verbose=False,

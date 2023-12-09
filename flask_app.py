@@ -293,22 +293,22 @@ def matamata_seg_page():
     oit_a, oit_b, qua_a, qua_b, semi_a, semi_b, final_a, final_b, esq_maior = mata_mata_seg_turno()
     final = True
 
-    # campeao = []
-    # vice = []
-    #
-    # for f_a, f_b in zip(final_a, final_b):
-    #     if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
-    #         campeao = [[f_a[1], f_a[2]]]
-    #         vice = [[f_b[1], f_b[2]]]
-    #     else:
-    #         campeao = [[f_b[1], f_b[2]]]
-    #         vice = [[f_a[1], f_a[2]]]
+    campeao = []
+    vice = []
+
+    for f_a, f_b in zip(final_a, final_b):
+        if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
+            campeao = [[f_a[1], f_a[2]]]
+            vice = [[f_b[1], f_b[2]]]
+        else:
+            campeao = [[f_b[1], f_b[2]]]
+            vice = [[f_a[1], f_a[2]]]
 
     # , get_list3 = qua_a,
     # get_list4 = qua_b, get_list5 = semi_a, get_list6 = semi_b, get_list7 = final_a,
     # get_list8 = final_b, esq_maior = esq_maior, campeao = campeao, vice = vice, final = final
     return render_template('matamata_seg_turno.html', get_list1=oit_a, get_list2=oit_b,
-                           get_list3=qua_a, get_list4=qua_b, get_list5 = semi_a, get_list6 = semi_b, get_list7=final_a, get_list8=final_b, esq_maior=esq_maior)
+                           get_list3=qua_a, get_list4=qua_b, get_list5 = semi_a, get_list6 = semi_b, get_list7=final_a, get_list8=final_b, esq_maior=esq_maior, campeao = campeao, vice = vice, final = final)
     # , get_list1=oit_a, get_list2=oit_b, get_list3=qua_a, get_list4=qua_b, get_list5=semi_a, get_list6=semi_b, get_list7=final_a, get_list8=final_b, esq_maior=esq_maior, campeao=campeao, vice=vice, final=final)
 
 
@@ -1090,8 +1090,8 @@ def premiacao():
         'prem_terc_geral': 210.00,
         'prem_quarto_geral': 105.00,
         'prem_camp_turno': 210.00,
-        'prem_camp_mm': 393.75,
-        'prem_vice_mm': 131.25
+        'prem_camp_mm': 412.50,
+        'prem_vice_mm': 137.50
     }
 
     dict_ganhadores = {}
@@ -1114,7 +1114,10 @@ def premiacao():
         if t == quarto_colocado:
             dict_ganhadores[t]['valor'] += premios['prem_quarto_geral']
 
-        if t == lider_prim_turno or t == lider_seg_turno:
+        if t == lider_prim_turno:
+            dict_ganhadores[t]['valor'] += premios['prem_camp_turno']
+
+        if t == lider_seg_turno:
             dict_ganhadores[t]['valor'] += premios['prem_camp_turno']
 
         if t == campeao_prim_turno or t == campeao_seg_turno:
@@ -2320,7 +2323,9 @@ def finais_prim_turno():
                     if chave == id:
                         dict_finais_pts[nome] = [v, valor]
 
-    if api.mercado().status.nome == 'Mercado fechado':
+
+
+    if 18 <= rod < 20 and api.mercado().status.nome == 'Mercado fechado':
         with ThreadPoolExecutor(max_workers=40) as executor:
             threads = executor.map(api.time_parcial, list_finais_prim_turno)
 
@@ -2329,14 +2334,36 @@ def finais_prim_turno():
 
         for key, value in dict_finais_pts.items():
             finais.append([key,
-                           value[0],
-                           value[1][2] if rod == 18 else value[1][0],
-                           value[1][2] if rod == 19 else value[1][1]])
+                          value[0],
+                          value[1][2] if rod == 18 else value[1][0],
+                          value[1][2] if rod == 19 else value[1][1]])
 
-    if api.mercado().status.nome == 'Mercado aberto':
+    elif rod >= 20 or api.mercado().status.nome == 'Mercado aberto':
+
         for key, value in dict_finais_pts.items():
-            finais.append([key,
-                           value[0], value[1][0], value[1][1]])
+            finais.append([key, value[0], value[1][0], value[1][1]])
+
+
+
+    #
+    #
+    # if api.mercado().status.nome == 'Mercado fechado':
+    #     with ThreadPoolExecutor(max_workers=40) as executor:
+    #         threads = executor.map(api.time_parcial, list_finais_prim_turno)
+    #
+    #     for teams in threads:
+    #         dict_finais_pts[teams.info.nome][1].append(teams.pontos)
+    #
+    #     for key, value in dict_finais_pts.items():
+    #         finais.append([key,
+    #                        value[0],
+    #                        value[1][2] if rod == 18 else value[1][0],
+    #                        value[1][2] if rod == 19 else value[1][1]])
+    #
+    # if api.mercado().status.nome == 'Mercado aberto':
+    #     for key, value in dict_finais_pts.items():
+    #         finais.append([key,
+    #                        value[0], value[1][0], value[1][1]])
 
     jogos_final_a = []
     jogos_final_a.append(
@@ -4162,26 +4189,26 @@ def mata_mata_seg_turno():
         jogos_semis_a, jogos_semis_b = semi_finais_seg_turno()
 
     jogos_final_a, jogos_final_b, esq_maior = finais_seg_turno()
-    # campeao_prim_turno = ''
-    # vice_prim_turno = ''
-    #
-    # for f_a, f_b in zip(jogos_final_a, jogos_final_b):
-    #     if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
-    #         campeao_prim_turno = f_a[2]
-    #         vice_prim_turno = f_b[2]
-    #     else:
-    #         campeao_prim_turno = f_b[2]
-    #         vice_prim_turno = f_a[2]
-    #
-    # dict_prem['liberta_seg_turno']['campeao'] = campeao_prim_turno
-    # dict_prem['liberta_seg_turno']['vice'] = vice_prim_turno
-    #
-    # if not local:
-    #     with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
-    #         json.dump(dict_prem, f, ensure_ascii=False)
-    # else:
-    #     with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
-    #         json.dump(dict_prem, f, ensure_ascii=False)
+    campeao_prim_turno = ''
+    vice_prim_turno = ''
+
+    for f_a, f_b in zip(jogos_final_a, jogos_final_b):
+        if f_a[0] + f_a[3] > f_b[3] + f_b[0]:
+            campeao_prim_turno = f_a[2]
+            vice_prim_turno = f_b[2]
+        else:
+            campeao_prim_turno = f_b[2]
+            vice_prim_turno = f_a[2]
+
+    dict_prem['liberta_seg_turno']['campeao'] = campeao_prim_turno
+    dict_prem['liberta_seg_turno']['vice'] = vice_prim_turno
+
+    if not local:
+        with open(f'/tmp/dict_prem.json', 'w', encoding='utf-8') as f:
+            json.dump(dict_prem, f, ensure_ascii=False)
+    else:
+        with open(f'static/dict_prem.json', 'w', encoding='utf-8') as f:
+            json.dump(dict_prem, f, ensure_ascii=False)
 
     # print(jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b, esq_maior)
     # return jogos_oitavas_a, jogos_oitavas_b, jogos_quartas_a, jogos_quartas_b, jogos_semis_a, jogos_semis_b, jogos_final_a, jogos_final_b
